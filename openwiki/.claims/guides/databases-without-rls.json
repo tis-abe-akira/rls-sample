@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:de142a86786118f47d5c5b90efb82b0f3b47c0fcc748aa9175d24999b55f9d55",
+  "claims": [
+    {
+      "id": "claim_0ba91a0a9a604bdaa8175b68dfd35642",
+      "statement": "The database-side enforcement in this sample relies on PostgreSQL-specific features: CREATE POLICY with AS RESTRICTIVE tenant walls, ENABLE/FORCE ROW LEVEL SECURITY, and current_setting-based helper functions.",
+      "evidence": [
+        {
+          "resource": "repo://db/init/02_schema.sql#L136-L170",
+          "version": "repo-lines-v1:sha256:c2cb2deb3ba82fa1952c160724aadb984597c4c800c715a04f58bf37b299979b:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmNjZlZjBjY2FkZTM3OWJhMmNhYWFkMWU1ODljNGI4MjVhYjIwNjhlODU0ZTkwZWU1OGVmMWRmMjcwNmZkYWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxMDMyZGMyOWI3MTI3NWE0MDI2ZTFhNDY2YTY4YjM3MzcxOGQyOWRiOTUwNjk5Y2JkMDE4MzgwMzc0ZDZmMGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY1MWY5ZDIxZjdlNzUyY2RhMzM2NDcyNzM4MDlhYTg2NDZmMmIzOWFkZTZlOTZhZmRhODExYzMxMjI5OGRjMjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVmMjJkMGFiNjg2NWU1ZmI4ZDQ0MWMwMTAzNzMxZDQ4NTBlNDJjODRlYzQ1ODNkNjAyZTJjMzNhNjIzNmIyMzcifQ"
+        },
+        {
+          "resource": "repo://db/init/02_schema.sql#L23-L53",
+          "version": "repo-lines-v1:sha256:2e7513f2ffe56877de1b589205c6a91e3fbfd6a0ed2d19993050e5fe6b832763:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1YWJkMmNkNjA4NTFhYTkyN2MzMmJjMzU5NzFkMDlkM2RjZGM5ZGNlNWQ2NDMzNGZmYzU4MmMyMmEzYWNhY2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlMzQ2YjNlYzhlNDY1Zjc5MTMzZTQxYjU0NzdhNzRkZGNmNTc3YzE1YjNmNWUzZDczOTRhOTEyZDE5Zjc0ZmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjllNjE0MDBlNTc2ODFkMzM5ZDkxY2U4ZjVjYmY0MjY0ZDVkYWE2OTdiZTQ0N2Y0YWRiMTExM2RiODk5OWExMmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg1M2NjNjlhMjNiNTcwZGU1MTU0YWU1YzZjOWQzM2Y0NmI1NGUwZDZjYjI0MDgyYzkwMWFlOWI0ZmQ5NmE3MWIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0b8def8ea712429ca5f9c112d2e94cf3",
+      "statement": "Context is passed to the database with PostgreSQL's set_config(..., true), which is transaction-scoped and therefore does not leave values on pooled connections.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/TenantAwareTransactionManager.java#L14-L37",
+          "version": "repo-lines-v1:sha256:f5f7e94565463ad376c1bf3979714c4faf7bb65755f2aeb39f17eb4a403231bf:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2NzlmYWRmNTNmMGUwZmY1ODkyOTNkMjI4MzI2OWVlNzIyODYzMmNhNzAxMzgyNDM2ZDg4YTBmOGM3NDU3OGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM3NTBjZWIwMjY3ODQxMTZkOThmZGViOGZmMmQ1Njk0OTE4NjUxNDQzZmNhOWJhZTYyMTA1NTExYmMzMDlkMzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgyYjNiNDM3NDBlZTM2YmE3M2E5ODA3ODYzMjRkMTBmNDIyZDM3Y2ExYWNiYjQ1OTcwMTM4ZjE3NWIyZmMyODUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cc5c1646e7a042fca5a48e7e63a7795b",
+      "statement": "The batch/operations role app_bypass depends on PostgreSQL's BYPASSRLS attribute.",
+      "evidence": [
+        {
+          "resource": "repo://db/init/01_roles.sql#L4-L11",
+          "version": "repo-lines-v1:sha256:ba00afba6d32658711a18e6b1ff722df0f8789b99979dda6692b4b5463c7b79a:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWM5MDYzNjJiMzNlMTk1Y2I2ZmUxMzNhYjJmNWQ0MTA5YmYzZDA5ZmJjZTFmMjU2YWViODkwYWVhOTc4MWRhNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjBmYjI2ZDU4ZDlhYzJmZjI3MzRlZGE4MjU1Y2E4MzUzNGEyMDYxMWNiYjQzNjBhYzZjODIyMGIwMGE5Mzc5MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWVjZWVlNjgzNDRmYzIwMTkwM2IxMzM2MjUxYTJhMTM3MzVkYWU5NTJjMzNiMjY5YTQwZTVlZjJhMGIzZmExYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_302cc433d0234803a7f0beeeafead5fb",
+      "statement": "Tenant and user determination in TenantFilter is database-independent: the tenant comes from the signed tenant_ids JWT claim and the user is looked up through CurrentUserResolver.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/TenantFilter.java#L23-L51",
+          "version": "repo-lines-v1:sha256:82817761b4dd59e025e2b833139e3b080b736f320d53c2cfdf9fc1fe2d641d70:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhZjFjODMxM2E5MDg1OTFmNmZmNWRkNWJmNzllZmFjZjViOGFhMzAzYjVkZjI4OWViMTNkYzA3ZDA4OWI2YWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBlZmM1NDE3MDU2ZDM3MWE2Yjg3NTRjMTkwZGM0YmFjYjk1ZjQ2OGIyM2I1NzVkYjdkMDFmNWNjMjM1NTJjM2MifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6311531506804a7ca4580530b55bb796",
+      "statement": "TenantContext is a plain ThreadLocal with runAs and a guard against switching tenants inside an active Spring transaction, independent of the database product.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/TenantContext.java#L8-L56",
+          "version": "repo-lines-v1:sha256:22480dd963591b54b64d1deca7d1ce45b9faac8bb8021f04f606202e916c9f6f:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI4ZGRlZmY1NTYzMTBjNWVkNmNlNGE3ZjIwZWI3Y2UxZmVkNTczYWVkMjhiMWYxNTRkNTFmYmQzODk3ZDk0MmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA2M2RmN2RjNjExNTVhNDg2YWNiN2ViZDgxYmI1MmZmZGZlNDdlNDAyNDI1MmM5MDczMWE5OGVlNTExODJlN2IifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_245472a297c74336959bb68a0360dd4b",
+      "statement": "Visible-organization calculation is isolated behind the AccessScopeResolver interface, so it can be reused with a different database.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/user/AccessScopeResolver.java#L5-L17",
+          "version": "repo-lines-v1:sha256:2d37749d2bea98028d0069151e0d9c3e2c25412874dc6b620bfffceb7a507a60:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZkYzUyZTA1MGFjNDg4MzNjOGRiOWRhM2Q3NGRkNDFjNmI3MDVmM2FkNzIxY2NhNzAyNmUxNjhhYTE1OTRjN2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_108f792432754206a3fac033650713e8",
+      "statement": "The application-side tenant and scope filtering in OrderMapper is plain SQL that does not depend on RLS.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/resources/mapper/OrderMapper.xml#L16-L35",
+          "version": "repo-lines-v1:sha256:547df335d2c68212607001270c0be815af02ee611074ac5d93ca27384c90c5da:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxYmYxZTAwM2EwZmQ4ZDdhMzYzZjNiN2QzNTIwOGNhNGVjNzM0Nzg2MDZkMzgxZjE3ZjQ1OGEwNzMzZjMzZjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNkNzEwOWI2MDVhODVmNTkwNGIyYWIzODk3YjhhMDY4MGY2N2Q5OGRkOTU2YTQ4N2ExOTRiNGVjOTI4MTk0M2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc4ZWUxNTU5ZDk5MzdiNzg5ZDYzYTY3NTY1ZDk5YTk4Njg2Yjg0MzFmOTU3NGM5MTI5ZTFjZmIwNGZlZmFiOGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE3MTdhMzliOWY0NmVmZGNkNGQwZDNiYTgyNDkyMzQ1ZjEwZjVkNDI3NGJhNTI5NzZkYWU1ZmMyNzY0OWQyMTgifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T20:48:55.949Z"
+  }
+}

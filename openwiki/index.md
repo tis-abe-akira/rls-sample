@@ -12,6 +12,8 @@ okf_version: "0.2"
 - [authorization](authorization/)
 - [database](database/)
 - [domain](domain/)
+- [guides](guides/)
 - [operations](operations/)
 - [request-lifecycle](request-lifecycle/)
 - [testing](testing/)
+- [tutorials](tutorials/)

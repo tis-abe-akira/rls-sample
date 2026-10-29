@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:58594defcf3f5fb7fb789a25845fb4c496f77085f458170c2237de3995d874bb",
+  "claims": [
+    {
+      "id": "claim_8e5f1fc08ead427994feedc81adc7484",
+      "statement": "order_details is the template for a child table: it carries tenant_id and uses a composite (tenant_id, order_id) foreign key to orders with ON DELETE CASCADE, relying on UNIQUE (tenant_id, id) on orders.",
+      "evidence": [
+        {
+          "resource": "repo://db/init/02_schema.sql#L103-L134",
+          "version": "repo-lines-v1:sha256:f7fb3eb2f1383f0118a81a0b6aaf64f42892b139dce9418bb73ad24ec03b7ad9:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlhNDI1Yjg3ZjdhZWVlOGFmNGMzNDczNWNjNWYwYzZkM2RiYjQ0ZDZhYjk5Mjg2Mzg3MzE4ZDQxOGRkOGVkNWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkNTE5ZTk2OGIwMDU4OTM4NjBjMzk2OTg3N2FkNDRjNzgzZTk3OTI4YTY1NjNhMzgyYWFlODM4ZTUyOThhZTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRlY2VhYzNmOGU0NGQ2NzVlYTU1MTBhNGViYTYxMDhmNDVkY2I0MWE1YzRjMzFhMjQ1MTE4YjkyMTMzMWFjOGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc3OGM1MmNkNTA2MzE1ODMyZTc5MDJhZjY1YThhM2IzN2FmMWQxNDgwYTIzMGE2ODAwOTczMzNjZTJmYTBiZGUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4f5ed7e8c47f4c6dbdca34393e2653c9",
+      "statement": "The order_details visible_parent_order policy uses an EXISTS subquery on orders for both USING and WITH CHECK, so role-based visibility is inherited from the orders policy rather than duplicated.",
+      "evidence": [
+        {
+          "resource": "repo://db/init/02_schema.sql#L220-L232",
+          "version": "repo-lines-v1:sha256:ed2620036bbe69221a23fc961e782ae932528b10165935c5e2e793dd0693268e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUzMzUzN2Y3Zjk2OTUzNWE5MTM2M2NjOGYxYzcxYjZiZGFjMjY2OWNmMDY1OWZhMzgyZTQ4MmY1MjJkNzMxYzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5MTVkODdlZTdkYmMwZTVhYWViOWFlMjZlZTUzY2YyM2ViMWQwYzUzYzI3YzBiNDI2MzE4NGM4MjY5NWQwZjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYxYmFhYTdhZmQyMzIyZWI1OGY4Yjg4ZDBhZjBkMmViMjkwYmJjN2ZlYTQ5MDY3MDZmNjY1NjBhMjA2YzJjYWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJjNTg4NzE0NWZhMTk1ODU1NzFkYWVjMzlkNmUyNzFmZmI0ZjhjYjE5MWVhZDBlN2M1ZDhmZWMyZTcwZDNjYjEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_90b1825f7905474a987af0ad9b2546c8",
+      "statement": "Table privileges are granted to app_user and app_bypass explicitly, and sequence USAGE is granted for all sequences in the public schema.",
+      "evidence": [
+        {
+          "resource": "repo://db/init/02_schema.sql#L234-L242",
+          "version": "repo-lines-v1:sha256:c01e2ccd222fd71f1bade2c1945d38817692eab63950abea097f7e443919fcbe:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGY2NmVmMGNjYWRlMzc5YmEyY2FhYWQxZTU4OWM0YjgyNWFiMjA2OGU4NTRlOTBlZTU4ZWYxZGYyNzA2ZmRhZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGVkNWZlMzQxODE1MGE3ZTE4MjM5Y2YzMWFhMmMyMmVhMjMzYjAyMDlhNzRkOGYwYmJhN2MyM2NmM2MxYTM2MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjNlMjUyNGRiMzkzZWFhMzZkZGI0ZDQyNWE0MjkwYWU4YjVjZmEzMjZmMmMwN2NmZGI4NzJjODQxZmM2NzA5ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_04e65568fcf44eaab83e894757689884",
+      "statement": "OrderService.addDetail first loads the parent order through RLS and throws OrderNotFoundException when it is not visible, then inserts the child row with the parent's tenant_id.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/order/OrderService.java#L93-L98",
+          "version": "repo-lines-v1:sha256:1c6ed319a70d6ce70989a255e7b9c2e7db19c8feec374d91f4ffd3206e49b5c3:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjA4MjQ2MWFjNjZmZjY4N2Q3ZGIzYzdiYzQ2YzViYjE5OTg5YWVlNmU1YTRhY2MxYjM3YTYyNTJmYmZjZTkyZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWU1OTMwOTNiNTAxNTg1NDU4OTJiM2ExMzQ0MWZjZGFmYzc5NzgzMWI5NmRkYjMxZWRiZDgyZmE4ZmJjMjQ1OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTNjZmQ3OTAwMjMxNzEyOTQzNGVlZDM4NDVkZjBkMTAxNjAxMDM0MTg3NTJjYmQwNzcxNGYzMWM1OGMzOTkxNiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7304c1c3a1f546958dff5744de689a4a",
+      "statement": "The README provides a pg_class query that lists tables having a tenant_id column but lacking ENABLE or FORCE ROW LEVEL SECURITY.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L256-L262",
+          "version": "repo-lines-v1:sha256:a1fed2dba7b3c2efd86dc5ea164c36aea1c063018b58fa5829cefc61feb36aff:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTZmNDAzZTYwZjE2MWM4MzVhYmFlZjg3NDZkZDA2Yjc4ZmE5YjBkY2JkZjEzMjAxOTVmN2U1ZmExM2QwMTQ2MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTYxYTRmOWZhNDlmNjg4MGIxZDIxNTQ5NWU1ODU3MTU4NGU2MWQ2N2YxNzEyOTJkMzZjZDUzNjYyOWZkMzAxYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDYwNGJjMTBjN2VjNzE4MjI0ZDhlZWY4YTg0NTQ0NDA2OWM5YjZhY2EzOTgyODI2ZTdiNjg5NWZmYTBkYjlkMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODEzYTBiNTM3MTA3NzE0NGJmNjQ0ZTdmZWFiNTlhMjE1ZDY3MDczNjBmOThhMDc3N2FjNDZiYmY3ZjVmMGUwNiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1d4b28088c434bb894a9be01cdfe2b8c",
+      "statement": "Init scripts only run on an empty database, so schema or seed changes require recreating the volume with docker compose down -v.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L93-L97",
+          "version": "repo-lines-v1:sha256:1fd337e671fded29fb1f98fb64f4193de6e54ae8bbbd7e452929942215897156:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDM0Y2E2NjFkMWE2MTZkMzZjZTk0ODEwNjdjMDQ1ZDY4ZjQ0MjE0NjUwMDllNDAyMmZjMDI1N2IzM2VkN2UwYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDdjMDZjNTYxZDVjMzI3MzQzNjg1MjY4YTQ2YjMzOTFmMzk5OGVlZTg5MGQyYmU1MWYwZDIxY2M0YTUzYWU2ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGQ2ZDk1NTlhMDRkZmRmZDk0NDdlYWE4ODk1Yjg3YTg3Njc5NTViNmRiMDU0YmMyYWE3ODllYWEwZjQyMTBhMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTc1NjJhZmRlOWU4NWQ5NmEzMDhkYWU0ZGIxYzgxZmE5YzZkYjY4MDIyOTRhNTllMTQ2YzY3ZDRkMWRiMDkxZiJ9"
+        },
+        {
+          "resource": "repo://compose.yaml#L12-L14",
+          "version": "repo-lines-v1:sha256:561139d4b42079a0c04eed5d79813c7fc33f4ab8c12d66ea8fdbd6bc90d5c59b:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEzZjRkOTY2MWU5ZDJjM2UxYTI4OWU1ODMyMjk5YmVhMTRjZGI2NGJmODg2NjFkZjcxN2IxMmZhMDJkMDExZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWE4MWYwZDNmMjI2ODExNmNiM2FiNTE0OWM5ZGFkZjYzNDNjMmI1NDMzOGFiNTYzZDg2N2FjM2M1ZWRmMjAxZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODk1MWZmYTVlNjlhNjBkNmMyYzg3OWM5YWU0MWQ4YjliZmYxOGVhNmEwNzE0YmU4OWU0YTU3NmYyMDlkZTM2YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_df1db52fb92e43118cfe8b1b66e4bf47",
+      "statement": "Existing tests use Actor personas and TransactionTemplate to call mappers directly, asserting that DB-level WITH CHECK rejects writes with a row-level security policy error.",
+      "evidence": [
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/order/OrderRoleAccessTest.java#L105-L125",
+          "version": "repo-lines-v1:sha256:2f29a8446d52cd63e012cbdc5a7b55254cabf7e5c10e67b3fd531f2384f23865:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjZjA5ZWIwYzU3NDRmYjk3MzMxYjk4ZmYzZmJmMDVhNjAyYmEzZjdmNjdlNWRhNWJlOTA5NTAzM2Y2MjU4MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEwYTBhNWJmMWM4NGYxOGQ3NWIxZTgwZDA4NGRjMmQyNWE2ODJhYzJjMzBlYTJjMTM4YzU2MzI3MWU5Yjk2OTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY0Yjg5ZmM5ZTY2MDU5NDEzNGZhNTMwZGIwNDllMWNkOGZhZjkwNWRjOTNhNzY3YzA4YzE5YmEwMWE2ZGEyMTUifQ"
+        },
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/support/Actor.java#L47-L50",
+          "version": "repo-lines-v1:sha256:fad1ffd07c57eec4111c01a76b2d43b523091dce35441fe3c8e0eb8102c2a3b1:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWZmYTliNjY4YmZiZDMzZGVmNmJlOTMzMmI4MTU2MDE1NjhlN2QxZDI0OTA2ZDZhZWU5MzI5ZGY0ZjgwM2U4MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTEzYTliMDExMzBlODE2ZDZkZTFjNGJlMmI1OTlhYmU3MmMwZjQ3OTQ1MGE5YWQwZDQ3Njg2MzU0YzU1NjFkOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTE3ZGIyNDgwYjZlZmIxMTQyNTkyMzBhYTExZGU3NDk5NjkwZjY2Nzc4NDIyMzc3ZjhjNTE2MGE3ZjQ3Njg5ZSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T20:48:55.949Z"
+  }
+}
