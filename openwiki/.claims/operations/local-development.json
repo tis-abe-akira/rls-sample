@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:ea805f0de36c015f27dddf62be4aedc8f003c64a1b2e15ca519e19ae0d7f94fd",
+  "claims": [
+    {
+      "id": "claim_e593d521a04a49d889f7bfb953ea3004",
+      "statement": "Docker Compose runs postgres:17 as container rls-sample-db on host port 15432 and mounts db/init read-only as the init directory, so the init scripts run only when the database volume is empty.",
+      "evidence": [
+        {
+          "resource": "repo://compose.yaml#L1-L14",
+          "version": "repo-lines-v1:sha256:a126a3991edfe90f3b5fa93008e5676dcccc6b5168760dd2f3ed9e5d155041c0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhNzNmY2NkYzk5ZWE4MzU5NjdjN2RlZTdlZmJlZDFmM2NhODcyNjBkOTI5MzE4NTBmZGQ2NmRhOGNiMTJmMWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhODFmMGQzZjIyNjgxMTZjYjNhYjUxNDljOWRhZGY2MzQzYzJiNTQzMzhhYjU2M2Q4NjdhYzNjNWVkZjIwMWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_48759b1ba8b543b6b248821448b9d7aa",
+      "statement": "The bypass profile only switches the datasource to the BYPASSRLS role app_bypass, reproducing the no-RLS behavior with unchanged code.",
+      "evidence": [
+        {
+          "resource": "repo://db/init/01_roles.sql#L10-L11",
+          "version": "repo-lines-v1:sha256:6434f8d43cdcb1c20520731b2c6f415545d69216e77e22ae3f30088e4edc2225:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWViNGUzZjYzNDA4ODYyZDc5YTBlMzFmZDFhMGNhZWJhN2I5OTUzYjZkN2MxZmE3OTRkZDhhNmViNGY0ZTA1NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjBmYjI2ZDU4ZDlhYzJmZjI3MzRlZGE4MjU1Y2E4MzUzNGEyMDYxMWNiYjQzNjBhYzZjODIyMGIwMGE5Mzc5MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTk0N2E4NmY2MzUwMmZkMzU2OWRmNzRiODMxMzJmNTRlZTk5M2QyZWVhNjA0YWJmNmJkZTg4NGI3YmEzZjkyMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://src/main/resources/application-bypass.yml#L1-L7",
+          "version": "repo-lines-v1:sha256:3b0e061deac7c2d655296761570911e7f7dce79dbb9ec6818f90c16a26e07da3:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTZlZjBiYzcwYzcxMmU3ZTFlMGM4N2ZjMmM4N2Q2ZjdmMmI1OWYxNTdjY2Q0YjY2YTExOTE5YWY3NmNlYWFmZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTY0MmIxMDIxZDI2ZjM5Zjg5MTdmZWQyYTBjZDY5ODgwYWFmM2I4MzgxNDg1ZmQ5NDkwZmJiZTE2Y2M0ZTUwYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_fa1a6cd0308a41068a6bc35e872b1aef",
+      "statement": "scripts/token.sh issues an HS256 JWT containing sub, tenant_ids, iat and a one-hour exp, signed with JWT_SECRET or the same default secret as app.jwt.secret; user IDs and roles are not put in the token.",
+      "evidence": [
+        {
+          "resource": "repo://scripts/token.sh#L1-L32",
+          "version": "repo-lines-v1:sha256:f4ff23d0e3128f09cc966c8dc4d448a99d3bae0ffa7a51c41af181154f3a4356:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkOTVmYzA0YTgwYzk1MmY0OWNlNDE4ODYyN2M1M2IwZmJlOGM0NDA0MWI5NTJkNTkyYWNkMWRlOTk4NjE0NjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIyZmNhN2FkODFiZTA1NTQ0NjFjMTAyMDBjMTBlYjIxMDFjYjY3OTdjNDNmMDhkOTRmZDBjNTk1MzVjNmNmMjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://src/main/resources/application.yml#L10-L14",
+          "version": "repo-lines-v1:sha256:0c80fa1c9dec38f9433a08173051ccace2f349567e5be0760e2f7575f8504fdd:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmEwNzUxODRhMjViNDI2MGRkY2I5NjE5ZGMxMzNmODkwYWNiZWUwYjhjYjdiY2Q3YmI3NmQwNDAxM2QxNjNhMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiY2IzYTJhMmZlMGQyYzljMTYwM2FmMmMxYzY3NTY1YjBkZGFhNDQyOTU0ZDI4ZjJhZDI2NDAzZWMwMTFmYTc4MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmQ2ZDllNzMwY2UxODYyOTY3NzQ4YzUyYjJmOTU1NjgyNDliMzU4NWEyZmE5NzQ0NWJiNGMyYjc5ZDkzMjdhMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODIzNGVkOTU4ZDg3ZWE4ZTMxN2IwYTVhOWUyNzBiM2Y5NTA3ZGViZWYyZTM0YjVmODQxOGJkYjY0ZDZlNTdmNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8f4c6fa5c8d5426db2cac4134fb58de7",
+      "statement": "application.yml connects as app_user and enables DEBUG logging for OrderMapper and TenantAwareTransactionManager so issued SQL and set_config calls are visible.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/resources/application.yml#L1-L26",
+          "version": "repo-lines-v1:sha256:80cd2602791a4234ea60c7a97604001c834562454b87b9e5fecae073ad1e7958:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFiM2NkZjRmZDRiNmMxZWNlYWYzNDMxNWRkYjkyZDcxMTFiNTBhNTBjYjc3MTRmYjNiNGQ2NjQxNjBiMjBjNDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExN2JmN2VlZGZkYTZjOTEzOTBlYmFlYWVlZDQ4ZTRhZjllZTdjMTU1OTQ3YjY1NjM1NTY2YmNhZDQ4Yjg5ZTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e7f866087d7a4dc693f8d4fb9120cdfa",
+      "statement": "db/demo.sql reproduces the application's set_config calls by hand in psql to demonstrate fail-closed behavior, IDOR protection, WITH CHECK rejections, manager scopes and settings disappearing after the transaction.",
+      "evidence": [
+        {
+          "resource": "repo://db/demo.sql#L1-L83",
+          "version": "repo-lines-v1:sha256:c2e4fc52384f7cd392d32da7c47a7b4283ef445e4714619e620ecaeb6f82f160:eyJzZWxlY3RlZExpbmVDb3VudCI6ODMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjM2UwYzJiNzM2YmM5OTZmNDgyODEyZTE2MDc2YWY0NDdjNjIxNzZjNmY1ZjFhNmVkNWE3MjAyNWVhYmQ1YzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0ODVjNjBiMTg4N2FjNDljODRjNmIyMGQ0MGM4MzVhMzU2OTU3YmNhNGFiZGE4Y2UyMmFmYzVmMjkzM2NhYTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4481c2330b224e3aa7fab1772da886fa",
+      "statement": "The same subject taro is a GENERAL user in tenant 1 and an ADMIN in tenant 2, demonstrating per-tenant roles.",
+      "evidence": [
+        {
+          "resource": "repo://db/init/03_data.sql#L24-L35",
+          "version": "repo-lines-v1:sha256:37bfb305394b484611261fbf878e93d381c53fee0455a1b833784d9ef0fcdcb7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA0YmUxMGE2ZTUyY2ZmZTc5OTQ5ZTJlZTUzMjYzZWE4Mzg0ODE2ZDNjNTdjMDM1MjQyNDczNjk0NGQyMTExYzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhiNzE1ZTQ3NTNmODg4MzU3ODFhNjEyMDQ1MTczOTQxYTkwNzE5YWJlODVjNjQ3MjU4YzQ1YzljZTc1MmJhMGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNkOTM0NGIwNDM0ZWY4NWU2ZGFiNDY0MjAyYjQzYWI4NGM5NTNkZjFhN2UyYWVhNGFkNDllNTQ3YTkyZmY5MzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhMmQzOGExZmZkZGU1NjM0MzQzZWQzOTJjZGQxNDBlNjI4YTMwMTA5MWU5MjlkYjExMmU3YjE1YjQwZjQ5MTMifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T20:28:49.941Z"
+  }
+}

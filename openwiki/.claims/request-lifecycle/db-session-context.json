@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:934479057ccc8185b7dd37ad1195b8493218c8a4ce07252f680f0c46d0d133b8",
+  "claims": [
+    {
+      "id": "claim_297f6c8b259644f6bfc955d2289d4da2",
+      "statement": "TenantContext.runAs and UserContext.runAs set the ThreadLocal value, run the action, and always restore the previous value (or remove it) in finally, so values do not leak to the next request on a pooled thread.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/TenantContext.java#L32-L63",
+          "version": "repo-lines-v1:sha256:7a474bc51b8b0840e51d1012a61222c60c96ebc55c2eb80768a61af9e8c46696:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5Y2JiYzY1NDY5ZGIxY2EyODQyZWZkOTdkZjdlZTJjZTZjYzE1NzE0ODJkMDFhMThiNzkwYTEwYzdjNTEwZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAwYjc2MGQwNDdmODU0YTliMmZkMGZiOTQyMDQ1MjJlNjU1ZjQ1OWZlNTFmOTc0M2EwYzg5ODhlODAxZGMzNDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/UserContext.java#L31-L59",
+          "version": "repo-lines-v1:sha256:600982bec0916a4f1fb99f8f6bc2be397eacd806f1443ec294ea9011ddeb6ac5:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5Y2JiYzY1NDY5ZGIxY2EyODQyZWZkOTdkZjdlZTJjZTZjYzE1NzE0ODJkMDFhMThiNzkwYTEwYzdjNTEwZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVhMTg4YTRiMTI1MDY2YzE0Mzg1M2E2MjVkMDk5ZTA4OTM1YjVlZTUzZWY0MWYzOTE1ZjdkNTEzMzBkYjQ0ODUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bbf98525835f4ab5b8e86a49ae3c353d",
+      "statement": "runAs throws IllegalStateException when an actual transaction is active and a different tenant or user is requested, because database settings are applied only once at BEGIN; re-entering with the same tenant and user is allowed.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/TenantContext.java#L32-L45",
+          "version": "repo-lines-v1:sha256:9831fdebcbd9c918e8d84e59d3dee5f5ca730c4a5f9556c29da30df3b171777d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5Y2JiYzY1NDY5ZGIxY2EyODQyZWZkOTdkZjdlZTJjZTZjYzE1NzE0ODJkMDFhMThiNzkwYTEwYzdjNTEwZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAwYjc2MGQwNDdmODU0YTliMmZkMGZiOTQyMDQ1MjJlNjU1ZjQ1OWZlNTFmOTc0M2EwYzg5ODhlODAxZGMzNDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ2MGJmYzUxMzExY2UyYzQxYWRjODA2MGFkOGM3M2YyYzU3NGM5ODM1N2IwYmVjYTc3M2E0ZjlmNTFjZmQxZmIifQ"
+        },
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/UserContext.java#L31-L41",
+          "version": "repo-lines-v1:sha256:6bae39a70bd10b2e450cbfe827013f683d02637ae1b23bb3140b03f412976a00:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5Y2JiYzY1NDY5ZGIxY2EyODQyZWZkOTdkZjdlZTJjZTZjYzE1NzE0ODJkMDFhMThiNzkwYTEwYzdjNTEwZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVhMTg4YTRiMTI1MDY2YzE0Mzg1M2E2MjVkMDk5ZTA4OTM1YjVlZTUzZWY0MWYzOTE1ZjdkNTEzMzBkYjQ0ODUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcxZWQ2YzgwYzc5YzJjN2M0YmI5MmUyMjFjZDFhZjBiYWYwMTM5ZGQ4OTI4ZjQ3MDkyNzVmZjIyY2I4NWVkYjUifQ"
+        },
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/order/OrderRlsIntegrationTest.java#L154-L171",
+          "version": "repo-lines-v1:sha256:c9556ec1f3e7dac98860375eb3939d35856ca391217bd8abed9978d11ae00e23:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjZjA5ZWIwYzU3NDRmYjk3MzMxYjk4ZmYzZmJmMDVhNjAyYmEzZjdmNjdlNWRhNWJlOTA5NTAzM2Y2MjU4MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg4MWU1MTMzNjliMDgzYjUyMTQxY2EzYzRkMjJlMjY5MWY0MzkxNjBkMzlmYjk1OGQ1YzMxZTkwNDc3OWI0YzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNiY2Q2MmYyNDNmYjlhNDgxN2QyYzU3YWQ3YzAwN2U3OGM2ZGM4MTQ1ODRhZmY4MGY1ZTQ5NDY2NTI0MGM1MjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cad113ae2a3643b18cbd638a2f209b28",
+      "statement": "UserContext.require fails unless the current user is resolved, whereas TenantContext.require fails only when no tenant is set.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/TenantContext.java#L26-L30",
+          "version": "repo-lines-v1:sha256:73dc877635c2007d1fc392241ee41b629b95e8b2a92ef1dd6ad02787b0d4cb40:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTRjZWVkNDY1NWI5MTk5ZjhhNjU1MzVkMzU2OGQ5YjNhMGFiNWJiZGU4MWUzYjZmYWQ4NjFkYTc0MTIwMzE5ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTQ5ZjA3ZmIxOThlY2U4MThiZWMwZWQ2ZDA3YzlkYjFmNDFhMDI5N2ZkMDE4ODExYjhlZjAxMGNiYTY1MGVmYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTE5ZDVlZDNlMDRkZTIyZWU3YjI0NzJiOGM0YjE2MjAzYWQyYzU2ZjVhOWE5NWY1OTNhMDk2YjczNTBhMTVlNSJ9"
+        },
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/UserContext.java#L25-L29",
+          "version": "repo-lines-v1:sha256:a9705e1f1e0332cd190e8c8dd90e548770e22b44c9daa6abadfebe2979222429:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjdmZmJiNzg0MzYyMDc3ZTEwNWU0MjRjYTQ5YjUzYTcyMjY3ZTQzNDRhYmM3N2U4NDViZjU5MmE0OGI0ZjZlMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTQ5ZjA3ZmIxOThlY2U4MThiZWMwZWQ2ZDA3YzlkYjFmNDFhMDI5N2ZkMDE4ODExYjhlZjAxMGNiYTY1MGVmYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjI3MjJmODViMjA0MTk3YmQ4N2YyZTdjOTVkYzYxMzc2N2FiMGQ0Y2JkNDhiNzcyMzRjZGMzNmQwYzZiOTY2OCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_721af4f4f22b4aa6b1eb288e18bb7897",
+      "statement": "TenantAwareTransactionManager overrides prepareTransactionalConnection to run one parameterized SELECT of five set_config(..., true) calls on the transaction's connection, filling missing user fields with empty strings.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/TenantAwareTransactionManager.java#L14-L69",
+          "version": "repo-lines-v1:sha256:35ff5bea1fd84ced36bc88e7d4a23e2f475e8833aec32925eb00bdcb57dcaea2:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM3NTBjZWIwMjY3ODQxMTZkOThmZGViOGZmMmQ1Njk0OTE4NjUxNDQzZmNhOWJhZTYyMTA1NTExYmMzMDlkMzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2e0a731abf99447f994733da5b945c12",
+      "statement": "TenantConfig defines the PlatformTransactionManager bean as TenantAwareTransactionManager, replacing Spring Boot's auto-configured one; MyBatis joins this transaction and connection.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/TenantConfig.java#L9-L21",
+          "version": "repo-lines-v1:sha256:d57a76504e6e564070ab899bd06389747314af55cd68b1848068710906c1695a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE5YjkyNWM5NDJmMDJkMzI5ZTljYWQwOTQyYzNiNzg3ZDkwNDA2YjgzZDNlOWU2MWU2ZGIyNTExNWNhNzRmNDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk1ZTQzMjBhNWNiOTUwZjZjMjhkNDg4YjQ3YmUwNzU1MGRjMWMzZTJkYmFiNTc2ZTAxNDNjODQ2N2QxZDZmMGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7bffc235300944fc9209ed43cb522aa5",
+      "statement": "Without a tenant, or with a tenant but no user, or when a mapper is called outside a transaction, queries return no rows.",
+      "evidence": [
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/order/OrderRlsIntegrationTest.java#L130-L152",
+          "version": "repo-lines-v1:sha256:e7ff0e211cc981205d6daa5849b3e88be706fa59cb115ecb589466cb6439a0a3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjZjA5ZWIwYzU3NDRmYjk3MzMxYjk4ZmYzZmJmMDVhNjAyYmEzZjdmNjdlNWRhNWJlOTA5NTAzM2Y2MjU4MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNjMWNlM2M5ZDBjYzE4ZDgxNjVmMjBkYjFjMjNjYjRmNjBiNDgxZWQwMzU5MmIzYzE4NzE5YjU3ZGIxMTBlNTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU5NGJjODcwYjg3NThiNmY5ZGY0MmY0M2JhMzgwMTYzM2Q0MmU3ZDVmMTVhNGJiNWRmOWY5NTc2NzJiYTM0ZDUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T20:28:49.941Z"
+  }
+}

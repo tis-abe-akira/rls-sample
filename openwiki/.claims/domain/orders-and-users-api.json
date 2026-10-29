@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:3b505d95217b6a3fe121ac13ecbb5f7ac2c89df90a9412032900cf86d1d50bb5",
+  "claims": [
+    {
+      "id": "claim_9324051ece8c466cae4b427a8dc5bbc9",
+      "statement": "Order creation requests carry no tenantId; the tenant is always taken from TenantContext on the server, and detail tenant_id/order_id are set by the server.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/order/OrderController.java#L42-L75",
+          "version": "repo-lines-v1:sha256:6cf960d2535bb55e8bd894a44b6e4863126eee8563d4bc6e75e90300e4f7e61a:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyN2JmNDEwNjBkMWFlZjI2NDRhODU3MGRmYTk3YzFiN2ViZmM3YWZjNTM4MzEwNjU1ZmM0MTkxM2Q2Y2U2NDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI2Mzk5MmJhZjRkZGFmOTNhYTFhNmM5YWU3OGU5ZGFlNzc4MjExNWYzZTgyYTEyZDdiODUzZTA4ZDFlYzI1YWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/order/OrderService.java#L65-L83",
+          "version": "repo-lines-v1:sha256:c39ce399ee0449754a1bfe5662a19825a93384bd1003614fb38771febc181d02:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2NjhmMmQ0YmY1OWVjZWQ4MTMwMjU5MjUyYmZjODNiMmIxZGQyZWQ5M2UyNzE1NjYzYjdkYThkMDRkYjc2OGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZmYmJkMGRhODg4NjkyM2U1Mzg3ZGNiZWI0ZTMxMDU5YWU1MmZiNzJiODkxMjZkYTc1YWExZTk0ZmZhNWNmNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE0NDQwN2U5MjE3NjU1NjM0NjcyMDYzZmJiYTNhYjQxODk5OWM5MjY4ZjU1MDE0ZjI0NzNlODM2MDdiOTcyZDgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_39e16475141143048b2eb5c5da57b435",
+      "statement": "OrderService is annotated @Transactional at class level (UserService with readOnly = true) so that all SQL runs inside a transaction where the tenant and user settings have been applied.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/order/OrderService.java#L16-L26",
+          "version": "repo-lines-v1:sha256:43d5b21e77d315cdaaf6a41bfc037c94f8d9d9ad3ee042940b2bec8f111261c1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmMWQwNTc2MmFmMTM2ZTc2YmI5NzlmNjlkNWMzYmQzOWJiZmY5YjdmMjMxYTgyNmU0Yjg5YWI3YWFmNWU5MzIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQxNDE5ZWI2Nzg5ZGFkMjAwMTBlYWE5YTQwMzBlY2JiYTRhYjA1NDk3OTY5ZTBmMTIxMTVmN2JiZWRjYzRjOGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMzOWE5Nzk1YTFiMTRmZTBlMTE2MWUwZjc4NzdkZjVjMjM5YzYxNzFjY2NjZTQ1ZTkxNjY5YTc1ZWEwMjQ2MzIifQ"
+        },
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/user/UserService.java#L15-L17",
+          "version": "repo-lines-v1:sha256:a9b35874935f2213cf7ba861f63385bb98a03809a527d6503f3d1630fbfd98a9:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmIzMzZjNDJiMmY1MjA3Yjc3NWU1MGE4ZGFjZTJkNmQxNWIyNmY2MWU4Y2RhMmNhNGQ0M2ZjZTRhZTQ4NDRmOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTJiNDI2ZjY2NzRjZTMyYzJkZjQwMjMzMWE4MDBkMGYyZWYyMTVkMjk5NDVhMWZiNTEwNzI0ZWIzYmI5YzkzNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmRiYjVjOTg1ZWM2N2ZkZGZhYTZmYWUyNWE3NGEyOTVhNWFlNGFmMzNiYzM4MzRiY2UwNzc0OTJhYTQyZjVjNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTRmYTg4MWY0NmVmMWQ1YzEyNGFjMmJhZjFhNDUzOTcyMjc0NzVhZmM2YmZhZjllYzdlMmI3Nzk4NDhiY2M4NiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_e8a3883cf30d4d15beb3290515287727",
+      "statement": "findAllByTenantAndScope filters by tenant_id and (own user_id OR org_id IN visible organizations), omitting the org_id clause when the scope is empty.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/resources/mapper/OrderMapper.xml#L24-L35",
+          "version": "repo-lines-v1:sha256:8c694d6319ef0fb6edd9a1f5d9d6559b8115bca4a9a7bb16e52c960d4f8e8959:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5YzNjYWEzMDRjMTQ0Mjk3Yjc2Y2E2MGY3NzhjYzQ2ZmFlOTU4YmJmMmMyMzdjYWIyNzFhZmQ5NzMxMGFjY2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNkNzEwOWI2MDVhODVmNTkwNGIyYWIzODk3YjhhMDY4MGY2N2Q5OGRkOTU2YTQ4N2ExOTRiNGVjOTI4MTk0M2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0Mzk3M2QzNjM2MzJjYWUwOGVjNmZjODQ4ZDUzNGVhMWFhOWM4MGJhOTI0ODg1ZmVlYmU5M2Q3NTA3NjlmOWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE3MTdhMzliOWY0NmVmZGNkNGQwZDNiYTgyNDkyMzQ1ZjEwZjVkNDI3NGJhNTI5NzZkYWU1ZmMyNzY0OWQyMTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_242de67a12e84a5b9ad3a2ba92dac107",
+      "statement": "The mappers intentionally include a WHERE-less listing and id-only get/update/delete (IDOR patterns); with RLS these return or affect only rows the caller may see, so missing rows surface as 404.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/order/OrderMapper.java#L10-L44",
+          "version": "repo-lines-v1:sha256:3a06799e70efaebed4bcd63b7f1e8d3f59a992c0541b27f4100706dbc27a4cef:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJkYmI1Yzk4NWVjNjdmZGRmYWE2ZmFlMjVhNzRhMjk1YTVhZTRhZjMzYmMzODM0YmNlMDc3NDkyYWE0MmY1YzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/order/OrderService.java#L85-L105",
+          "version": "repo-lines-v1:sha256:896b64da33e0aeea70c435113b2ccfbe091d268b6ec279ac2d1d1f65dda7c340:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliZjkxMmQ5ZTc4MzU5OGM5MTIwYWM5MjgyMmMyZWU2MzA2MjgzNTc2NWI0MDRlYjI1ZmQ2NGVhNDUwZTU2NzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjllNTkzMDkzYjUwMTU4NTQ1ODkyYjNhMTM0NDFmY2RhZmM3OTc4MzFiOTZkZGIzMWVkYmQ4MmZhOGZiYzI0NTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFjMDU3MjM0YWY4NWE4NzRhZTU3MzQ1NzE4ZGY2YWVhNjFhYjVkNGEwMTE2MTQzODZmN2FjMWEzMjQxMjQyNTYifQ"
+        },
+        {
+          "resource": "repo://src/main/resources/mapper/OrderMapper.xml#L37-L66",
+          "version": "repo-lines-v1:sha256:8e38554ac0ff41658fa1af79fc534b90592e6d87844f79151e030c4768920043:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0NTRiZDEyODM4MDg0NzAzYzQ4YjdmMzM4OTE2ODgzZmM2ODNiYzI4M2JhMGU4NDViOTMwMzU5NDc0MGE1ZGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlMTQ1MWZiY2MwNmM1N2UwZDM1ZDRkMmIzYTE5OTNiMGNjMjJlYjRiMmRhM2RkMjQ5MGVlZTdjNGZhMTkzY2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0Mzk3M2QzNjM2MzJjYWUwOGVjNmZjODQ4ZDUzNGVhMWFhOWM4MGJhOTI0ODg1ZmVlYmU5M2Q3NTA3NjlmOWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY4MjNkMzUwYjI4ZGM2ZjlkYzM4Yzg1MjY2ZmQyNzJlOTQzYjBmNTFiYTU4MzhlNzk2NmYzY2FkMTJiZGY2MDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_38fe13ddadd24c5ba60fc5c98e0355a8",
+      "statement": "createOrder rejects a general user naming another owner, looks up the owner through RLS (out-of-scope users are not found), requires non-admin managers to have the owner's organization in scope, and stores the owner's current org_id on the order.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/order/OrderService.java#L59-L83",
+          "version": "repo-lines-v1:sha256:7ed235dc753b41832151985c371387ebc0a4ce6a76dd712cf02b8c1eebcf358e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5Y2JiYzY1NDY5ZGIxY2EyODQyZWZkOTdkZjdlZTJjZTZjYzE1NzE0ODJkMDFhMThiNzkwYTEwYzdjNTEwZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjllNTkzMDkzYjUwMTU4NTQ1ODkyYjNhMTM0NDFmY2RhZmM3OTc4MzFiOTZkZGIzMWVkYmQ4MmZhOGZiYzI0NTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE0NDQwN2U5MjE3NjU1NjM0NjcyMDYzZmJiYTNhYjQxODk5OWM5MjY4ZjU1MDE0ZjI0NzNlODM2MDdiOTcyZDgifQ"
+        },
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/order/OrgScopeAccessTest.java#L114-L133",
+          "version": "repo-lines-v1:sha256:16ae94af5009febff5506f44a85812ca6634482191181106bc1262ff9a755a2e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjZjA5ZWIwYzU3NDRmYjk3MzMxYjk4ZmYzZmJmMDVhNjAyYmEzZjdmNjdlNWRhNWJlOTA5NTAzM2Y2MjU4MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0Njc1N2FmZTJhZGQ2M2Y0MzFmZTQyNWI2M2MxMTA3MDE0ZWM4N2IyMGJlYTkzMzc3Yjc2MjFhNjZiOGZkNzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBiMDA4Nzg0YTFkNDI5NGZiN2ZiMTU2ODE1YzIxNjYyZGQzYWU1ZmUzNDZhZTAzZDA5ZGU4MzBiOTAyZmNlOWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f5a3b185a9c3496ea34d6df145eb2e0f",
+      "statement": "listUsers returns all tenant users for administrators, members of the visible organizations for managers with a non-empty scope, and throws ForbiddenException otherwise.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/user/UserService.java#L40-L54",
+          "version": "repo-lines-v1:sha256:9d3e534711720aa59cc54b9a39759f2acdc7bac7206eaa50a2016468e77b0392:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5Y2JiYzY1NDY5ZGIxY2EyODQyZWZkOTdkZjdlZTJjZTZjYzE1NzE0ODJkMDFhMThiNzkwYTEwYzdjNTEwZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEzNTYzMDNlYjIwZmJhMGQ4YWE1NTY3MTVlM2NhYjVkMmRjNWVmMWZmMTgyMzRjNzRjNjYxMzQ2MGJkZmExNWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_96534e18c626419c86672f6d0b31cf6e",
+      "statement": "ApiExceptionHandler maps OrderNotFoundException to 404 and ForbiddenException to 403 ProblemDetail responses; 403 is reserved for the caller's own permission problems so that other users' existing rows are never revealed.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/common/ApiExceptionHandler.java#L9-L21",
+          "version": "repo-lines-v1:sha256:fee9f3d227e6fbe5800cb0194a3c19fe3e92104b99648f865925417dfcc88db7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRiY2VjNDQ4Y2M5YTVlMDk1NTg0YTVlOTIyOTQ3ZGQwMzlhMTI2NjIyZDE5MGM2YTUwODY0ZWVhZDhiMzBlYWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVlMDk4MzBhMDUxMjBiZmZlYTJiMDI0OGU3NDZhZTcwNzgxYzAwMGE4NzE0YzRhZjNjMmFhZTM2ZjBkYzIwNzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/common/ForbiddenException.java#L3-L14",
+          "version": "repo-lines-v1:sha256:a3adbcafbf7f34758c4795379663328451590ca713fe551e9373ca969e8081f6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjoyLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVjNjcwOWY3MzQ5ZjQ5MDJmMjM4YjA0NmY1MzYxYWJjNTBlZjY5ZTRlM2VmM2I4MTBhMGNkNjFkZjMzMzEwODEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/order/OrderNotFoundException.java#L3-L12",
+          "version": "repo-lines-v1:sha256:3cc9d0319892011d203b9f917a47cd5a02ae0d7432e72ccd703d614bd3f39885:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjoyLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVjOWZlMjUzMDY3NjY2MGI3NjNhMzk0OTQ0NGIwMzMwNDliZWYwOGE5NGRhNDNlMzNlNGU5ODY2NjA1YWYxOTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a653dbcd79b94f0eac78d5291e8898fb",
+      "statement": "GET /api/me returns tenantId, userId, subject, role and the sorted visibleOrganizationIds computed by AccessScopeResolver.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/user/UserController.java#L23-L38",
+          "version": "repo-lines-v1:sha256:7c111047ca834a7e9ec593131714e8b6ec6b26505aaad115384ee216c66013d8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkOGM5YTZlNmE4MmJiMmMyY2JmZDNmZWNiYzNlMTY3YWEwYjVhMmNhN2M2NjI5MjIxNDA4MWVhZWIwOTEyYjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg1Njk2Yzc4MDMzNGFmMjk2OTZjOWE4ZjU3OGEwN2Q0OTJlYzNiNDkwYjAzODM2ZWExMzcyMjljMTIwNTViNDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T20:28:49.941Z"
+  }
+}

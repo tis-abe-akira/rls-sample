@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:e8e808ec6b5615545f16b6465c6ab8d676377d4e8aa6d6883fdb73547922d689",
+  "claims": [
+    {
+      "id": "claim_454db58a5ddd49c6909e63db5f132126",
+      "statement": "Every tenant-owned table pairs a RESTRICTIVE tenant_isolation policy (tenant_id = current_tenant_id()) with PERMISSIVE policies for in-tenant permissions, so a later, looser PERMISSIVE policy cannot expose other tenants' rows.",
+      "evidence": [
+        {
+          "resource": "repo://db/init/02_schema.sql#L151-L170",
+          "version": "repo-lines-v1:sha256:eef3306a96c27c73fc4f45c390d5c61a047d84ef0d30e137d37932a2ba0703c3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmNjZlZjBjY2FkZTM3OWJhMmNhYWFkMWU1ODljNGI4MjVhYjIwNjhlODU0ZTkwZWU1OGVmMWRmMjcwNmZkYWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxMDMyZGMyOWI3MTI3NWE0MDI2ZTFhNDY2YTY4YjM3MzcxOGQyOWRiOTUwNjk5Y2JkMDE4MzgwMzc0ZDZmMGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMzNTdhZTM4MTg2ZGM0ZDdhOTVkZWE0MzIyZDQ2ZWU3ZmY2NGZmNjNiN2U3ZWUzNGFlZGEwNDQ5NTE4NmMwNzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVmMjJkMGFiNjg2NWU1ZmI4ZDQ0MWMwMTAzNzMxZDQ4NTBlNDJjODRlYzQ1ODNkNjAyZTJjMzNhNjIzNmIyMzcifQ"
+        },
+        {
+          "resource": "repo://db/init/02_schema.sql#L203-L223",
+          "version": "repo-lines-v1:sha256:e4cb254f4164e165ecbbf3bfa16b6c4f595cf4c0e63b8cf937d6da5937d9ca25:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0YzM3ZGJiNzQ2OGFiNzU1MzFmNzExYzRkYTIyYzIxYTNjOGU3ZmMzMTFmOTlmY2ZkMzUxYzZiYzI1NTgyMzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxMDMyZGMyOWI3MTI3NWE0MDI2ZTFhNDY2YTY4YjM3MzcxOGQyOWRiOTUwNjk5Y2JkMDE4MzgwMzc0ZDZmMGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhkYzFlZTFmYzdjMGQ5NDJhZjJiMjY5OThkYzU1N2UyYTdhYTFjYzdmYjMxNTk1NmM0Y2U0Y2UxZDMyN2VhZmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgxZTJmMTgzMGYzMWQ5NzY4ZjdjYzk3NjcyZTViMTk3YTMyZmFhOWM2MzU5NTM4MWVlM2RjZmQ2ZjU5ODUzN2IifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0335d41b081f4c129dc81652ec12ab4d",
+      "statement": "The orders policy allows a row when user_id matches the current user, org_id is in the app-supplied visible organization list, or the current role is ADMIN; the database never traverses the organization hierarchy itself.",
+      "evidence": [
+        {
+          "resource": "repo://db/init/02_schema.sql#L208-L218",
+          "version": "repo-lines-v1:sha256:8bbd1d93baed4bed96198e067cdf330924d27319ec72d0fb746562b44f0566dd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFlOTA2OWZjMmY4YWUwZGRmNTA2MjIwMjNjM2ViOGM2NWE2N2M3NTFkZTFkMzJmNDgzZmYwZjFlY2Q3YjA1OTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzZTQzOWU4ODIwN2IzZmYyYjk4ZWVlNjA3YmJjZWM2NjYzMjVjYWQ2NjIwZDlhZDgyZDQwMmRiNWJlZjBkYTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5YmIyNTY2YmJmMjM0ZmI0MzA4MWRkNDcwYTM2YmNkZGZlOTczM2Y0YjJjMmJjMjBjNzY2ODc0N2RkZmFkNDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlNGIyODcyODUyNjkwOGU5MjI4MmU1NzU0MzE0ZjM1YTExNjU4NzdkMjVlN2NjMDdhZGQyNTMwNWMwZTYxM2UifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2ca936d74c674c0e918367830c6c7064",
+      "statement": "TenantFilter runs after Spring Security's AuthorizationFilter, so only authenticated requests reach tenant and user resolution.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/SecurityConfig.java#L26-L38",
+          "version": "repo-lines-v1:sha256:43af384a5cdbeb88c143696dd2aaa5a82e2138b23bb0cb7d7c6cfd06085ac6a2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiYzBhY2VmNTZhYjcwZGYwYzJlMzJiYjY1MTI1MjViODA1MzZkNDRlODZiZDQ1MWQ1N2M3ZTlkMjJkY2JhMzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcwODUwMGUyYjU4YzI3YzE5NGQwYmZmMjc0MGQ4YTlhNTQ0NGY3ZmY0N2U2MzMxN2NmZWJlZThmOGVkY2MwNGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFjZjEzM2U4NWM3ZDhmOTE0NjYwZDkxOWQ0MWUyNWRjYWNhZTZjZTdkNThmNjdkZjBhMDg5ZTY1ZGY0MjhlMWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a38c11bfafcc4708b22f200f1e716a5f",
+      "statement": "TenantAwareTransactionManager is the single place that passes context to the database: right after BEGIN it sets app.tenant_id, app.subject, app.user_id, app.role and app.visible_org_ids with set_config(..., true), which are discarded at COMMIT/ROLLBACK.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/TenantAwareTransactionManager.java#L32-L69",
+          "version": "repo-lines-v1:sha256:488b72ad8c078657831bb3a8ee68c27e7e639643c804882573cb762db96daa2c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRlMTRiZjNhZGYzZGMyMTUyZjQ1ODVmMWU2MTBiZjU2MDFlZTVjNjA2ZWI1NDE3YTZmZjVjNzg1NzkyZTU3MmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5NGU3NjAyNDQ0MTYzNWRlYzA4NmY0ZTkyODMyYWY5ZjgwYzNkMzg4NDM2NmRiM2UwYTkzNTJkZTI5YThjNmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/TenantConfig.java#L12-L20",
+          "version": "repo-lines-v1:sha256:93e9db2ed6221ce001f584c2265f5de7c44024012486578fcc00da9bd894fdd5:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzljYmJjNjU0NjlkYjFjYTI4NDJlZmQ5N2RmN2VlMmNlNmNjMTU3MTQ4MmQwMWExOGI3OTBhMTBjN2M1MTBmMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTlhY2UxY2NkY2Y1ZWQxMjkzNjIzYTljZDBmY2MzM2MyMGMyMDE1NTIwZmJhNzgxNzA3ZDQ0Y2I5MDM5MmMxYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f54ee281e86744ceb5237ad4cf0e215c",
+      "statement": "OrderService keeps application-side WHERE filtering as a first defensive layer: administrators query by tenant_id, while general users and managers query by tenant_id plus own user_id or visible organizations; RLS applies the same condition again.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/order/OrderService.java#L38-L45",
+          "version": "repo-lines-v1:sha256:3db29621165aff928b254da788736fa0676ddaef9ab40d99915bbb5fa82ce216:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzhiMDRmYmZhODc4ZDFmNjU3MDM4MTQ1MWQ5OGQ0NmZiYmRkMmVmZjYwYjViMTBlY2EyZDk1ZGEzOTIwYzRiYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzhlYTY0NzMzYWY4Yjk1YmE2ZTM4OTIxMTdhYjk4ODJmNTJjZjVhODAwMjFlODQyOGUyYWQyYjk3OGYzMmZkNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTI1MGQwODJjNThhZTEwOWYxMDBlZjc0ZGU4OTk1ZTI5NGY4MmJlM2UwOTc4NTA2OGU3YzgxMGQyNDAxMGRkMSJ9"
+        },
+        {
+          "resource": "repo://src/main/resources/mapper/OrderMapper.xml#L16-L35",
+          "version": "repo-lines-v1:sha256:547df335d2c68212607001270c0be815af02ee611074ac5d93ca27384c90c5da:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxYmYxZTAwM2EwZmQ4ZDdhMzYzZjNiN2QzNTIwOGNhNGVjNzM0Nzg2MDZkMzgxZjE3ZjQ1OGEwNzMzZjMzZjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNkNzEwOWI2MDVhODVmNTkwNGIyYWIzODk3YjhhMDY4MGY2N2Q5OGRkOTU2YTQ4N2ExOTRiNGVjOTI4MTk0M2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc4ZWUxNTU5ZDk5MzdiNzg5ZDYzYTY3NTY1ZDk5YTk4Njg2Yjg0MzFmOTU3NGM5MTI5ZTFjZmIwNGZlZmFiOGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE3MTdhMzliOWY0NmVmZGNkNGQwZDNiYTgyNDkyMzQ1ZjEwZjVkNDI3NGJhNTI5NzZkYWU1ZmMyNzY0OWQyMTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4bf2a7abec8146378092c2bb2f322580",
+      "statement": "When no tenant is in context the transaction manager skips set_config, so RLS compares against NULL and tenant-owned rows are hidden (fail-closed).",
+      "evidence": [
+        {
+          "resource": "repo://db/init/02_schema.sql#L17-L27",
+          "version": "repo-lines-v1:sha256:1ad57c0206d2083ad2c9d75599a6fc24d128bc3eb82e5086a0535d94820bbaee:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4YTQ0YThiMjg1YWNkNjVhMGM0ODc2YjIzMDVjN2Q1YzE2NmUzNDhhMzE3MGVhNDNkYzhjODA4YWU1ODNkYTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlMzQ2YjNlYzhlNDY1Zjc5MTMzZTQxYjU0NzdhNzRkZGNmNTc3YzE1YjNmNWUzZDczOTRhOTEyZDE5Zjc0ZmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcxODg4MDZmYmZjOWY5MDIzZmFhMzYzYzY2Y2U0OGI2OGQzY2NjODc0ZjJlYzUzNjkwZmZkYjM3NGM3ZmMxZWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJkZjc1YjE5NDFjMGQ4NDk5NjNiMTJiNDRiMjYwZDRjNTFiOWM4YWE4YThiZjEwOWJkZDVlOWYzODMxN2Q5NGUifQ"
+        },
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/TenantAwareTransactionManager.java#L48-L52",
+          "version": "repo-lines-v1:sha256:0db05f7d083fa677536e6aba80c049bd3e316eea382cd5db6fb1d54b48faccc3:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2NlZTA5ZmQ3Y2NhMmRjM2Q4ZDFkOGExMGU4YzQxYTJiMTFhNzczMjUxYmU4NjliYjQxYmQ1NGZlZDMzZTk0ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTZiMDQ0OTE0Njk3MjJlODM2M2E5NGU0MDQ0NTM4ZTAxM2EyYTIxN2UzNmIxZTU2OGJhNjBhY2I3YjRjOGYyZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWM4NGFiN2FjOTJlYTY1M2UxZjRkMmY3ODRmZDRkMzE2YWM0ZDA1OWI4YWIwYmZmZmY0OWQ2OTI4OTAwMmEyNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTI4ZjQ1ZTRlOWM2ZGEzMDRjZmVjYjUzZTMyNDgzZDk0ZWZiYTRmYjQ2Y2VmZDliYjU4ZGE2MDk3OGQwNDY5MiJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T20:28:49.941Z"
+  }
+}

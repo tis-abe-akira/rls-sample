@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:a5613ad59000d5efc51f5d6ca80c934c7670beb7b233945c616fbd17071372c8",
+  "claims": [
+    {
+      "id": "claim_b485ad89abc143f7aa3c991f7c8cdecc",
+      "statement": "The application connects as app_user, to which RLS applies; app_bypass has BYPASSRLS and the owner role is the superuser/table owner used only for DDL and seed data.",
+      "evidence": [
+        {
+          "resource": "repo://compose.yaml#L5-L9",
+          "version": "repo-lines-v1:sha256:6b1bc7549d850d7d33a50f9c87392514cdbd0027d0dd87732201f8653474296d:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjI3NDYzMzRmZGJkNjUxMzIzOWYxMzI2ZGI4YjYxMjc1N2I1YjMyYzA4MDhiNTA4MWE5OTM3ZjY1MzNiOGRiOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGNiMWMzZGM1ODQ5ODljZTAxOWI4YmY4ZjAxNzdmOWY0MjkzNDEzM2Q1M2YyZGJkZmQxOTllOTQ0NDNiY2M4NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjk0ODhhOWViMjA1NjBjOThiMDAyZTMxYjg1OGY0MDIyZWQwMGQ4MThhYWUzZGUwODRlOTNhNThlMGEzNTI5OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjhlNzY2Mzk3MTEwZmI2NTQwMGExMGZjMDlhNjAzZmYwNTYyYzgwOTlmZTczNDNmY2U4M2ZhZTBjMTI5OTcwMCJ9"
+        },
+        {
+          "resource": "repo://db/init/01_roles.sql#L1-L11",
+          "version": "repo-lines-v1:sha256:a03e5d439fbc6e1ad0ace93ff20e035a88cf0f66946cd4ce97ce0423b413b8db:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjM2UwYzJiNzM2YmM5OTZmNDgyODEyZTE2MDc2YWY0NDdjNjIxNzZjNmY1ZjFhNmVkNWE3MjAyNWVhYmQ1YzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwZmIyNmQ1OGQ5YWMyZmYyNzM0ZWRhODI1NWNhODM1MzRhMjA2MTFjYmI0MzYwYWM2YzgyMjBiMDBhOTM3OTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://src/main/resources/application.yml#L4-L8",
+          "version": "repo-lines-v1:sha256:b62d3ae2c0b45e8d41f147a6991d331503630b7f1e0f714463b65aa12394334d:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWVlMzIyMTRiY2Q3NDEwMGE5MTBlODJmNTQ0NTJmYWRkNzliNmYyOWFkOGQ5YWY5NmIxODA4Nzc5OWIzZTIwNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjUzY2M2YmZkZjE4NWRjYTZkMDM4NmFmYjI1ZjE1NzZhOGY3YjQ4NGVjNmJkMDQwOGIzZDNiMDdhMzNmY2QxMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGZhNTBiZWJmZjVjY2NkYWFlNWQyOGNkMTc0ZWJhMTEyNjFmZTA0YjI5MGYzODJhYjVhMjNkN2Y2NDBjNTI4MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMGI5MDJjMGFjODdkY2IzMGU4OGZlMjAzYzdiNjhmYjk2MDAyZDljNDU3NjY3ZTljMzZlOWU4ZjM4NjUyN2FiNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_da111276aca94b719dc22c05774e2065",
+      "statement": "Foreign keys between tenant-owned tables are composite (tenant_id, parent id) referencing UNIQUE (tenant_id, id), so the database rejects relationships that cross tenants.",
+      "evidence": [
+        {
+          "resource": "repo://db/init/02_schema.sql#L69-L132",
+          "version": "repo-lines-v1:sha256:24c96c022e9abf980ce87569872342a86f2b4ce6b4da4207a1d2846b5ccc1c13:eyJzZWxlY3RlZExpbmVDb3VudCI6NjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyMDQzOTQ3NjUxODY4OGIwODQwODYwZTM1ZjBiMzBmNzgzMGVjMTY2NTFlZGJkOTQzMDIyZTVhMWM2ZTIzNzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5OTY3ZWMxZWQzODM2ZjhlYjE3YWZmMTcyYjViZmVmN2RlNjA0ODVhNDM5YzZjYTExYzU5MWUxNzU1NzM5YWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkMGE2NDkzMTQ3NmZlZmI4NTZkNGUxNzE2NTA0NzI4Zjc4NjA5MTRkMjliZjU0NDI5NWY3MzAyYWY5YTAzYzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY1MWY5ZDIxZjdlNzUyY2RhMzM2NDcyNzM4MDlhYTg2NDZmMmIzOWFkZTZlOTZhZmRhODExYzMxMjI5OGRjMjYifQ"
+        },
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/order/OrderRlsIntegrationTest.java#L120-L128",
+          "version": "repo-lines-v1:sha256:1919bf028fa07a3815596aadc589ffebed8283bcd9ab6c051697c722aaa74da5:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGNmMDllYjBjNTc0NGZiOTczMzFiOThmZjNmYmYwNWE2MDJiYTNmN2Y2N2U1ZGE1YmU5MDk1MDMzZjYyNTgyNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODI5ZTM2Y2ZhYTYyNDdjYTI4MDU5Y2I1MGFlZTNkZDQ2YmZkOTkyZWVmNjVkMDY2YTQyNjIyMzg2Mjk1M2Q4YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjJhZmJhNzQ5OGQ5NmQ3ZTYzYzg2NTdlNWJjOGQ5ZDdkNDAxNDAzMjQ4ZTcxOTkwY2JjYjU3MjAwZWFlMGZjOCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_133e184aabbd4bcba9f5c3488f1c6bd7",
+      "statement": "Policy helper functions wrap current_setting(name, true) in NULLIF(..., '') because a session that has used SET LOCAL returns an empty string afterwards; unset values become NULL, false or an empty array, so policies hide rows (fail-closed).",
+      "evidence": [
+        {
+          "resource": "repo://db/init/02_schema.sql#L17-L53",
+          "version": "repo-lines-v1:sha256:2fa3e38e17524da3e62406a7224e98a601ba2b7b1d8b461848e641970dc30dad:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4YTQ0YThiMjg1YWNkNjVhMGM0ODc2YjIzMDVjN2Q1YzE2NmUzNDhhMzE3MGVhNDNkYzhjODA4YWU1ODNkYTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlMzQ2YjNlYzhlNDY1Zjc5MTMzZTQxYjU0NzdhNzRkZGNmNTc3YzE1YjNmNWUzZDczOTRhOTEyZDE5Zjc0ZmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcxODg4MDZmYmZjOWY5MDIzZmFhMzYzYzY2Y2U0OGI2OGQzY2NjODc0ZjJlYzUzNjkwZmZkYjM3NGM3ZmMxZWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg1M2NjNjlhMjNiNTcwZGU1MTU0YWU1YzZjOWQzM2Y0NmI1NGUwZDZjYjI0MDgyYzkwMWFlOWI0ZmQ5NmE3MWIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_193e7cc06107450da9a7c638f43d1522",
+      "statement": "All four tenant-owned tables use both ENABLE and FORCE ROW LEVEL SECURITY so the table owner is also subject to RLS.",
+      "evidence": [
+        {
+          "resource": "repo://db/init/02_schema.sql#L136-L149",
+          "version": "repo-lines-v1:sha256:691575c19b8ff8e93a1a3b73745ea4aae6b96a277958248767ea2e506f03816b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmNjZlZjBjY2FkZTM3OWJhMmNhYWFkMWU1ODljNGI4MjVhYjIwNjhlODU0ZTkwZWU1OGVmMWRmMjcwNmZkYWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxNjZmNjhkNDQwZmUyZjg0YTg4ZjMwZTlmMjBjYWE5YWY4MTU3YWFjZmQyZjgzZmU1ZDhiMjAxYzA4MGJhNDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY1MWY5ZDIxZjdlNzUyY2RhMzM2NDcyNzM4MDlhYTg2NDZmMmIzOWFkZTZlOTZhZmRhODExYzMxMjI5OGRjMjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdmMDRhMWNhZjY3ZmIyZTU2YmNlMzQxMDYwNWI4MjQyZGJhZjU4YjUxMzJkYWU2YzEyNzhlOWMxMTFmZGVhYmUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_927b83a5835341c28f50bf6ba27155d7",
+      "statement": "users_select identifies the caller's own row by subject rather than user_id, because during user resolution only app.tenant_id and app.subject have been set.",
+      "evidence": [
+        {
+          "resource": "repo://db/init/02_schema.sql#L189-L193",
+          "version": "repo-lines-v1:sha256:280dd2c500fc09e8ade8a2aa63c202e5d112349c894e0a148814422f36c56937:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzkzMTk0MDgzODQyOGNmZjhjMGQ1ZjJmZTI2YTI4NzVjNjFjNWI4YWNmOWI5ZDQ3ODhhZTU2ZDA1YTc2MDY5YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWI3NzU4ZWFkZDE4MGE1MDY3M2JiY2E4MmExOWIzOWNhZGQ0MDU3ZTdiYzI0OWM5OTkyZTk5MjY5MzlmYTJjZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTliYjI1NjZiYmYyMzRmYjQzMDgxZGQ0NzBhMzZiY2RkZmU5NzMzZjRiMmMyYmMyMGM3NjY4NzQ3ZGRmYWQ0MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDUwNGQxMDVkYmYwMWY0YTlmNDQ1ZjkxNGI3ZWUwMmMyYzUzZDg3YzRiMTE1Mjg0ZjU1YThiMjdlNDZiZWI2NSJ9"
+        },
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/user/UserService.java#L27-L38",
+          "version": "repo-lines-v1:sha256:90457d467dab5cd583b06636ae53ab1608cd309db64cc16b5a4d1bdb1996ee0b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5Y2JiYzY1NDY5ZGIxY2EyODQyZWZkOTdkZjdlZTJjZTZjYzE1NzE0ODJkMDFhMThiNzkwYTEwYzdjNTEwZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJjYjBhMmFmNDYzMjdiYjAwYWRhOGM4MmM5ZWZlMjc1MDI5ZDA5NDdmYzY2ZWNhM2EzYjM1NjFhNzYyY2UxYWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ4MzBmN2Q0ZWExYWRiNDk4OTNiZWNhNzg1ZmRmM2MxNTZkNjgwMDU2MzkzNjhkY2ZiNjE4MWFhNDE1MGRiNTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_860664f09701439aa4aca794538b7e15",
+      "statement": "The orders policy owner_or_scope_or_admin applies to all commands with identical USING and WITH CHECK conditions, so out-of-scope or other-owner orders can neither be created nor reassigned.",
+      "evidence": [
+        {
+          "resource": "repo://db/init/02_schema.sql#L208-L218",
+          "version": "repo-lines-v1:sha256:8bbd1d93baed4bed96198e067cdf330924d27319ec72d0fb746562b44f0566dd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFlOTA2OWZjMmY4YWUwZGRmNTA2MjIwMjNjM2ViOGM2NWE2N2M3NTFkZTFkMzJmNDgzZmYwZjFlY2Q3YjA1OTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzZTQzOWU4ODIwN2IzZmYyYjk4ZWVlNjA3YmJjZWM2NjYzMjVjYWQ2NjIwZDlhZDgyZDQwMmRiNWJlZjBkYTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5YmIyNTY2YmJmMjM0ZmI0MzA4MWRkNDcwYTM2YmNkZGZlOTczM2Y0YjJjMmJjMjBjNzY2ODc0N2RkZmFkNDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlNGIyODcyODUyNjkwOGU5MjI4MmU1NzU0MzE0ZjM1YTExNjU4NzdkMjVlN2NjMDdhZGQyNTMwNWMwZTYxM2UifQ"
+        },
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/order/OrgScopeAccessTest.java#L135-L143",
+          "version": "repo-lines-v1:sha256:cdc124a9071641dd7027f50c57a6fab7d127d592aeb31ca7297571fbcd82fd73:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGNmMDllYjBjNTc0NGZiOTczMzFiOThmZjNmYmYwNWE2MDJiYTNmN2Y2N2U1ZGE1YmU5MDk1MDMzZjYyNTgyNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2MxNWFiOWVkMTNjN2UxNDJkMmQ5ODJjNDRlMjFkMTk0NjY0ZDVhOTYyODE2ZDFjZTEwZjIyZjA4ZWYzNDIzMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzRhNTUwZWMwNGNmZGQ1NmQyYmQxYzdiYThhZWMwNDJmN2ZkZTMzOTk0MjRhZGU4MmUwZTk1NzNjYmQwMTczZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_ebe9b79f866e421eb04513f2907239ed",
+      "statement": "order_details visibility and writes depend on whether the parent order is visible: the visible_parent_order policy uses an EXISTS subquery on orders, which is itself filtered by RLS.",
+      "evidence": [
+        {
+          "resource": "repo://db/init/02_schema.sql#L225-L232",
+          "version": "repo-lines-v1:sha256:d6af532a95bb53b070de06cd9e092c12d6f25aea323082659941fe4daa94fe74:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYThkYjlmNmI4NWVhNGY3MjFlNTU3YjdkYjNmYjkzZjIwYTMyYjZlNDc3ZmZkMjA1ODNmZDI4YjNjMTRlZTM0YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTkxNWQ4N2VlN2RiYzBlNWFhZWI5YWUyNmVlNTNjZjIzZWIxZDBjNTNjMjdjMGI0MjYzMTg0YzgyNjk1ZDBmOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTliYjI1NjZiYmYyMzRmYjQzMDgxZGQ0NzBhMzZiY2RkZmU5NzMzZjRiMmMyYmMyMGM3NjY4NzQ3ZGRmYWQ0MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmM1ODg3MTQ1ZmExOTU4NTU3MWRhZWMzOWQ2ZTI3MWZmYjRmOGNiMTkxZWFkMGU3YzVkOGZlYzJlNzBkM2NiMSJ9"
+        },
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/order/OrderRoleAccessTest.java#L115-L125",
+          "version": "repo-lines-v1:sha256:820f03beb2ff3bea70f36f44933b1835fc4dd49299de75ad8ef76de1a62ecdea:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjZjA5ZWIwYzU3NDRmYjk3MzMxYjk4ZmYzZmJmMDVhNjAyYmEzZjdmNjdlNWRhNWJlOTA5NTAzM2Y2MjU4MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgyOWUzNmNmYWE2MjQ3Y2EyODA1OWNiNTBhZWUzZGQ0NmJmZDk5MmVlZjY1ZDA2NmE0MjYyMjM4NjI5NTNkOGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY0Yjg5ZmM5ZTY2MDU5NDEzNGZhNTMwZGIwNDllMWNkOGZhZjkwNWRjOTNhNzY3YzA4YzE5YmEwMWE2ZGEyMTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b624ef347fcc45f199d5129d947e4e9d",
+      "statement": "Organizations are readable by everyone in the tenant, while inserts, updates and deletes on organizations and users are restricted to administrators.",
+      "evidence": [
+        {
+          "resource": "repo://db/init/02_schema.sql#L172-L201",
+          "version": "repo-lines-v1:sha256:965cc2aaa6d3d78339e59750599be02379626fd9173e1dcb84849352ef369558:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1ZmEzNzU4NDM4NzlhZjhhMTJiZWY5MzAzMzFkMzU3ZWE4NjNiNzExOGY5MDVlMzU0ZmM1MDE0YTQ0MjlmYmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxNmExYWE5NGM0NzZiZjFkNDU3ZmIyNDQyYjRhZGMzOTE0MzU3NDA2YmZjZDlkNzJjYjFlODAwMzRmMWI0MTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5YmIyNTY2YmJmMjM0ZmI0MzA4MWRkNDcwYTM2YmNkZGZlOTczM2Y0YjJjMmJjMjBjNzY2ODc0N2RkZmFkNDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEzYThhNDRiZmMyY2M5NDQyMDI2YTA4YzRiYzA5MTM3OWM0NTllODBhMmM5ZjU5NWM0MWNkYTFiZmYzMmMwNjQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6bfd8390ffb34c77b9ef535372ad9d9b",
+      "statement": "Seed data is loaded by the superuser so RLS does not apply, and tests depend on the resulting insertion-order IDs (organizations 1-6, users 1-9, orders 1-6).",
+      "evidence": [
+        {
+          "resource": "repo://db/init/03_data.sql#L1-L6",
+          "version": "repo-lines-v1:sha256:b31daaa2fa8a33eeac90808dfeee92baa261f1ca6cc8510142e67ea27509560d:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMGMzZTBjMmI3MzZiYzk5NmY0ODI4MTJlMTYwNzZhZjQ0N2M2MjE3NmM2ZjVmMWE2ZWQ1YTcyMDI1ZWFiZDVjMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMGMzZTBjMmI3MzZiYzk5NmY0ODI4MTJlMTYwNzZhZjQ0N2M2MjE3NmM2ZjVmMWE2ZWQ1YTcyMDI1ZWFiZDVjMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjg0ZjMxMmY2MGI1MGE5ZjczODI5YmNmOGQ2MGFiN2U4YjAxOTJjNDQxZTE4MmFjYTEzYjI4NzVjY2YyMTZkMCJ9"
+        },
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/support/Actor.java#L12-L18",
+          "version": "repo-lines-v1:sha256:227c212355e59be6ce8937191ebcfc07c464d836a5694cb3053077f7c5ab76b2:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWFmMjJjZjA3MzI1OTJjMjQ3MTQxY2JlNjFlZmExMTAxMjYxMmY1YTMxMjJiOWFmOWJiYWY1MmY1NzI0ZDE5NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDg3MTdkNDI5Y2NhMTc1NzBjOTZkMDMzNzZjNGIzNWMzNzRjMDNjNTgxMTRlYzNkNDMzZjI5YmZjYTkzNDc1ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTZhYzA1N2Y5YWU3YWJjNzBlZjljYTNjNDMwYTVhMjcwZGUxMWMyOWUzMTkyNTgwOWZhZDhkMzkxM2E5ZmYwOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjA3MzZhNjk5MWVjNmZjNzRhYTkyMGRlYjM1YjcwODE4OTg0ODc0ZTZmNWM1NGU1NDU2OWM3ZDNjYWFiMTRiOCJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T20:28:49.941Z"
+  }
+}
