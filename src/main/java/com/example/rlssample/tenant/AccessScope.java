@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
  * 「自分のデータ以外に、どの部署のデータを見てよいか」。
  * <p>
  * 判断（組織階層をたどる、将来は兼務・代理・期間限定も考慮する）はアプリの AccessScopeResolver が行い、
- * 結果だけを {@code app.visible_org_ids} として DB に渡す。DB の RLS は「渡された一覧に入っているか」だけを見る（ADR.md）。
+ * 結果だけを {@code app.visible_org_ids} として DB に渡す。DB の RLS は「渡された一覧に入っているか」だけを見る（docs/ADR.md）。
  * 管理者の「全部見える」はロールで表すので、ここには含めない。
  */
 public record AccessScope(Set<Long> organizationIds) {

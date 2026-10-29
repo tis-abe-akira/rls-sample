@@ -12,7 +12,7 @@
 --     app.role      : users テーブルで解決したロール（GENERAL / MANAGER / ADMIN）
 --     app.visible_org_ids : アプリ（AccessScopeResolver）が算出した「見てよい部署」の一覧。例 '{1,2,3}'
 --
---   組織階層の判断（誰がどの部署を見られるか）はアプリが行い、DB はその結果を強制するだけ（ADR.md）。
+--   組織階層の判断（誰がどの部署を見られるか）はアプリが行い、DB はその結果を強制するだけ（docs/ADR.md）。
 --
 --   NULLIF(..., '') が重要:
 --   一度でも SET LOCAL したセッションでは、トランザクション終了後に

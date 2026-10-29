@@ -4,7 +4,7 @@ Spring Boot 4.1.1 / MyBatis (mybatis-spring-boot-starter 4.0.0) / PostgreSQL 17 
 
 「WHERE句を書き忘れても、id だけで取りに来られても、他社のデータは返らない」を体験するためのサンプルです。
 テナントの中でも、**一般ユーザーは自分のデータだけ、部長・事業部長は組織階層で配下の部署のデータ、管理者はテナント内の全員のデータ**を扱えるようにしています。
-組織階層の見える範囲は「判断はアプリ、強制は DB」で実現しています（[ADR.md](ADR.md)）。
+組織階層の見える範囲は「判断はアプリ、強制は DB」で実現しています（[ADR.md](docs/ADR.md)）。
 
 ## 構成
 
@@ -35,7 +35,13 @@ src/test/.../OrganizationHierarchyScopeResolverTest   見てよい部署の算�
 src/test/.../TenantFilterWebTest       JWT・ヘッダ・users テーブルによるテナントとユーザーの確定
 ```
 
-背景・利点と限界・設計のベストプラクティスは [STORY.md](STORY.md)、組織階層の設計判断は [ADR.md](ADR.md) にまとめています。
+## ドキュメント
+
+| ドキュメント | 内容 |
+|---|---|
+| [docs/STORY.md](docs/STORY.md) | 背景、RLS の利点と限界、設計のベストプラクティス |
+| [docs/AUTHORIZATION.md](docs/AUTHORIZATION.md) | 認可の処理の流れ（主要なクラスの連携をシーケンス図で説明） |
+| [docs/ADR.md](docs/ADR.md) | 組織階層の見える範囲を「判断はアプリ、強制は DB」にした設計判断 |
 
 ## データモデル
 
@@ -255,5 +261,5 @@ curl -s localhost:8080/api/orders/3     -H "Authorization: Bearer $BOB"   # ← 
    WHERE c.relkind = 'r' AND (NOT c.relrowsecurity OR NOT c.relforcerowsecurity);
   ```
 - 非同期処理・バッチへの `TenantContext` / `UserContext` 伝播（`runAs` で明示的に）
-- 兼務・代理・期間限定の権限（`AccessScopeResolver` の実装を拡張するか、OpenFGA に置き換える。[ADR.md](ADR.md)）
+- 兼務・代理・期間限定の権限（`AccessScopeResolver` の実装を拡張するか、OpenFGA に置き換える。[ADR.md](docs/ADR.md)）
 - テナントを横断する Root 権限（未実装）

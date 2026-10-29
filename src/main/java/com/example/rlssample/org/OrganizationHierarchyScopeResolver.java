@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 
 /**
- * 組織階層だけで「見てよい部署」を決める、自前の {@link AccessScopeResolver}（ADR.md の候補 A）。
+ * 組織階層だけで「見てよい部署」を決める、自前の {@link AccessScopeResolver}（docs/ADR.md の候補 A）。
  * <ul>
  *   <li>一般ユーザー・管理者 → なし（一般は自分のデータだけ。管理者の「全部」はロールで表す）</li>
  *   <li>管理職 → 自分の所属部署とその配下のすべて（部長なら部、事業部長なら事業部と配下の部）</li>

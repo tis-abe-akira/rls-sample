@@ -25,7 +25,7 @@ import static com.example.rlssample.support.Actor.MIKA;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * 「見てよい部署」の算出（ADR.md の選択肢3の①）を確認する。
+ * 「見てよい部署」の算出（docs/ADR.md の選択肢3の①）を確認する。
  * 本番と同じ経路（UserService.resolve → OrganizationHierarchyScopeResolver）で解決し、
  * テスト用の {@link Actor} の値と一致することも確かめる。
  */
