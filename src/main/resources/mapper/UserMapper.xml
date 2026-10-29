@@ -7,6 +7,7 @@
         <constructor>
             <idArg column="id"        javaType="java.lang.Long"/>
             <arg   column="tenant_id" javaType="java.lang.Long"/>
+            <arg   column="org_id"    javaType="java.lang.Long"/>
             <arg   column="subject"   javaType="java.lang.String"/>
             <arg   column="name"      javaType="java.lang.String"/>
             <arg   column="role"      javaType="com.example.rlssample.tenant.Role"/>
@@ -15,15 +16,31 @@
 
     <!-- テナントは RLS が絞る（同じ subject でもテナントごとに別の行がある） -->
     <select id="findBySubject" resultMap="userMap">
-        SELECT id, tenant_id, subject, name, role
+        SELECT id, tenant_id, org_id, subject, name, role
           FROM users
          WHERE subject = #{subject}
     </select>
 
+    <!-- 見えない（他テナント・範囲外の）ユーザーは RLS により見つからない -->
+    <select id="findById" resultMap="userMap">
+        SELECT id, tenant_id, org_id, subject, name, role
+          FROM users
+         WHERE id = #{id}
+    </select>
+
     <select id="findAllByTenant" resultMap="userMap">
-        SELECT id, tenant_id, subject, name, role
+        SELECT id, tenant_id, org_id, subject, name, role
           FROM users
          WHERE tenant_id = #{tenantId}
+         ORDER BY id
+    </select>
+
+    <select id="findAllByOrganizations" resultMap="userMap">
+        SELECT id, tenant_id, org_id, subject, name, role
+          FROM users
+         WHERE tenant_id = #{tenantId}
+           AND org_id IN
+               <foreach collection="orgIds" item="orgId" open="(" separator="," close=")">#{orgId}</foreach>
          ORDER BY id
     </select>
 

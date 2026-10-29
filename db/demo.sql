@@ -2,9 +2,10 @@
 -- demo.sql : psql だけで RLS の挙動を体験するスクリプト
 --   docker exec -i rls-sample-db psql -U app_user -d rls_sample < db/demo.sql
 --
---   アプリはトランザクション開始時に、次の4つを SET LOCAL 相当で設定する。
+--   アプリはトランザクション開始時に、次の5つを SET LOCAL 相当で設定する。
 --   ここでは同じことを手で打っている。
---     app.tenant_id / app.subject / app.user_id / app.role
+--     app.tenant_id / app.subject / app.user_id / app.role / app.visible_org_ids
+--   app.visible_org_ids（見てよい部署）は、アプリの AccessScopeResolver が組織階層から算出する。
 -- =============================================================
 \echo '--- 1) 何も設定せずに WHERE なし SELECT → 0 件（fail-closed）'
 SELECT id, tenant_id, user_id, title FROM orders;
@@ -49,7 +50,7 @@ COMMIT;
 BEGIN;
 SELECT set_config('app.tenant_id', '1', true), set_config('app.subject', 'bob', true),
        set_config('app.user_id', '2', true),   set_config('app.role', 'GENERAL', true);
-INSERT INTO orders (tenant_id, user_id, title) VALUES (1, 3, 'なりすまし注文');
+INSERT INTO orders (tenant_id, user_id, org_id, title) VALUES (1, 3, 3, 'なりすまし注文');
 ROLLBACK;
 
 \echo '--- 11) bob がキャロルの受注(id=2)に明細を INSERT → 親が見えないので WITH CHECK 違反でエラー'
@@ -59,5 +60,24 @@ SELECT set_config('app.tenant_id', '1', true), set_config('app.subject', 'bob', 
 INSERT INTO order_details (tenant_id, order_id, item, quantity, unit_price) VALUES (1, 2, '勝手に追加', 1, 1);
 ROLLBACK;
 
-\echo '--- 12) トランザクション終了後 → 設定は消えて再び 0 件'
+\echo '--- 12) 第一営業部の部長 ken → アプリが算出した「見てよい部署」= {2}。第一営業部の受注（ボブ・ケン）だけ'
+BEGIN;
+SELECT set_config('app.tenant_id', '1', true), set_config('app.subject', 'ken', true),
+       set_config('app.user_id', '8', true),   set_config('app.role', 'MANAGER', true),
+       set_config('app.visible_org_ids', '{2}', true);
+SELECT id, user_id, org_id, title FROM orders;
+COMMIT;
+
+\echo '--- 13) 営業事業部の事業部長 mika → 「見てよい部署」= {1,2,3}。配下の部の受注も見える（管理本部のアリスの受注は出ない）'
+BEGIN;
+SELECT set_config('app.tenant_id', '1', true), set_config('app.subject', 'mika', true),
+       set_config('app.user_id', '9', true),   set_config('app.role', 'MANAGER', true),
+       set_config('app.visible_org_ids', '{1,2,3}', true);
+SELECT id, user_id, org_id, title FROM orders;
+
+\echo '--- 14) mika は範囲の外（管理本部 org_id=4）の受注を作れない → WITH CHECK 違反でエラー'
+INSERT INTO orders (tenant_id, user_id, org_id, title) VALUES (1, 1, 4, '範囲外の部署の受注');
+ROLLBACK;
+
+\echo '--- 15) トランザクション終了後 → 設定は消えて再び 0 件'
 SELECT id, tenant_id, user_id, title FROM orders;

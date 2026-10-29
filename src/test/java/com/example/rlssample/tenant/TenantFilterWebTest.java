@@ -19,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Arrays;
 
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.hasSize;
@@ -148,6 +149,32 @@ class TenantFilterWebTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[*].tenantId", everyItem(is(2))));
+    }
+
+    @Test
+    @DisplayName("事業部長（mika）の /me には、算出された「見てよい部署」が出る")
+    void divisionManager_meShowsVisibleOrganizations() throws Exception {
+        mvc.perform(get("/api/me").header("Authorization", bearer("mika", 1)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.role", is("MANAGER")))
+                .andExpect(jsonPath("$.visibleOrganizationIds", contains(1, 2, 3)));
+    }
+
+    @Test
+    @DisplayName("部長（ken）は WHERE なしの一覧でも、第一営業部の受注だけ")
+    void departmentManager_seesOnlyDepartmentOrders() throws Exception {
+        mvc.perform(get("/api/orders/leaky").header("Authorization", bearer("ken", 1)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*].id", contains(1, 6)))
+                .andExpect(jsonPath("$[*].orgId", everyItem(is(2))));
+    }
+
+    @Test
+    @DisplayName("部長（ken）のユーザー一覧は部員だけ")
+    void departmentManager_listsMembers() throws Exception {
+        mvc.perform(get("/api/users").header("Authorization", bearer("ken", 1)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*].id", contains(2, 4, 8)));
     }
 
     @Test

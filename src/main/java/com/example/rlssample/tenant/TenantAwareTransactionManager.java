@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 /**
- * トランザクション開始直後に、その接続へ「今のテナントとユーザー」を教える TransactionManager。
+ * トランザクション開始直後に、その接続へ「今のテナントとユーザー（と見てよい部署）」を教える TransactionManager。
  * <p>
  * {@code prepareTransactionalConnection} は Spring が BEGIN 直後（autoCommit=false にした後）に
  * 呼ぶフックなので、ここで {@code set_config(..., true)}（= SET LOCAL）を発行すると:
@@ -30,10 +30,11 @@ public class TenantAwareTransactionManager extends JdbcTransactionManager {
     private static final Logger log = LoggerFactory.getLogger(TenantAwareTransactionManager.class);
 
     private static final String SET_CONTEXT_SQL = """
-            SELECT set_config('app.tenant_id', ?, true),
-                   set_config('app.subject',   ?, true),
-                   set_config('app.user_id',   ?, true),
-                   set_config('app.role',      ?, true)""";
+            SELECT set_config('app.tenant_id',       ?, true),
+                   set_config('app.subject',         ?, true),
+                   set_config('app.user_id',         ?, true),
+                   set_config('app.role',            ?, true),
+                   set_config('app.visible_org_ids', ?, true)""";
 
     public TenantAwareTransactionManager(DataSource dataSource) {
         super(dataSource);
@@ -53,14 +54,17 @@ public class TenantAwareTransactionManager extends JdbcTransactionManager {
         String subject = user.map(CurrentUser::subject).orElse("");
         String userId = user.map(CurrentUser::id).map(String::valueOf).orElse("");
         String role = user.map(CurrentUser::role).map(Role::name).orElse("");
+        String visibleOrgIds = user.map(CurrentUser::scope).map(AccessScope::asSettingValue).orElse("");
 
         try (PreparedStatement ps = con.prepareStatement(SET_CONTEXT_SQL)) {
             ps.setString(1, tenantId.get().asSettingValue());
             ps.setString(2, subject);
             ps.setString(3, userId);
             ps.setString(4, role);
+            ps.setString(5, visibleOrgIds);
             ps.execute();
         }
-        log.debug("set_config tenant_id={} subject={} user_id={} role={}", tenantId.get().value(), subject, userId, role);
+        log.debug("set_config tenant_id={} subject={} user_id={} role={} visible_org_ids={}",
+                tenantId.get().value(), subject, userId, role, visibleOrgIds);
     }
 }

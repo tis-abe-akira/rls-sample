@@ -106,7 +106,7 @@ class OrderRoleAccessTest {
     @DisplayName("アプリのチェックをすり抜けても、他人名義の受注は DB（WITH CHECK）が拒否する")
     void general_cannotCreateOrderForOthers_db() {
         assertThatThrownBy(() -> BOB.run(() ->
-                tx.execute(status -> orderMapper.insert(A_SHOJI.value(), CAROL.userId(), "なりすまし"))))
+                tx.execute(status -> orderMapper.insert(A_SHOJI.value(), CAROL.userId(), 3L, "なりすまし"))))
                 .isInstanceOf(DataAccessException.class)
                 .rootCause()
                 .hasMessageContaining("row-level security policy");
@@ -195,11 +195,11 @@ class OrderRoleAccessTest {
     }
 
     @Test
-    @DisplayName("管理者のユーザー一覧は、自社の全員（他社のユーザーは出ない）")
+    @DisplayName("管理者のユーザー一覧は、自社の全員6人（他社のユーザーは出ない）")
     void admin_listsAllUsersInTenant() {
         List<User> users = ALICE.run(userService::listUsers);
 
-        assertThat(users).hasSize(4)
+        assertThat(users).hasSize(6)
                 .allSatisfy(u -> assertThat(u.tenantId()).isEqualTo(A_SHOJI.value()));
     }
 }

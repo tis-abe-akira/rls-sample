@@ -2,9 +2,12 @@ package com.example.rlssample.order;
 
 import com.example.rlssample.common.ForbiddenException;
 import com.example.rlssample.tenant.CurrentUser;
+import com.example.rlssample.tenant.Role;
 import com.example.rlssample.tenant.TenantContext;
 import com.example.rlssample.tenant.TenantId;
 import com.example.rlssample.tenant.UserContext;
+import com.example.rlssample.user.User;
+import com.example.rlssample.user.UserMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,8 +18,8 @@ import java.util.List;
  * （テナントとユーザーの設定はトランザクション開始時に入るため）。
  * そのためクラスに付けて付け忘れを防いでいる。
  * <p>
- * 一般ユーザーは自分の受注だけ、管理者はテナント内の全員の受注を扱える。
- * この判定はアプリ（このクラス）と DB（RLS ポリシー owner_or_admin）の両方で行う（多層防御）。
+ * 一般ユーザーは自分の受注だけ、管理職は自分の受注と見てよい部署の受注、管理者はテナント内の全員の受注を扱える。
+ * この判定はアプリ（このクラス）と DB（RLS ポリシー owner_or_scope_or_admin）の両方で行う（多層防御）。
  */
 @Service
 @Transactional
@@ -24,10 +27,12 @@ public class OrderService {
 
     private final OrderMapper orderMapper;
     private final OrderDetailMapper orderDetailMapper;
+    private final UserMapper userMapper;
 
-    public OrderService(OrderMapper orderMapper, OrderDetailMapper orderDetailMapper) {
+    public OrderService(OrderMapper orderMapper, OrderDetailMapper orderDetailMapper, UserMapper userMapper) {
         this.orderMapper = orderMapper;
         this.orderDetailMapper = orderDetailMapper;
+        this.userMapper = userMapper;
     }
 
     @Transactional(readOnly = true)
@@ -36,7 +41,7 @@ public class OrderService {
         CurrentUser user = UserContext.require();
         return user.isAdmin()
                 ? orderMapper.findAllByTenant(tenantId.value())
-                : orderMapper.findAllByTenantAndUser(tenantId.value(), user.id());
+                : orderMapper.findAllByTenantAndScope(tenantId.value(), user.id(), user.scope().organizationIds());
     }
 
     /** WHERE句を書き忘れた「設計がイマイチな機能」の再現 */
@@ -52,18 +57,25 @@ public class OrderService {
     }
 
     /**
-     * 受注を明細ごと作成する。
+     * 受注を明細ごと作成する。受注の部署（org_id）には、名義人の今の所属部署を記録する。
      *
-     * @param userId 受注の名義人。null なら自分。他人を指定できるのは管理者だけ
+     * @param userId 受注の名義人。null なら自分。
+     *               他人を指定できるのは、管理者（テナント内の誰でも）と管理職（見てよい部署のメンバー）だけ
      */
     public OrderWithDetails createOrder(Long userId, String title, List<NewDetail> details) {
         TenantId tenantId = TenantContext.require();
         CurrentUser me = UserContext.require();
-        long owner = userId == null ? me.id() : userId;
-        if (!me.isAdmin() && owner != me.id()) {
+        long ownerId = userId == null ? me.id() : userId;
+        if (ownerId != me.id() && me.role() == Role.GENERAL) {
             throw new ForbiddenException("general users can only create their own orders");
         }
-        long id = orderMapper.insert(tenantId.value(), owner, title);
+        // 範囲の外のユーザーは RLS により見つからない
+        User owner = userMapper.findById(ownerId)
+                .orElseThrow(() -> new ForbiddenException("cannot create orders for user " + ownerId));
+        if (ownerId != me.id() && !me.isAdmin() && !me.scope().organizationIds().contains(owner.orgId())) {
+            throw new ForbiddenException("cannot create orders for user " + ownerId);
+        }
+        long id = orderMapper.insert(tenantId.value(), owner.id(), owner.orgId(), title);
         for (NewDetail detail : details) {
             orderDetailMapper.insert(tenantId.value(), id, detail.item(), detail.quantity(), detail.unitPrice());
         }

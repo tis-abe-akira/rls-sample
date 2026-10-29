@@ -8,45 +8,50 @@
             <idArg column="id"        javaType="java.lang.Long"/>
             <arg   column="tenant_id" javaType="java.lang.Long"/>
             <arg   column="user_id"   javaType="java.lang.Long"/>
+            <arg   column="org_id"    javaType="java.lang.Long"/>
             <arg   column="title"     javaType="java.lang.String"/>
         </constructor>
     </resultMap>
 
     <!-- ✅ 正しい実装（管理者）: アプリ側でも tenant_id で絞る（RLS と二重の防御） -->
     <select id="findAllByTenant" resultMap="orderMap">
-        SELECT id, tenant_id, user_id, title
+        SELECT id, tenant_id, user_id, org_id, title
           FROM orders
          WHERE tenant_id = #{tenantId}
          ORDER BY id
     </select>
 
-    <!-- ✅ 正しい実装（一般ユーザー）: tenant_id と user_id で絞る -->
-    <select id="findAllByTenantAndUser" resultMap="orderMap">
-        SELECT id, tenant_id, user_id, title
+    <!-- ✅ 正しい実装（一般ユーザー・管理職）: tenant_id と「自分の受注、または見てよい部署の受注」で絞る -->
+    <select id="findAllByTenantAndScope" resultMap="orderMap">
+        SELECT id, tenant_id, user_id, org_id, title
           FROM orders
          WHERE tenant_id = #{tenantId}
-           AND user_id   = #{userId}
+           AND (user_id = #{userId}
+                <if test="orgIds != null and !orgIds.isEmpty()">
+                OR org_id IN
+                   <foreach collection="orgIds" item="orgId" open="(" separator="," close=")">#{orgId}</foreach>
+                </if>)
          ORDER BY id
     </select>
 
     <!-- ❌ WHERE句の書き忘れ。RLS が無ければ全社・全員のデータが返る -->
     <select id="findAllWithoutTenantFilter" resultMap="orderMap">
-        SELECT id, tenant_id, user_id, title
+        SELECT id, tenant_id, user_id, org_id, title
           FROM orders
          ORDER BY id
     </select>
 
     <!-- ❌ id だけで取得する IDOR パターン。他社・他人の id を指定されると読めてしまう -->
     <select id="findById" resultMap="orderMap">
-        SELECT id, tenant_id, user_id, title
+        SELECT id, tenant_id, user_id, org_id, title
           FROM orders
          WHERE id = #{id}
     </select>
 
     <!-- PostgreSQL の RETURNING で採番された id を受け取る -->
     <select id="insert" resultType="long" flushCache="true">
-        INSERT INTO orders (tenant_id, user_id, title)
-        VALUES (#{tenantId}, #{userId}, #{title})
+        INSERT INTO orders (tenant_id, user_id, org_id, title)
+        VALUES (#{tenantId}, #{userId}, #{orgId}, #{title})
         RETURNING id
     </select>
 

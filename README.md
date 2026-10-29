@@ -3,7 +3,8 @@
 Spring Boot 4.1.1 / MyBatis (mybatis-spring-boot-starter 4.0.0) / PostgreSQL 17 (Docker) / Java 21
 
 「WHERE句を書き忘れても、id だけで取りに来られても、他社のデータは返らない」を体験するためのサンプルです。
-テナントの中でも、**一般ユーザーは自分のデータだけ、管理者はテナント内の全員のデータ**を扱えるようにしています。
+テナントの中でも、**一般ユーザーは自分のデータだけ、部長・事業部長は組織階層で配下の部署のデータ、管理者はテナント内の全員のデータ**を扱えるようにしています。
+組織階層の見える範囲は「判断はアプリ、強制は DB」で実現しています（[ADR.md](ADR.md)）。
 
 ## 構成
 
@@ -11,47 +12,62 @@ Spring Boot 4.1.1 / MyBatis (mybatis-spring-boot-starter 4.0.0) / PostgreSQL 17 
 compose.yaml                     PostgreSQL (localhost:15432)
 db/init/01_roles.sql             接続ロールの分離（owner / app_user / app_bypass）
 db/init/02_schema.sql            テーブル定義・RLSポリシー ← ★ここが本体
-db/init/03_data.sql              A商事(1) / B工業(2) のユーザー・受注・明細
+db/init/03_data.sql              A商事(1) / B工業(2) の組織・ユーザー・受注・明細
 db/demo.sql                      psql だけで挙動を見るスクリプト
 scripts/token.sh                 デモ用の JWT を発行するスクリプト
 src/main/java/.../tenant/
   TenantId                       テナントIDの値オブジェクト
   TenantContext / UserContext    現在のテナント / ユーザー（ThreadLocal）
-  CurrentUser / Role             テナントの中の「誰か」（ユーザーIDとロール）
+  CurrentUser / Role             テナントの中の「誰か」（ユーザーIDとロールと見てよい部署）
+  AccessScope                    見てよい部署の一覧（app.visible_org_ids として DB に渡す）
   SecurityConfig                 JWT（Bearer トークン）の検証と TenantFilter の配置
   TenantFilter                   JWT とヘッダでテナントを、users テーブルでユーザーを確定
   TenantAwareTransactionManager  BEGIN直後に set_config を発行 ← ★アプリ側の本体
   TenantConfig                   上記を TransactionManager として登録
-src/main/java/.../user/          ユーザー（/api/me, /api/users）
+src/main/java/.../user/          ユーザー（/api/me, /api/users）と AccessScopeResolver（インターフェース）
+src/main/java/.../org/           組織。OrganizationHierarchyScopeResolver（自前の AccessScopeResolver）
 src/main/java/.../order/         受注・明細の Controller / Service / Mapper
 src/main/resources/mapper/       正しいSQLと「よくある危ないSQL」
 src/test/.../OrderRlsIntegrationTest   2テナント越境テスト（テナントの壁）
 src/test/.../OrderRoleAccessTest       一般ユーザー / 管理者のテスト（テナントの中の権限）
+src/test/.../OrgScopeAccessTest        部長 / 事業部長のテスト（組織階層による見える範囲）
+src/test/.../OrganizationHierarchyScopeResolverTest   見てよい部署の算出
 src/test/.../TenantFilterWebTest       JWT・ヘッダ・users テーブルによるテナントとユーザーの確定
 ```
 
-背景・利点と限界・設計のベストプラクティスは [STORY.md](STORY.md) にまとめています。
+背景・利点と限界・設計のベストプラクティスは [STORY.md](STORY.md)、組織階層の設計判断は [ADR.md](ADR.md) にまとめています。
 
 ## データモデル
 
 ```
-companies ─┬─ users          (id, tenant_id, subject, name, role: GENERAL / ADMIN)
-           ├─ orders         (id, tenant_id, user_id → users, title)
+companies ─┬─ organizations  (id, tenant_id, parent_id → organizations, name)   事業部 → 部 の階層
+           ├─ users          (id, tenant_id, org_id → organizations, subject, name, role: GENERAL / MANAGER / ADMIN)
+           ├─ orders         (id, tenant_id, user_id → users, org_id → organizations, title)
            └─ order_details  (id, tenant_id, order_id → orders, item, quantity, unit_price)
 ```
 
 - 子テーブル（`order_details`）にも `tenant_id` を持たせて RLS をかける
 - 外部キーは `(tenant_id, 親の id)` の複合にして、テナントをまたぐ関連を DB が作らせない
 - 同じ人（同じ JWT の `sub`）でも、テナントごとに `users` の行とロールを持つ
+- `orders.org_id` は受注を作った時点の名義人の部署。名義人が異動しても、受注は元の部署のデータのまま
 
-| テナント | ユーザー（id） | ロール |
-|---|---|---|
-| A商事 (1) | alice (1) | 管理者 |
-| A商事 (1) | bob (2) / carol (3) | 一般 |
-| A商事 (1) | taro (4) | 一般 |
-| B工業 (2) | dave (5) | 管理者 |
-| B工業 (2) | erin (6) | 一般 |
-| B工業 (2) | taro (7) | **管理者**（同じ taro でもテナントごとにロールが違う） |
+```
+A商事: 営業事業部(1) ─┬─ 第一営業部(2)
+                      └─ 第二営業部(3)
+       管理本部(4)
+B工業: 製造事業部(5) ── 第一製造部(6)
+```
+
+| テナント | ユーザー（id） | 所属 | ロール | 見える受注 |
+|---|---|---|---|---|
+| A商事 (1) | alice (1) | 管理本部 | 管理者 | A商事の全部 |
+| A商事 (1) | mika (9) | 営業事業部 | **事業部長**（MANAGER） | 営業事業部と配下の部 |
+| A商事 (1) | ken (8) | 第一営業部 | **部長**（MANAGER） | 第一営業部 |
+| A商事 (1) | bob (2) / taro (4) | 第一営業部 | 一般 | 自分の分 |
+| A商事 (1) | carol (3) | 第二営業部 | 一般 | 自分の分 |
+| B工業 (2) | dave (5) | 製造事業部 | 管理者 | B工業の全部 |
+| B工業 (2) | erin (6) | 第一製造部 | 一般 | 自分の分 |
+| B工業 (2) | taro (7) | 製造事業部 | **管理者**（同じ taro でもテナントごとにロールが違う） | B工業の全部 |
 
 ## 動かし方
 
@@ -118,12 +134,39 @@ curl -s -X PUT localhost:8080/api/orders/1 -H "Authorization: Bearer $ALICE" \
 curl -i -X POST localhost:8080/api/orders -H "Authorization: Bearer $BOB" \
      -H 'Content-Type: application/json' -d '{"userId":3,"title":"なりすまし"}'
 
-# 一般ユーザーがユーザー一覧 → 403 / 管理者 → A商事の4人
+# 一般ユーザーがユーザー一覧 → 403 / 管理者 → A商事の6人
 curl -i localhost:8080/api/users -H "Authorization: Bearer $BOB"
 curl -s localhost:8080/api/users -H "Authorization: Bearer $ALICE"
 
 # 同じ taro でも、B工業を選ぶと管理者として B工業の全員の受注が見える
 curl -s localhost:8080/api/orders/leaky -H "Authorization: Bearer $TARO" -H 'X-Tenant-Id: 2'
+```
+
+### 部長・事業部長（組織階層）
+
+```bash
+KEN=$(scripts/token.sh ken 1)      # 第一営業部の部長
+MIKA=$(scripts/token.sh mika 1)    # 営業事業部の事業部長
+
+# /me に、アプリが算出した「見てよい部署」が出る → ken は [2]、mika は [1,2,3]
+curl -s localhost:8080/api/me -H "Authorization: Bearer $MIKA"
+
+# WHERE句を書き忘れた実装でも、範囲の中だけ（ken: 第一営業部 / mika: 事業部と配下の部）
+curl -s localhost:8080/api/orders/leaky -H "Authorization: Bearer $KEN"
+curl -s localhost:8080/api/orders/leaky -H "Authorization: Bearer $MIKA"
+
+# 部長は範囲の外（第二営業部のキャロルの受注 id=2）は見えない → 404。事業部長は見える
+curl -i localhost:8080/api/orders/2 -H "Authorization: Bearer $KEN"
+curl -s localhost:8080/api/orders/2 -H "Authorization: Bearer $MIKA"
+
+# 部長は部員（ボブ）の名義で代理作成できる。範囲の外（キャロル）の名義では 403
+curl -s -X POST localhost:8080/api/orders -H "Authorization: Bearer $KEN" \
+     -H 'Content-Type: application/json' -d '{"userId":2,"title":"ボブの代理発注"}'
+curl -i -X POST localhost:8080/api/orders -H "Authorization: Bearer $KEN" \
+     -H 'Content-Type: application/json' -d '{"userId":3,"title":"範囲外"}'
+
+# ユーザー一覧: 部長は部員、事業部長は事業部のメンバー
+curl -s localhost:8080/api/users -H "Authorization: Bearer $KEN"
 ```
 
 ### テナントの壁
@@ -168,13 +211,13 @@ curl -s localhost:8080/api/orders/3     -H "Authorization: Bearer $BOB"   # ← 
 ## 仕組み（1リクエストの流れ）
 
 1. Spring Security が JWT の署名と有効期限を検証する
-2. `TenantFilter` がクレームとヘッダからテナントを確定し、そのテナントの `users` を `sub` で引いてユーザーIDとロールを確定して、`TenantContext` / `UserContext` に入れる
+2. `TenantFilter` がクレームとヘッダからテナントを確定し、そのテナントの `users` を `sub` で引いてユーザーIDとロールを確定する。管理職なら `AccessScopeResolver` が組織階層から「見てよい部署」を算出する。これらを `TenantContext` / `UserContext` に入れる
 3. `@Transactional` なサービスメソッドが呼ばれ、トランザクション開始
 4. `TenantAwareTransactionManager#prepareTransactionalConnection` が、同じ接続で
-   `app.tenant_id` / `app.subject` / `app.user_id` / `app.role` を `set_config(..., true)` で設定
+   `app.tenant_id` / `app.subject` / `app.user_id` / `app.role` / `app.visible_org_ids` を `set_config(..., true)` で設定
 5. MyBatis の SQL はそのまま実行。RLS ポリシーが暗黙に条件を付加する
    - **RESTRICTIVE**（テナントの壁）: `tenant_id = current_tenant_id()` … どのポリシーにも AND で掛かる
-   - **PERMISSIVE**（テナントの中の権限）: `user_id = current_app_user_id() OR current_app_is_admin()`
+   - **PERMISSIVE**（テナントの中の権限）: `user_id = 自分 OR org_id = ANY(見てよい部署) OR 管理者`。DB は階層をたどらず、渡された一覧と比べるだけ
    - 明細は「親の受注が見えるか」で決まる
 6. COMMIT / ROLLBACK で設定は自動的に消える（コネクションプールに残らない）
 
@@ -194,7 +237,7 @@ curl -s localhost:8080/api/orders/3     -H "Authorization: Bearer $BOB"   # ← 
 
 ## アプリ側の WHERE 句は消してよい？
 
-消さないことを推奨します（多層防御）。このサンプルも、一般ユーザーなら `tenant_id` と `user_id`、管理者なら `tenant_id` で絞っています。
+消さないことを推奨します（多層防御）。このサンプルも、一般ユーザーなら `tenant_id` と `user_id`、管理職なら `tenant_id` と「自分または見てよい部署」、管理者なら `tenant_id` で絞っています。
 
 - `bypass` ロールで動くバッチ・管理機能では RLS が効かない
 - RLS 設定ミス（ポリシー付け忘れのテーブル）があってもアプリ側で止まる
@@ -212,4 +255,5 @@ curl -s localhost:8080/api/orders/3     -H "Authorization: Bearer $BOB"   # ← 
    WHERE c.relkind = 'r' AND (NOT c.relrowsecurity OR NOT c.relforcerowsecurity);
   ```
 - 非同期処理・バッチへの `TenantContext` / `UserContext` 伝播（`runAs` で明示的に）
+- 兼務・代理・期間限定の権限（`AccessScopeResolver` の実装を拡張するか、OpenFGA に置き換える。[ADR.md](ADR.md)）
 - テナントを横断する Root 権限（未実装）

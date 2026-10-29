@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.rlssample.org.OrganizationMapper">
+
+    <!--
+      再帰 CTE で配下をたどる。リクエストごとに1回だけ実行され、結果は app.visible_org_ids として DB に渡る。
+      RLS のポリシーは階層をたどらないので、行ごとに再帰が走ることはない。
+      organizations にも RLS（テナントの壁）がかかるので、再帰の途中で他テナントの部署に出ることはない。
+    -->
+    <select id="findSelfAndDescendantIds" resultType="long">
+        WITH RECURSIVE subtree AS (
+            SELECT id FROM organizations WHERE id = #{orgId}
+            UNION ALL
+            SELECT o.id FROM organizations o JOIN subtree s ON o.parent_id = s.id
+        )
+        SELECT id FROM subtree ORDER BY id
+    </select>
+
+</mapper>
