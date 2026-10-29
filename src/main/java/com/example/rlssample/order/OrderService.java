@@ -19,7 +19,7 @@ import java.util.List;
  * そのためクラスに付けて付け忘れを防いでいる。
  * <p>
  * 一般ユーザーは自分の受注だけ、管理職は自分の受注と見てよい部署の受注、管理者はテナント内の全員の受注を扱える。
- * この判定はアプリ（このクラス）と DB（RLS ポリシー owner_or_scope_or_admin）の両方で行う（多層防御）。
+ * この判定はアプリケーション（このクラス）と DB（RLS ポリシー owner_or_scope_or_admin）の両方で行う（多層防御）。
  */
 @Service
 @Transactional

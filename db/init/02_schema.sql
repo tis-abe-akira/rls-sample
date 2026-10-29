@@ -4,15 +4,15 @@
 
 -- -------------------------------------------------------------
 -- 「今の接続は誰か」を返す関数たち
---   アプリはトランザクション開始時に、次の値を SET LOCAL 相当で設定する
+--   アプリケーションはトランザクション開始時に、次の値を SET LOCAL 相当で設定する
 --   （TenantAwareTransactionManager）。
 --     app.tenant_id : テナント（JWT のクレームとヘッダで確定）
 --     app.subject   : JWT の sub（users テーブルで自分の行を引くために使う）
 --     app.user_id   : users テーブルで解決したユーザーID
 --     app.role      : users テーブルで解決したロール（GENERAL / MANAGER / ADMIN）
---     app.visible_org_ids : アプリ（AccessScopeResolver）が算出した「見てよい部署」の一覧。例 '{1,2,3}'
+--     app.visible_org_ids : アプリケーション（AccessScopeResolver）が算出した「見てよい部署」の一覧。例 '{1,2,3}'
 --
---   組織階層の判断（誰がどの部署を見られるか）はアプリが行い、DB はその結果を強制するだけ（docs/ADR.md）。
+--   組織階層の判断（誰がどの部署を見られるか）はアプリケーションが行い、DB はその結果を強制するだけ（docs/ADR.md）。
 --
 --   NULLIF(..., '') が重要:
 --   一度でも SET LOCAL したセッションでは、トランザクション終了後に
@@ -62,7 +62,7 @@ CREATE TABLE companies (
 
 -- -------------------------------------------------------------
 -- 組織（テナント所有テーブル）。事業部 → 部 のような階層を parent_id で表す。
---   階層をたどるのはアプリ（AccessScopeResolver）だけで、RLS のポリシーはたどらない。
+--   階層をたどるのはアプリケーション（AccessScopeResolver）だけで、RLS のポリシーはたどらない。
 --   そのため ltree のような専用の型は使わず、parent_id と再帰 CTE で十分。
 --   (tenant_id, parent_id) の複合外部キーで、「別テナントの部署の配下」を DB が作らせない。
 -- -------------------------------------------------------------
@@ -206,8 +206,8 @@ CREATE POLICY tenant_isolation ON orders AS RESTRICTIVE
   WITH CHECK (tenant_id = current_tenant_id());
 
 -- 一般ユーザーは自分の受注だけ、管理職は見てよい部署の受注、管理者はテナント内の全員の受注を読み書きできる
---   「見てよい部署」の判断はアプリ（AccessScopeResolver）が行い、DB は渡された一覧に入っているかだけを見る。
---   兼務・代理・期間限定の権限が増えても、変わるのはアプリの算出ロジックだけで、このポリシーは変わらない。
+--   「見てよい部署」の判断はアプリケーション（AccessScopeResolver）が行い、DB は渡された一覧に入っているかだけを見る。
+--   兼務・代理・期間限定の権限が増えても、変わるのはアプリケーションの算出ロジックだけで、このポリシーは変わらない。
 --   WITH CHECK により、範囲の外の部署・他人名義の受注は作れないし、範囲の外へ付け替えることもできない。
 CREATE POLICY owner_or_scope_or_admin ON orders
   USING      (user_id = current_app_user_id()

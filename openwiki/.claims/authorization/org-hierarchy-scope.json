@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:5822d5eb138dadb5cd6aad94f074b3917c57adbccbaf6bbc48f6df12e6756b33",
+  "claims": [
+    {
+      "id": "claim_efa1e6658a3949fcb261a448e1f3339e",
+      "statement": "OrganizationHierarchyScopeResolver returns an empty AccessScope for every role except MANAGER; for a manager it returns the user's own organization plus all descendant organizations.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/org/OrganizationHierarchyScopeResolver.java#L11-L35",
+          "version": "repo-lines-v1:sha256:dd3bbae6cd3d2cebb23596edfa4875726c8bc89cdeee6dcce67fbf02f48b2c75:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVmNWQ1MjcxNDExYmJmNTcyNjMwMzE1NTE1NDExNjY1YTU1YjNjODkxZDIxMmI5MjIzYTg0NDYwYWM3ZmVmZjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bee37306ec2342a6a663d63914b4db2e",
+      "statement": "Administrator-wide visibility is represented by app.role = ADMIN, not by listing organizations, so AccessScope excludes the administrator's 'all' case.",
+      "evidence": [
+        {
+          "resource": "repo://db/init/02_schema.sql#L41-L46",
+          "version": "repo-lines-v1:sha256:1a30f3e9b54861e4f63ab4e7006e48faf2092bd9fc65515ffd65f2348f7572bd:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDFkYjBkMDk3YmY3MjhmN2Y3MjM1M2I4MDY5Mjk4ODA5MmRhMzI4YTE4NWJkMTNkNWRiMzAwYWJhMGE0M2QzMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWUzNDZiM2VjOGU0NjVmNzkxMzNlNDFiNTQ3N2E3NGRkY2Y1NzdjMTViM2Y1ZTNkNzM5NGE5MTJkMTlmNzRmZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGViNTFjNGQ0NWQ1ODJmOGU3MjRjNzEwOTA5ZDcyNzRiYmFjOWRjZTczMmIwM2Q3ZDdiMGZmMTFmMmVkNTRkZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmI5NDJlM2E3ODYyM2M3NjE4NDIwOWY3YThiODYwZDFkYjUyOTNhMzI3ZGVjZDczODU5M2RmMjg1NmY3N2ZmZSJ9"
+        },
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/AccessScope.java#L6-L13",
+          "version": "repo-lines-v1:sha256:5bb6c2e9a771f15ad1f890f539da48e13ec037b26e4289f92734f7ec67695007:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWFmMjJjZjA3MzI1OTJjMjQ3MTQxY2JlNjFlZmExMTAxMjYxMmY1YTMxMjJiOWFmOWJiYWY1MmY1NzI0ZDE5NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTZlZjkxYmJhYjk1MzFkOTJlNDg3ZDAzZGUwODVjNzY5OWVmYWFiM2I2ZmY3YzVmZDUyYTM5OWU3NTQ4NWFhZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWI5NjhmMzBiM2Y1MDMyZDQ2MjY3ZDM0ZGUyN2U4ODdiYTAwOTlmMjg1MTFkZDhhZTY2OTFmNDg5Mjg2NDAyNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmE3OTAxZWViYmFkM2VjMTNlNjNkMjNiMmJjY2Q5MDg3OTZkZjc5NzY2Njk5NjAxMDQ4OTE1YzczYzZkMWEzZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8b396e7b282647e5a9fb011fb41d89ac",
+      "statement": "AccessScope serializes its organization IDs as a sorted PostgreSQL array literal such as {1,2,3}, which is passed as app.visible_org_ids.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/AccessScope.java#L33-L36",
+          "version": "repo-lines-v1:sha256:211068ceb7405185dd7052b012be5653da8f99b6f1da0c258240b62c6984dd5f:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjQ3NjNmYTc5NGNlMTdkMGY3NDdlY2U1ZmQ2ZjMxY2ExNTg1NzdjOWVjOTQ3MGFkOGU3YzZiMGMxZmVhYzFiZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTY3OGU0NmZiMzJhMTdmZTFhN2JkMWIzNTFjMGE0Y2JlMDBlMjkxMzIzZDI1OGU2YjM1NWQwYzJkOWQ5NDdhMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
+        },
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/TenantAwareTransactionManager.java#L53-L65",
+          "version": "repo-lines-v1:sha256:61dd86861a6c6d7566d9db6238e48ef556be19c287b91590cee046f41b72b986:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2Y2QxYjVhMDBlY2Y2MzRkNDAzZGE2ZTNmMjczOGExMjAyYTgzMTQ4M2NhOTM1Y2U2YTg3N2JkNzM3ODhkODEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQwNjhjZDM4ZTkwODA5ODAxYTJmYmNjYWRhN2VmZWQyYTFiMzBmNjgzNDZjYmI3ODI2NDQwMWVhMDIzNTc3MjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNhMjM1MTkyNzcyZDUwNmYxMjMzNDcwNDcyODY4ODkwNjY1ODE2YjIxM2FkMDEzMTUwNTMxOGU0MzIzODBjY2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY3NDY3M2IwMzE4YWY4MzllNzllNzJjMGVjZmIyOTgwZWMzMGNmNjg5MmRkZmM5MzRjYmRjMWM2MmM3M2I4YzQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f037b26c2e6c4931a7a17a8f1d7dba8c",
+      "statement": "Descendant organizations are found with a recursive CTE over organizations.parent_id that has no tenant predicate; the RESTRICTIVE tenant policy on organizations keeps the recursion inside the current tenant, so starting from another tenant's organization returns nothing.",
+      "evidence": [
+        {
+          "resource": "repo://db/init/02_schema.sql#L167-L174",
+          "version": "repo-lines-v1:sha256:025219f0642865123f84b86d4663a86a8131beefe1ead87c957716ea252c631e:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDgwZGI3NmU5ZTIzZDhhODIyOTQyYTBlZGQ5MDljZTU2MWJmNDNiNWU5NjJjNDU1YWY5NDkyZjg1MDFiZDEwMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWE0Nzk1YmM0NDIwYTZhMTdlMTc1Yzk0NmZmYzM4NmQ4ZjVlZDE3NWZiNDkwMTg2ZmYxMWIyZDAyMjUwMTJlZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWMxNzg2ZmU1NmVhOTkwOWUwNjA5NzhjYjdhZjQ1ZGY4OGEwOTU0ZGJiNzk0Nzc5ZmU1NWU1ZmMxZGMwYzZiOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjVjZThlY2E0YzA0MTMyMGE4MDVjNDIwN2I3YmFjNDViZGNjYmIzNmJlYjNhNGRhYzE3MTRhZTNiOTEyM2ZhYyJ9"
+        },
+        {
+          "resource": "repo://src/main/resources/mapper/OrganizationMapper.xml#L6-L18",
+          "version": "repo-lines-v1:sha256:351d46d90b88b31faab7f3b40ec3bb1ae72f1068ea5e39f8503fdc4c1f512522:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE4OWI1YWMxYWM2YTc4MjczZjQ1NGYzZTVlZGFmYWNkMjZiZWU1ODg1OTYyZmE4NWQzYzRiMjY2YTI4ZGMwYjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNkNzEwOWI2MDVhODVmNTkwNGIyYWIzODk3YjhhMDY4MGY2N2Q5OGRkOTU2YTQ4N2ExOTRiNGVjOTI4MTk0M2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVjMTc5ZDkxMTRmZDIxZTg0N2NkZTg5ZDFiMjJlYjAxM2IzOTllNzNmZjE2NTUzYjcyOWViZTQyMjRiMjdlNDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY4MjNkMzUwYjI4ZGM2ZjlkYzM4Yzg1MjY2ZmQyNzJlOTQzYjBmNTFiYTU4MzhlNzk2NmYzY2FkMTJiZGY2MDQifQ"
+        },
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/org/OrganizationHierarchyScopeResolverTest.java#L69-L76",
+          "version": "repo-lines-v1:sha256:eabfec8a296ec90ad5922f8c8d9116ee3355736013153a23776f8f28a0e031bd:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGNmMDllYjBjNTc0NGZiOTczMzFiOThmZjNmYmYwNWE2MDJiYTNmN2Y2N2U1ZGE1YmU5MDk1MDMzZjYyNTgyNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzIwZGZjZDZmZGNmOGEwMDVhMDA4NzI3MzQ5MjdlZDhkOWEzODYzN2U2Zjg2ZjcwZTMzMmQxYTQ0M2YxZTdjNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_fe74712e3f974dcf9410f6f5ca37321d",
+      "statement": "UserService.resolve computes the access scope inside the same read-only transaction that looks up the user by subject, and the scope is recomputed per request rather than cached.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/user/UserService.java#L15-L38",
+          "version": "repo-lines-v1:sha256:21b2d7893c50aebe77c4357cee4ed2ecdb71986c34f100e0ba0a510d4f1e3e43:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJiMzM2YzQyYjJmNTIwN2I3NzVlNTBhOGRhY2UyZDZkMTViMjZmNjFlOGNkYTJjYTRkNDNmY2U0YWU0ODQ0ZjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJkYmI1Yzk4NWVjNjdmZGRmYWE2ZmFlMjVhNzRhMjk1YTVhZTRhZjMzYmMzODM0YmNlMDc3NDkyYWE0MmY1YzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ4MzBmN2Q0ZWExYWRiNDk4OTNiZWNhNzg1ZmRmM2MxNTZkNjgwMDU2MzkzNjhkY2ZiNjE4MWFhNDE1MGRiNTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_afa86754ce8c46318224b1ff1e6475d1",
+      "statement": "AccessScopeResolver is the replacement seam for richer authorization (concurrent posts, delegation, time-limited access, a future OpenFGA ListObjects implementation); RLS policies and mappers do not change when the implementation changes.",
+      "evidence": [
+        {
+          "resource": "repo://docs/ADR.md#L193-L199",
+          "version": "repo-lines-v1:sha256:2323329ff5d6b47d1189e0594e4cb10d4b09167fe53a9f4f830b199795ef3fbc:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmY1OTVkMzdjMzRkOGUzMDBhYzQ0ODdhNTVjYjY0ZWJhYTVlNGNkMGZmODEwZTYwOGE0MGYzMGVhNGJhMzU1YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2M5YTY4Y2Y0YjBiMzUzZGVmZjU1ZTE3NDg3OTNlYmEyM2FjY2M1NjlkY2M3ZjFjNGE5ZGJjMjRlMDhjOWU0NSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmQ5YWRhN2U0MjQxNjQzYzMyZWY5Nzg5M2Y1ODk3ZTY4MzExZGE5ZjY5NWVkZjNmZDUxOWYyMjdmOGU1Mzk2ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODMyN2I5NDU4ZTI4OGRjZmJmMzlmZDkwNGI0Y2UzODMyNWMwMDdmOWNiZmIwZWMzODE1YmU1OGU1YjMxZTcwMiJ9"
+        },
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/user/AccessScopeResolver.java#L5-L17",
+          "version": "repo-lines-v1:sha256:43e1b9343cdf1eaea677d5ce7379cabb0ff4f3e432c78c56a3e68d97063e4b54:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZkYzUyZTA1MGFjNDg4MzNjOGRiOWRhM2Q3NGRkNDFjNmI3MDVmM2FkNzIxY2NhNzAyNmUxNjhhYTE1OTRjN2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_558f96fc65194d70ae2636f7e77237b0",
+      "statement": "orders.org_id records the owner's organization at creation time, so after the owner transfers, the original department's manager still sees past orders and the owner still sees them by user_id.",
+      "evidence": [
+        {
+          "resource": "repo://db/init/02_schema.sql#L98-L113",
+          "version": "repo-lines-v1:sha256:4a456191415a9d9d752416b1b8c0e96f04d82e6b9457c6e682a14efb041b5bd3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmNjZlZjBjY2FkZTM3OWJhMmNhYWFkMWU1ODljNGI4MjVhYjIwNjhlODU0ZTkwZWU1OGVmMWRmMjcwNmZkYWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5OTY3ZWMxZWQzODM2ZjhlYjE3YWZmMTcyYjViZmVmN2RlNjA0ODVhNDM5YzZjYTExYzU5MWUxNzU1NzM5YWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJlYWU0Mjc3YzM3MDI3MDJiZmFhYTVlYTE1MTk1MTQyMThlZjJkYWI0NTNhYzI1YjJkMmVkMWIzZDk5MjZmOTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU3OTQ3MjMzZTFjOTA2M2I2NjAzYWFmMGQwODcxN2RhMzFkNDk0ZTA4YjEwNjQ0NTEyOTE2NmVmZjdkMmMwNzIifQ"
+        },
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/order/OrderService.java#L59-L83",
+          "version": "repo-lines-v1:sha256:7ed235dc753b41832151985c371387ebc0a4ce6a76dd712cf02b8c1eebcf358e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5Y2JiYzY1NDY5ZGIxY2EyODQyZWZkOTdkZjdlZTJjZTZjYzE1NzE0ODJkMDFhMThiNzkwYTEwYzdjNTEwZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjllNTkzMDkzYjUwMTU4NTQ1ODkyYjNhMTM0NDFmY2RhZmM3OTc4MzFiOTZkZGIzMWVkYmQ4MmZhOGZiYzI0NTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE0NDQwN2U5MjE3NjU1NjM0NjcyMDYzZmJiYTNhYjQxODk5OWM5MjY4ZjU1MDE0ZjI0NzNlODM2MDdiOTcyZDgifQ"
+        },
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/order/OrgScopeAccessTest.java#L162-L181",
+          "version": "repo-lines-v1:sha256:2b7a00a191991cc8e72d2000c23a1c3a16cdc476404a91ac58a4039b4ee08260:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJlMWZlZGIxMDAyOTY5ZGY2Yzk4MjNjNmY0MDYzYmE1YjFmZGEyNmRiZmY4NjA1NTBjNmI2MzU4MmU1OGRjODQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUwNjJkODFlMzM5Y2NmZjBmOThjNzUzZDllZmJmMjM3ZTkyMzEyNDc5YWI5NDEyNzllYmZhNTk2NGY3OWMzMWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY3MzNhNzdlZjljNzBmM2U1NmI2YTc1YzkzODdiM2MyY2VkZTk5MWE5OTY5NzE5ZjFkMTQxZmY0ZmFjMzhiMmYifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T22:35:43.342Z"
+  }
+}

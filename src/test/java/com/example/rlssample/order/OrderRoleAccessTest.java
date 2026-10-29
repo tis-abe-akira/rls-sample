@@ -96,14 +96,14 @@ class OrderRoleAccessTest {
     }
 
     @Test
-    @DisplayName("一般ユーザーが他人名義で受注を作ろうとすると、アプリが 403 で止める")
+    @DisplayName("一般ユーザーが他人名義で受注を作ろうとすると、アプリケーションが 403 で止める")
     void general_cannotCreateOrderForOthers_app() {
         assertThatThrownBy(() -> BOB.run(() -> orderService.createOrder(CAROL.userId(), "なりすまし", List.of())))
                 .isInstanceOf(ForbiddenException.class);
     }
 
     @Test
-    @DisplayName("アプリのチェックをすり抜けても、他人名義の受注は DB（WITH CHECK）が拒否する")
+    @DisplayName("アプリケーションのチェックをすり抜けても、他人名義の受注は DB（WITH CHECK）が拒否する")
     void general_cannotCreateOrderForOthers_db() {
         assertThatThrownBy(() -> BOB.run(() ->
                 tx.execute(status -> orderMapper.insert(A_SHOJI.value(), CAROL.userId(), 3L, "なりすまし"))))
@@ -113,7 +113,7 @@ class OrderRoleAccessTest {
     }
 
     @Test
-    @DisplayName("アプリのチェックをすり抜けても、他人の受注への明細追加は DB（WITH CHECK）が拒否する")
+    @DisplayName("アプリケーションのチェックをすり抜けても、他人の受注への明細追加は DB（WITH CHECK）が拒否する")
     void general_cannotAddDetailToOthersOrder_db() {
         long carolsOrderId = CAROL.run(orderService::listOrders).getFirst().id();
 
@@ -145,14 +145,14 @@ class OrderRoleAccessTest {
     }
 
     @Test
-    @DisplayName("一般ユーザーにはユーザー一覧を見せない（アプリが 403）")
+    @DisplayName("一般ユーザーにはユーザー一覧を見せない（アプリケーションが 403）")
     void general_cannotListUsers() {
         assertThatThrownBy(() -> BOB.run(userService::listUsers))
                 .isInstanceOf(ForbiddenException.class);
     }
 
     @Test
-    @DisplayName("アプリのチェックをすり抜けて全員分の SQL を流しても、一般ユーザーに見えるのは自分の行だけ（DB が絞る）")
+    @DisplayName("アプリケーションのチェックをすり抜けて全員分の SQL を流しても、一般ユーザーに見えるのは自分の行だけ（DB が絞る）")
     void general_seesOnlySelfInUsersTable() {
         List<User> visible = BOB.run(() -> tx.execute(status -> userMapper.findAllByTenant(A_SHOJI.value())));
 

@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "pages": {
+    "/openwiki/architecture/overview.md": {
+      "pageVersion": "sha256:efba4d0f9ee8125f8b8c054fdee88a7648eb9c3d177de4facb841c8211bfc040",
+      "completedBy": "claude-code",
+      "completedRunId": "2362ece1-54df-493f-8f27-648c9de66054",
+      "gitHead": "577c359aa4b7bde51acd0e1e4d91bb1fe1524208",
+      "sourceFingerprint": "sha256:3fc3bf9169f21532e17f00b463fe8ae33a57f315b6024412666e59bc05465acf"
+    },
+    "/openwiki/authorization/org-hierarchy-scope.md": {
+      "pageVersion": "sha256:5822d5eb138dadb5cd6aad94f074b3917c57adbccbaf6bbc48f6df12e6756b33",
+      "completedBy": "claude-code",
+      "completedRunId": "2362ece1-54df-493f-8f27-648c9de66054",
+      "gitHead": "577c359aa4b7bde51acd0e1e4d91bb1fe1524208",
+      "sourceFingerprint": "sha256:3fc3bf9169f21532e17f00b463fe8ae33a57f315b6024412666e59bc05465acf"
+    },
+    "/openwiki/database/schema-and-rls-policies.md": {
+      "pageVersion": "sha256:f8758c21bc52378ff0a94bb0948f4aeb4041b3fbe6c98ae506ccaafa33e8505b",
+      "completedBy": "claude-code",
+      "completedRunId": "2362ece1-54df-493f-8f27-648c9de66054",
+      "gitHead": "577c359aa4b7bde51acd0e1e4d91bb1fe1524208",
+      "sourceFingerprint": "sha256:3fc3bf9169f21532e17f00b463fe8ae33a57f315b6024412666e59bc05465acf"
+    },
+    "/openwiki/domain/orders-and-users-api.md": {
+      "pageVersion": "sha256:c726f6e0cc4711d0e391db39786cd9e1af67891b9cb2e8fab63d9d4d7a8359d2",
+      "completedBy": "claude-code",
+      "completedRunId": "2362ece1-54df-493f-8f27-648c9de66054",
+      "gitHead": "577c359aa4b7bde51acd0e1e4d91bb1fe1524208",
+      "sourceFingerprint": "sha256:3fc3bf9169f21532e17f00b463fe8ae33a57f315b6024412666e59bc05465acf"
+    },
+    "/openwiki/guides/databases-without-rls.md": {
+      "pageVersion": "sha256:b7ae95d350d911af76c3775ae29d5fd4d46e2f6c70915af67eb376708a69c78d",
+      "completedBy": "claude-code",
+      "completedRunId": "2362ece1-54df-493f-8f27-648c9de66054",
+      "gitHead": "577c359aa4b7bde51acd0e1e4d91bb1fe1524208",
+      "sourceFingerprint": "sha256:3fc3bf9169f21532e17f00b463fe8ae33a57f315b6024412666e59bc05465acf"
+    },
+    "/openwiki/operations/local-development.md": {
+      "pageVersion": "sha256:9e9383948aead71b113cbd0643c9d8f82146313351d5d49275fec21fe7b895ce",
+      "completedBy": "claude-code",
+      "completedRunId": "2362ece1-54df-493f-8f27-648c9de66054",
+      "gitHead": "577c359aa4b7bde51acd0e1e4d91bb1fe1524208",
+      "sourceFingerprint": "sha256:3fc3bf9169f21532e17f00b463fe8ae33a57f315b6024412666e59bc05465acf"
+    },
+    "/openwiki/quickstart.md": {
+      "pageVersion": "sha256:e45d1e619c8eba4d33df97885c32882c93411261e942cab6b340246ad045906d",
+      "completedBy": "claude-code",
+      "completedRunId": "2362ece1-54df-493f-8f27-648c9de66054",
+      "gitHead": "577c359aa4b7bde51acd0e1e4d91bb1fe1524208",
+      "sourceFingerprint": "sha256:3fc3bf9169f21532e17f00b463fe8ae33a57f315b6024412666e59bc05465acf"
+    },
+    "/openwiki/request-lifecycle/db-session-context.md": {
+      "pageVersion": "sha256:14595f14f64b60cdb32ead760bc17bb131190948c8505c5d34929344b8ccb1a9",
+      "completedBy": "claude-code",
+      "completedRunId": "2362ece1-54df-493f-8f27-648c9de66054",
+      "gitHead": "577c359aa4b7bde51acd0e1e4d91bb1fe1524208",
+      "sourceFingerprint": "sha256:3fc3bf9169f21532e17f00b463fe8ae33a57f315b6024412666e59bc05465acf"
+    },
+    "/openwiki/request-lifecycle/tenant-and-user-resolution.md": {
+      "pageVersion": "sha256:97fd8da37c46e8125d08f223026900d8dd890ab20255347a36f34e74dcbbc00b",
+      "completedBy": "claude-code",
+      "completedRunId": "2362ece1-54df-493f-8f27-648c9de66054",
+      "gitHead": "577c359aa4b7bde51acd0e1e4d91bb1fe1524208",
+      "sourceFingerprint": "sha256:3fc3bf9169f21532e17f00b463fe8ae33a57f315b6024412666e59bc05465acf"
+    },
+    "/openwiki/testing/rls-test-suite.md": {
+      "pageVersion": "sha256:b33a7a0674d75722da3d316088c7fb73a0345aa1e5f0098b75ebca4c2ef309be",
+      "completedBy": "claude-code",
+      "completedRunId": "2362ece1-54df-493f-8f27-648c9de66054",
+      "gitHead": "577c359aa4b7bde51acd0e1e4d91bb1fe1524208",
+      "sourceFingerprint": "sha256:3fc3bf9169f21532e17f00b463fe8ae33a57f315b6024412666e59bc05465acf"
+    },
+    "/openwiki/tutorials/add-tenant-owned-table.md": {
+      "pageVersion": "sha256:8ff218747674d1bc325080cb633747f2f736a179b4382718cfe56c7c7f4daa6c",
+      "completedBy": "claude-code",
+      "completedRunId": "2362ece1-54df-493f-8f27-648c9de66054",
+      "gitHead": "577c359aa4b7bde51acd0e1e4d91bb1fe1524208",
+      "sourceFingerprint": "sha256:3fc3bf9169f21532e17f00b463fe8ae33a57f315b6024412666e59bc05465acf"
+    }
+  }
+}

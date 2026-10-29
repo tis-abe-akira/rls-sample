@@ -43,3 +43,6 @@ out/
 # ---- OS ----
 .DS_Store
 Thumbs.db
+
+# ---- OpenWiki（自動更新のワークフローは OpenAI の API キーが要るので、使うと決めるまで置かない）----
+.github/workflows/openwiki-update.yml

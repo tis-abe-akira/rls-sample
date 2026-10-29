@@ -3,7 +3,7 @@
 このサンプルで「誰が、どのデータを見られるか」が、どのクラスのどの処理で決まるのかを、シーケンス図で説明します。
 
 - 背景と設計の考え方: [STORY.md](STORY.md)
-- 組織階層の見える範囲を「判断はアプリ、強制は DB」にした理由: [ADR.md](ADR.md)
+- 組織階層の見える範囲を「判断はアプリケーション、強制は DB」にした理由: [ADR.md](ADR.md)
 - 動かし方と API の例: [README.md](../README.md)
 
 例として、**第一営業部の部長 ken** が `GET /api/orders` を呼んだ場合をたどります。
@@ -15,7 +15,7 @@
 | 段階 | 何を決めるか | 主なクラス |
 |---|---|---|
 | フェーズ1: 入口 | どのテナントの、誰として動くか。その人が見てよい部署はどこか | `TenantFilter`、`UserService`、`OrganizationHierarchyScopeResolver` |
-| フェーズ2: 業務処理 | その人に見せてよい行はどれか（アプリと DB の二重チェック） | `OrderService`、`TenantAwareTransactionManager`、RLS ポリシー |
+| フェーズ2: 業務処理 | その人に見せてよい行はどれか（アプリケーションと DB の二重チェック） | `OrderService`、`TenantAwareTransactionManager`、RLS ポリシー |
 | フェーズ3: 書き込み | その人がその名義・その部署でデータを作ってよいか | `OrderService`、RLS ポリシー（`WITH CHECK`） |
 
 登場する主なクラスと、その役割は次のとおりです。
@@ -81,7 +81,7 @@ sequenceDiagram
 - **③ が差し替えポイント**です。兼務・代理・期間限定の権限を足したり、OpenFGA に置き換えたりするときに変わるのは、`AccessScopeResolver` の実装だけです
 - **④ 以降の処理はすべて「A商事の ken」として動きます**。`runAs` は `finally` で ThreadLocal を元に戻すので、スレッドプールで次のリクエストに値が残りません
 
-## フェーズ2: 業務処理で、アプリと DB が二重にチェックする
+## フェーズ2: 業務処理で、アプリケーションと DB が二重にチェックする
 
 ```mermaid
 sequenceDiagram
@@ -97,7 +97,7 @@ sequenceDiagram
     OS->>TM: BEGIN（@Transactional）
     TM->>TM: TenantContext / UserContext を読む
     TM->>DB: ⑤ set_config × 5（SET LOCAL）<br/>tenant_id=1, subject=ken, user_id=8,<br/>role=MANAGER, visible_org_ids={2}
-    OS->>OS: ⑥ アプリの判定（多層防御の1枚目）<br/>ADMIN なら全件、それ以外は「自分 or 範囲の部署」
+    OS->>OS: ⑥ アプリケーションの判定（多層防御の1枚目）<br/>ADMIN なら全件、それ以外は「自分 or 範囲の部署」
     OS->>OM: findAllByTenantAndScope(1, 8, {2})
     OM->>DB: SELECT ... WHERE tenant_id = 1<br/>AND (user_id = 8 OR org_id IN (2))
     Note right of DB: ⑦ RLS（多層防御の2枚目）が条件を足す<br/>RESTRICTIVE: tenant_id = 1<br/>AND PERMISSIVE: user_id = 8<br/>OR org_id = ANY({2}) OR 管理者
@@ -112,8 +112,8 @@ sequenceDiagram
 
 - **⑤ DB に値を渡すのは `TenantAwareTransactionManager` の1か所だけ**です。BEGIN の直後に同じ接続で `SET LOCAL` するので、そのトランザクションのすべての SQL に効き、COMMIT / ROLLBACK で消えます（コネクションプールに残りません）
 - **⑥ と ⑦ は同じ条件の二重チェック**です。`/api/orders/leaky` のように ⑥ で WHERE を書き忘れた SQL でも、⑦ の RLS が同じ条件を足すので、結果は同じ「受注 1, 6」になります
-- **⑦ の RLS は組織階層をたどりません**。アプリが算出した `visible_org_ids` と比べるだけなので、ポリシーは単純なまま、行ごとに再帰が走ることもありません
-- 他社や範囲の外の行を id で指定した場合（IDOR）も、⑦ で行が見えないので 0 件になり、アプリは 404 を返します
+- **⑦ の RLS は組織階層をたどりません**。アプリケーションが算出した `visible_org_ids` と比べるだけなので、ポリシーは単純なまま、行ごとに再帰が走ることもありません
+- 他社や範囲の外の行を id で指定した場合（IDOR）も、⑦ で行が見えないので 0 件になり、アプリケーションは 404 を返します
 
 ## フェーズ3: 書き込み（代理作成）のチェック
 
@@ -145,10 +145,10 @@ sequenceDiagram
 
 ポイント:
 
-- **アプリのチェック**: 一般ユーザーは他人の名義を指定できません。管理職は、範囲の部署のメンバーの名義だけ指定できます
-- **名義人の検索にも RLS が効きます**。範囲の外のユーザーは `findById` で見つからないので、アプリのチェックをすり抜けても名義人を特定できません
+- **アプリケーションのチェック**: 一般ユーザーは他人の名義を指定できません。管理職は、範囲の部署のメンバーの名義だけ指定できます
+- **名義人の検索にも RLS が効きます**。範囲の外のユーザーは `findById` で見つからないので、アプリケーションのチェックをすり抜けても名義人を特定できません
 - **受注の部署（`org_id`）には、名義人のその時点の所属部署を記録します**。名義人が後で異動しても、受注は元の部署のデータのままです
-- **DB の `WITH CHECK`** が最後の砦です。アプリのチェックをすり抜けて Mapper を直接呼んでも、範囲の外の部署や他人の名義の受注は作れません。明細（`order_details`）も「親の受注が見えるか」を `WITH CHECK` で確かめます
+- **DB の `WITH CHECK`** が最後の砦です。アプリケーションのチェックをすり抜けて Mapper を直接呼んでも、範囲の外の部署や他人の名義の受注は作れません。明細（`order_details`）も「親の受注が見えるか」を `WITH CHECK` で確かめます
 
 ## エラーの返し方
 
@@ -158,7 +158,7 @@ sequenceDiagram
 | 400 | 所属が複数なのに `X-Tenant-Id` がない、ヘッダが数値でない | `TenantFilter` |
 | 403 | 所属していないテナントを指定した、そのテナントの users に登録がない | `TenantFilter` |
 | 403 | 一般ユーザーが他人の名義で作ろうとした、範囲の外のメンバーの名義で作ろうとした、一般ユーザーがユーザー一覧を見ようとした | `OrderService`、`UserService` |
-| 404 | 他社・他人・範囲の外の**既存の行**を id で指定した | RLS で行が見えず、アプリが「存在しない」として返す |
+| 404 | 他社・他人・範囲の外の**既存の行**を id で指定した | RLS で行が見えず、アプリケーションが「存在しない」として返す |
 
 403 を返すのは、**自分の権限についての情報**だけです。他人の既存の行に 403 を返すと「その id の行は存在する」と相手に教えてしまうので、すべて 404 にしています。
 

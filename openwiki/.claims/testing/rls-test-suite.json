@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:b33a7a0674d75722da3d316088c7fb73a0345aa1e5f0098b75ebca4c2ef309be",
+  "claims": [
+    {
+      "id": "claim_47ad85f16d494406969a68e9471be715",
+      "statement": "The test suite is @SpringBootTest integration tests against a real PostgreSQL started with docker compose, and relies on the seed data's insertion-order IDs.",
+      "evidence": [
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/order/OrderRlsIntegrationTest.java#L23-L33",
+          "version": "repo-lines-v1:sha256:9acf3a8d98bb65b7126bc582931a2a3d43cd3d1afbaefcabe638a83faac81aaa:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1YzVmZmZhZTc5ZmY1NWM4ODBiOWFjN2JiMjQ4NjRiM2UyYzFjMmU3Mzg2NjhmNzExZmNlZTIwMjZiODMyM2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg2OGY4ZTJkYmNmZjk3MjJkYTNiMDc3YTNjMjMzNTI0OTZlZDMyMDM1NzAzODY0MzEyZDdlMTNhMzhhNDYwNWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ5MGI0MWQwODU4YzY2NDE2ZTFiNjRjMmMzZWNmZWQwY2YwYjQzMmZmYmEyY2YzOGQ1OWYwMGZhMWE4MzIwOTgifQ"
+        },
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/support/Actor.java#L12-L18",
+          "version": "repo-lines-v1:sha256:227c212355e59be6ce8937191ebcfc07c464d836a5694cb3053077f7c5ab76b2:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWFmMjJjZjA3MzI1OTJjMjQ3MTQxY2JlNjFlZmExMTAxMjYxMmY1YTMxMjJiOWFmOWJiYWY1MmY1NzI0ZDE5NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDg3MTdkNDI5Y2NhMTc1NzBjOTZkMDMzNzZjNGIzNWMzNzRjMDNjNTgxMTRlYzNkNDMzZjI5YmZjYTkzNDc1ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTZhYzA1N2Y5YWU3YWJjNzBlZjljYTNjNDMwYTVhMjcwZGUxMWMyOWUzMTkyNTgwOWZhZDhkMzkxM2E5ZmYwOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjA3MzZhNjk5MWVjNmZjNzRhYTkyMGRlYjM1YjcwODE4OTg0ODc0ZTZmNWM1NGU1NDU2OWM3ZDNjYWFiMTRiOCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_e3d09ede0de44d67be9c9c244cb76883",
+      "statement": "Actor fixes the tenant and resolved CurrentUser for each test persona and run() wraps the action in TenantContext.runAs and UserContext.runAs.",
+      "evidence": [
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/support/Actor.java#L20-L62",
+          "version": "repo-lines-v1:sha256:70a736791d0658be348ddf74e1fc2c10475f1659690002a8ca6cd9f334367bae:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2NzA5MmRmYWM3MzhkZWI5MzI1ZDJhNDBmZmZkMjJkMTQ2YzExZTg2ZjFlNThiZTMyYzFhY2QxYzUwZjMwMDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEyZDQ4MTZkZWVlMTI3N2ZhZGYzYWJmOWY3MTRiYmIxYzMzMzk2YjM0N2U1ODQ1OWE3M2E2OGRjOGQyYTVlMmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cd568188f96b496b8e5800d0d16a3e01",
+      "statement": "OrganizationHierarchyScopeResolverTest verifies that resolving each persona through UserService.resolve yields exactly the CurrentUser hard-coded in Actor, keeping test fixtures aligned with production scope calculation.",
+      "evidence": [
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/org/OrganizationHierarchyScopeResolverTest.java#L44-L56",
+          "version": "repo-lines-v1:sha256:76d29e8ed474c25e24b6e4c9fc88a59e53909232c176f352395a13b21c334fe4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk4NDkzNmQ3ODJhYmM4MDU1MzcwM2VkZWQyZDhlN2NhYzIwYmNhMjQxOWY5ZDA2ZDExZjFiOGE0MmQ1ZTMzM2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhmNjQyNDIyZmUwNGRkMDMwMWVjNDI5ZGViYTZiMjBiMTc3MjZlYWNjZWYzYTBmYWQzY2QwZjQ2Nzg4ZWM5ZmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRjNmNjNTZjMmIzOTY4Mjk0YjE1MTRjMDMxZWY5ODJhNmNjODUzMDExYzk0ODQ5ZGRkZTBlZjM0ZGQ1NTU4NTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7ba596eb91e4470ea15ce9ae305862a3",
+      "statement": "Tests must not be annotated @Transactional because the transaction would begin before runAs sets the tenant, leaving every query with no visible rows.",
+      "evidence": [
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/order/OrderRlsIntegrationTest.java#L27-L31",
+          "version": "repo-lines-v1:sha256:9bbc33c29937b6c1fee40a3ae11ab27874c60b3d2ef27a59420fe1315840bb88:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTBmNDU4NjYzMDBlODA1Y2Y4OGZiZTM0YjVmNzIwYmZiMmRkMGQxNTUyOTYwMGU2NTA2YzA3OTE2MWFjMzVjMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTcyYTQyOTM4MmIyZTE0NzE4ZTBlMzdiMDU3MGE4YTE3MDI5OTFmY2Q4NDk4Y2Q4NDA2MGE4YmY0ZjA1MDE3YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjA3MTc2ZWIwNDU5NWY5NmM4YmZjODI1MmExNWZkZTM5YjlhMDI1ODY5NjUxNmM0NTJiYTdkYjI0MTUxMTUwOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjBjZTkzNThlNGIxMTEwODkzM2RmOWU4MGQyYTlkZDVhY2JkOTgzZjcyOGQ1YzgwNDlmMTcxMzY3N2FjMGMzNyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_523041edf25e4da4b43ad2e9e29b7a31",
+      "statement": "Database-only defenses are tested by calling mappers directly inside TransactionTemplate.execute, expecting DataAccessException whose root cause mentions row-level security policy.",
+      "evidence": [
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/order/OrderRoleAccessTest.java#L105-L125",
+          "version": "repo-lines-v1:sha256:b0aab09d81166b4d375f3088d1e05da32df9aceab03338fae64c6e8440ef8101:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjZjA5ZWIwYzU3NDRmYjk3MzMxYjk4ZmYzZmJmMDVhNjAyYmEzZjdmNjdlNWRhNWJlOTA5NTAzM2Y2MjU4MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEwYTBhNWJmMWM4NGYxOGQ3NWIxZTgwZDA4NGRjMmQyNWE2ODJhYzJjMzBlYTJjMTM4YzU2MzI3MWU5Yjk2OTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY0Yjg5ZmM5ZTY2MDU5NDEzNGZhNTMwZGIwNDllMWNkOGZhZjkwNWRjOTNhNzY3YzA4YzE5YmEwMWE2ZGEyMTUifQ"
+        },
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/order/OrgScopeAccessTest.java#L135-L143",
+          "version": "repo-lines-v1:sha256:eaecec7228162d44e94e28f78bb87e127f0c523202078c446fda3699dc1ce84b:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGNmMDllYjBjNTc0NGZiOTczMzFiOThmZjNmYmYwNWE2MDJiYTNmN2Y2N2U1ZGE1YmU5MDk1MDMzZjYyNTgyNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2MxNWFiOWVkMTNjN2UxNDJkMmQ5ODJjNDRlMjFkMTk0NjY0ZDVhOTYyODE2ZDFjZTEwZjIyZjA4ZWYzNDIzMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzRhNTUwZWMwNGNmZGQ1NmQyYmQxYzdiYThhZWMwNDJmN2ZkZTMzOTk0MjRhZGU4MmUwZTk1NzNjYmQwMTczZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c64a629d295a4cb79666662d0a0e94cf",
+      "statement": "OrgScopeAccessTest asserts the visible order IDs per persona: bob sees 1, ken sees 1 and 6, mika sees 1, 2 and 6, and alice sees 1, 2, 5 and 6.",
+      "evidence": [
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/order/OrgScopeAccessTest.java#L28-L68",
+          "version": "repo-lines-v1:sha256:7b97d6b820245404304d84bfa21bac2369c02328de934c93ceb803696c33333d:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg2OGY4ZTJkYmNmZjk3MjJkYTNiMDc3YTNjMjMzNTI0OTZlZDMyMDM1NzAzODY0MzEyZDdlMTNhMzhhNDYwNWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk2ZGYyOWM1MGQzYTUyYmRlMTA1ZDFhZWI5Mjg4MzY4OGE4ZGE0NmFlMmI1MDVhNDBjZDQyNDgwN2RjYTVlMGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fb37270744584eb691fb454db06be39b",
+      "statement": "TenantFilterWebTest issues tokens with NimbusJwtEncoder using app.jwt.secret (or a different key for forged tokens) and asserts HTTP statuses through MockMvc.",
+      "evidence": [
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/tenant/TenantFilterWebTest.java#L194-L210",
+          "version": "repo-lines-v1:sha256:238cb75c2f2269488fc87a0d75ac4d6c0d39d64bba8e43935bb08e69b80d2469:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlMDM2ZjFlZjAxYzBlY2Y2ODExZGEwNDM3YjIyYzdlZjJkMjdjZDBlNzhiNGFlODZlNjkxZTI5ZDU3ZmJlMGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBkY2UzMjFjZTViN2JlMTM4Y2E0MjY3YWM0MGMyYjAxMjliYTljNDkyYjAwY2IzYTc4MzQ5YTVlMjc4OWM3YTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/tenant/TenantFilterWebTest.java#L38-L64",
+          "version": "repo-lines-v1:sha256:1643f74992b27e409abac9dfbd75084a56a44c7bb28bf84a724f7d239c66c1b2:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5OGFmZjRlNjIwMWEwNzk0Y2ZiNmVjMjFjNmRhMDM5N2ZkMGZjYzI5ZGY5NGNiZWMyNDUzMTVhZDcwZGY0YjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQzZTJmYzcyNTMxZWZhNDU4ZTQ0N2UwZGU5YzhmOTY2MjVkZmNjZjAyMjExZGQyZDExNzlkZTk0NmE4ZmEwMmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIwYzY1ZDZjM2E5MWEzNWZlNmMxZmYwOTE3ZjlmMDgwODM2Y2Y0YWRhNTc0ZWJkN2EyYmJkNWI3NjA4NjI2YTAifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T22:35:43.342Z"
+  }
+}
