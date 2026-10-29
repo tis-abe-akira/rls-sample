@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:97fd8da37c46e8125d08f223026900d8dd890ab20255347a36f34e74dcbbc00b",
+  "claims": [
+    {
+      "id": "claim_8837c37aef444ffa8f18eb65496ed112",
+      "statement": "SecurityConfig requires authentication for all non-error requests, uses stateless JWT resource-server authentication with CSRF disabled, and validates HS256 tokens with the shared secret app.jwt.secret; production is meant to replace the JwtDecoder bean with issuer-uri configuration.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/SecurityConfig.java#L19-L50",
+          "version": "repo-lines-v1:sha256:6d01abb1ac97f6e01a52546d8dc9933b1b7a93f0a79bcb5eb0a6bb2c65b5bacc:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVmYjAyMzkzYmE4NThjZWM5YWYyMDAwNTExOTgxZmQ5MjQyY2FhMzQ3NTViZTg5YWY3NGRhZGQ3OGJlOGJmZjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8f6c1877a4f9440a9661fa8f7d6acf19",
+      "statement": "TenantFilter only filters /api/ requests and derives the tenant solely from the signed tenant_ids claim; X-Tenant-Id only selects among those tenants.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/TenantFilter.java#L23-L56",
+          "version": "repo-lines-v1:sha256:d5a7ee8b82de2aeda26a7a4296ddc5b42a0c43b5f8115c1136f706e17c785c63:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhZjFjODMxM2E5MDg1OTFmNmZmNWRkNWJmNzllZmFjZjViOGFhMzAzYjVkZjI4OWViMTNkYzA3ZDA4OWI2YWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlmYTVlNDQ3OTM0YjYzZDY0MzcwMDJhNmYyN2VhYzE3NjU2NTg5Mjc2Zjk2ZTBmM2ZiMzJjNjcxMTVlMThmYjcifQ"
+        },
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/TenantFilter.java#L93-L119",
+          "version": "repo-lines-v1:sha256:75365d0073f499ffc83ac608924ea94774840d4c90551568a6dbb74b74de36d6:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY4OGExNjhmMTZlNDFmN2Y0ZGFhZjM1MTIyZDgxOGUzNWVmZjU3MTEyZWNiZTU5YTcyOTAzMmQ2NzYyN2RhZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVhNDE5M2UzMDI3MjEzNDc0NzBkOTM3OTQ5ZDQyMmQ1ZTgwYTExYjk4ZmI4MjU1ZGM2Mzg5MzZjMzJhNmZlOWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_06fd093f06d1448396ebf1f6c79d204c",
+      "statement": "Tenant resolution returns 403 for a missing or unparseable tenant_ids claim, 400 when a multi-tenant user omits the header or the header is not a positive number, and 403 with a WARN log when the header names a tenant not in the claim.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/TenantFilter.java#L93-L150",
+          "version": "repo-lines-v1:sha256:d98391a6d54168d47fd4ddcbaf1720f989c6aa4c7db453d5257bd544fcaacabb:eyJzZWxlY3RlZExpbmVDb3VudCI6NTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY4OGExNjhmMTZlNDFmN2Y0ZGFhZjM1MTIyZDgxOGUzNWVmZjU3MTEyZWNiZTU5YTcyOTAzMmQ2NzYyN2RhZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRlMTZlYmQ3NWEzMDY1M2EyZWEzYzE5MTAwZjBiOGZjMTFlZDk2MWJhYmY1NTM3MzY5ZjRjY2MwYjk0YWQ5N2EifQ"
+        },
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/tenant/TenantFilterWebTest.java#L66-L111",
+          "version": "repo-lines-v1:sha256:518ecbb3d1b2eca9f1d06b807e24ac479007a172eab5695c2c3842429999ae95:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI5Njk3MWFhNWFhMDAxYjk5NGZlNGFkZmVlYzllZDFlYzhmNDYwZGFkYjJiMDJhNGQyMzgyYTFhNzczNmYyYTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJjZjdiNTcwZDRlZWMxY2E4YjIzMTIwMjI5OWRmMjlhMTA3ODJmYjY4YWNiYjQxZGY4M2JmN2IxYzcwZjc1MjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ5ZTE3MDhjZmM3ZDQ2ZWNkZDQ3OWY2Zjc5YTlhNWYxMjczNzZkYWI4ZTgzMTBjMDY4ODRjYmZmZmRhOGFkY2QifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_313bdc27154c4867926d7a80c94ea240",
+      "statement": "The user is resolved by looking up users by JWT sub inside runAs(tenant, unresolved user); roles come from the database rather than the token, and a subject not registered in the tenant yields 403.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/TenantFilter.java#L121-L134",
+          "version": "repo-lines-v1:sha256:88c8366821db52e90640a91f6a6379a96c7b848123855eda9c03a8fc6e38dbeb:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI0NWE2YmRmZWViMWYxYTY2ZDJjNzkxN2Y2NmExNzc2MTQ1ZDRlMWFkYmQyZTc4YzdhMTQ0ZDAyNTZiYTUzMDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU2ZGM2MmI1YWZhMmU0NWJjMzVkY2ZlYjBmMjhhZTg2OGI3MGNjZjEwZWUyMTU1M2IxNTA0MmM3MDRjODA2ZjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBjNWYzN2FlMWI3YmQ2YWZiYjlkYWNkODM5Mjg0ZjUzN2ZiOTE1ZTg3Nzk0NTlmNGUzODBhMzlhODNmYzdiZjYifQ"
+        },
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/user/UserService.java#L27-L38",
+          "version": "repo-lines-v1:sha256:90457d467dab5cd583b06636ae53ab1608cd309db64cc16b5a4d1bdb1996ee0b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5Y2JiYzY1NDY5ZGIxY2EyODQyZWZkOTdkZjdlZTJjZTZjYzE1NzE0ODJkMDFhMThiNzkwYTEwYzdjNTEwZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJjYjBhMmFmNDYzMjdiYjAwYWRhOGM4MmM5ZWZlMjc1MDI5ZDA5NDdmYzY2ZWNhM2EzYjM1NjFhNzYyY2UxYWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ4MzBmN2Q0ZWExYWRiNDk4OTNiZWNhNzg1ZmRmM2MxNTZkNjgwMDU2MzkzNjhkY2ZiNjE4MWFhNDE1MGRiNTAifQ"
+        },
+        {
+          "resource": "repo://src/test/java/com/example/rlssample/tenant/TenantFilterWebTest.java#L113-L131",
+          "version": "repo-lines-v1:sha256:73ef911226ba5db9ef470f68c564c25e740335b58895af13d2594e18b5bf5f2f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJlNWYxN2EyYzZiMDc5MjkxNWRhMzY2NzEwNDM4NzAxNDczZDE1NzdjYzZiYWI3NjMwNzBmYzg0NjVhMWRmYTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE1MTM5OGU2MTI0ZWNhY2IwYjY4NzBjNjgxN2Q2YjQ2NzhmYmFmN2ZiZmE4MzgxMzAwMDI2ODJhYTc2YzM3YTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJkMjA2YzQ2ZGM0NjdkMDRiNWFiZWUyZTZmMDU1NWI2ZjQ0MTY4YzNlNjAzZWJjMWM4MmQ4MjgyY2Y4NDA5YzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1f94dd1f66ab46609deb1018662793a9",
+      "statement": "CurrentUser requires a subject and enforces that id, role and scope are either all set (resolved) or all null (unresolved).",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/CurrentUser.java#L5-L39",
+          "version": "repo-lines-v1:sha256:1bf69b65795b4f4cc2a2b7f3c395bacaac044c7a36adb338aa72e63a1d32866d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgzMWQ0NjZhYzMwMDI2YTNkMGQ5NTc5MWVhZTdlMzNmNDc3Y2ZmZDlkZmNmNmRiNzMyMTYwMDlkYTA2NDIyNTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b5d09a724f684661bbef523496d5bb28",
+      "statement": "After resolution, TenantFilter runs the rest of the filter chain inside TenantContext.runAs and UserContext.runAs, and rejected requests receive an application/problem+json body.",
+      "evidence": [
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/TenantFilter.java#L152-L158",
+          "version": "repo-lines-v1:sha256:95d92476cc069426ef6bd7bc636091f02eacde3267e5f5fef3647bf0daca588a:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTg3ODJlYjQzM2Q5NTQ3NGI1MjFhYTE5MGQwZTllYWM1ODk0NDkzZTA4NzNjM2QwYTFjNTczNWUyY2MyYjFkMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2MxZWNjOGY5YWJhMDNlMjY0YWJmOWMzZTk4MzkwYzQ0NjEwNDQxYTljZjA0MDJiZDgxNDZkNTk1OGUyZmEyNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGM2YWM0NThjMGJkNDY2NDZjNzU4MzMyOWE4ZDQ4NGEwMjBmOTBiYzkwMDEwMjRkNjQzMWQwZWE5Y2ZhNjM2YSJ9"
+        },
+        {
+          "resource": "repo://src/main/java/com/example/rlssample/tenant/TenantFilter.java#L58-L91",
+          "version": "repo-lines-v1:sha256:b88aecc8b6742982b8b74dee990d8c1f4d41c136c1b2f23eb2e88bd8c91c5435:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVkYzJiMzExYWJlODc1NzJlOGE3Y2MwZDk5NmE2NTg0NDA3NmU1MjMyZDIxYjdhODU0NzVmOWI0MDU1Yjc0OTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyYTZlZDgxYjI4YWEwZTViYjYzZGI2ZDAyYjZiNTgwNWJiMzhjZTE1NjZiMDkxODcwNDk5ZDJlMzk4Yzk1MDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA5MTdlZDg4MzFjMmM5OTkwZjU5MTFkNmQ4ODE2MGVkYmM0MDA2ODEzZDU5OTg3OTJiODQ3ZmRiNzEzMjhjNzYifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T22:35:43.342Z"
+  }
+}

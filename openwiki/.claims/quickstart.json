@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:e45d1e619c8eba4d33df97885c32882c93411261e942cab6b340246ad045906d",
+  "claims": [
+    {
+      "id": "claim_ae0cd327def643709cdb1a6c3c94070d",
+      "statement": "The project is a Spring Boot 4.1.1 application on Java 21 using MyBatis via mybatis-spring-boot-starter 4.0.0, the OAuth2 resource server starter, and the PostgreSQL JDBC driver.",
+      "evidence": [
+        {
+          "resource": "repo://pom.xml#L7-L55",
+          "version": "repo-lines-v1:sha256:4a9d7064a1ebbaa793e4a2fcefb4e75dbae249cf8c54e634069fe26c5b01ff73:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU0YzI1YWVlZDkyYTBhNzM2YzNhNDg3MDlhMDRkYmYxN2JjZTM0NDYyODg4MmNkNGM5N2MwOTZhMjVmN2ZlOGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFiZmE4OTc2NGI1N2JhYzdkMDg4MDk1ZmFiNTdmNmY2MGFiMGQwM2QwZDY3NzVhY2UzMWYxNWRiNjE0ZmZjY2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEzNjY1OWJhZjgxZTU1OTUxZjBlYjZjYjE2M2Y1ZWZjYjU5NTUyYzRkMzg0NTNlMmZlMzdlMjU5MzY4NzNjODMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQzMDk5YjgwOGJkMWNlYWI5YjIwNTBiYTEwMjdjZjdhMzE3YmYxNjE3OTIyZDBkYWEzN2RhZmNkNGNkNzRmYTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1663bde7df1e43149842983290e507c1",
+      "statement": "The sample's goal is that missing WHERE clauses or id-only access never return other tenants' data, with in-tenant visibility of own data for general users, organization-hierarchy scope for managers, and whole-tenant data for administrators.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L1-L7",
+          "version": "repo-lines-v1:sha256:824cd0e957291fde1bcf5cbd94958dc3d24b466ebd5582989a68d926e08d5fb9:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTVjZjJkMGU4NDBjZjcwNjdhYjUxN2VmMzY5NjFjZmE1ZDE5MTQ0MjExYzgxNWNkMTcyYjU0ODU5MTY1ODhkZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDMxYTMxOThlMTY5NWUyNzUyZTQ2NDgxYmVhOGMwODJkNjRhMGNhM2QzZDE1Y2I4NDlmYzFjMmVhNmNkYzFjMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDBlMTZlODU4NWRmZTFkZDU1NWI2ZWFhNTYxNjUzNmNkZjEyNGQ2YmFlODQ2Zjc0ZGZhMmMzMmEyNjNmY2E3ZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_141a2885c19347d598dfb492700185f6",
+      "statement": "Production follow-ups listed by the project include switching JWT verification to an IdP public key, propagating context to async and batch work, richer delegated permissions, and cross-tenant root privileges, which are not implemented.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L272-L285",
+          "version": "repo-lines-v1:sha256:39412046179cf15d4de00cdf00806db3b8e2ad64ae4505c198c126d9fb324735:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQyMWEzYTYyMDRjOWQ3NmQxZjJiNjRjYzViZjU5NzZmMTU2NWExYTY4ZDIzMGEzZTEyYWJhZWRkOGY5M2MxYmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE3MDUxOGQ5NWQ2Mjg2MmZhOWFiYWIyODE0MTg1NTU4OWE3ODBiYzA0MWJjYjhjMTM4Mzk4MDE4NWIzMjdmN2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZmNGJhNzZmZTJlNWE0ZTFjMjU0ZTM2NjM0ZTdjOGQ2NGFiODNlMWUwMjM0ZmUzYzZjOTAwY2NkMmZkNmU1ZTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T22:35:43.342Z"
+  }
+}

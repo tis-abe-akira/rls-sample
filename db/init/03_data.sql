@@ -2,29 +2,46 @@
 -- 03_data.sql : 2社分のデモデータ
 --   初期化スクリプトはスーパーユーザー(owner)で実行されるため RLS は効かず、
 --   どのテナントの行も投入できる。
---   テストはこの投入順で採番される ID（users 1〜7、orders 1〜5）を前提にしている。
+--   テストはこの投入順で採番される ID（organizations 1〜6、users 1〜9、orders 1〜6）を前提にしている。
 -- =============================================================
 
 INSERT INTO companies (id, name) VALUES
   (1, 'A商事'),
   (2, 'B工業');
 
--- taro は2社に所属し、A商事では一般ユーザー、B工業では管理者
-INSERT INTO users (tenant_id, subject, name, role) VALUES
-  (1, 'alice', 'A商事 アリス（管理者）', 'ADMIN'),    -- id=1
-  (1, 'bob',   'A商事 ボブ',            'GENERAL'),  -- id=2
-  (1, 'carol', 'A商事 キャロル',        'GENERAL'),  -- id=3
-  (1, 'taro',  'A商事 太郎',            'GENERAL'),  -- id=4
-  (2, 'dave',  'B工業 デイブ（管理者）', 'ADMIN'),    -- id=5
-  (2, 'erin',  'B工業 エリン',          'GENERAL'),  -- id=6
-  (2, 'taro',  'B工業 太郎（管理者）',   'ADMIN');    -- id=7
+-- A商事: 営業事業部 ─┬─ 第一営業部
+--                    └─ 第二営業部
+--        管理本部
+-- B工業: 製造事業部 ── 第一製造部
+INSERT INTO organizations (tenant_id, parent_id, name) VALUES
+  (1, NULL, '営業事業部'),   -- id=1
+  (1, 1,    '第一営業部'),   -- id=2
+  (1, 1,    '第二営業部'),   -- id=3
+  (1, NULL, '管理本部'),     -- id=4
+  (2, NULL, '製造事業部'),   -- id=5
+  (2, 5,    '第一製造部');   -- id=6
 
-INSERT INTO orders (tenant_id, user_id, title) VALUES
-  (1, 2, 'A商事 ノートPC調達（ボブ）'),        -- id=1
-  (1, 3, 'A商事 モニター購入（キャロル）'),     -- id=2
-  (2, 6, 'B工業 産業用ロボット（エリン）'),     -- id=3
-  (2, 5, 'B工業 制御盤（デイブ）'),            -- id=4
-  (1, 1, 'A商事 オフィスチェア（アリス）');     -- id=5
+-- taro は2社に所属し、A商事では一般ユーザー、B工業では管理者
+-- ken は第一営業部の部長、mika は営業事業部の事業部長（ID を変えないよう末尾に追加している）
+INSERT INTO users (tenant_id, org_id, subject, name, role) VALUES
+  (1, 4, 'alice', 'A商事 アリス（管理者）',          'ADMIN'),    -- id=1
+  (1, 2, 'bob',   'A商事 ボブ（第一営業部）',        'GENERAL'),  -- id=2
+  (1, 3, 'carol', 'A商事 キャロル（第二営業部）',    'GENERAL'),  -- id=3
+  (1, 2, 'taro',  'A商事 太郎（第一営業部）',        'GENERAL'),  -- id=4
+  (2, 5, 'dave',  'B工業 デイブ（管理者）',          'ADMIN'),    -- id=5
+  (2, 6, 'erin',  'B工業 エリン（第一製造部）',      'GENERAL'),  -- id=6
+  (2, 5, 'taro',  'B工業 太郎（管理者）',            'ADMIN'),    -- id=7
+  (1, 2, 'ken',   'A商事 ケン（第一営業部 部長）',   'MANAGER'),  -- id=8
+  (1, 1, 'mika',  'A商事 ミカ（営業事業部 事業部長）', 'MANAGER'); -- id=9
+
+-- org_id は受注を作った時点の名義人の部署
+INSERT INTO orders (tenant_id, user_id, org_id, title) VALUES
+  (1, 2, 2, 'A商事 ノートPC調達（ボブ）'),        -- id=1  第一営業部
+  (1, 3, 3, 'A商事 モニター購入（キャロル）'),     -- id=2  第二営業部
+  (2, 6, 6, 'B工業 産業用ロボット（エリン）'),     -- id=3
+  (2, 5, 5, 'B工業 制御盤（デイブ）'),            -- id=4
+  (1, 1, 4, 'A商事 オフィスチェア（アリス）'),     -- id=5  管理本部
+  (1, 8, 2, 'A商事 展示会出展（ケン）');          -- id=6  第一営業部
 
 INSERT INTO order_details (tenant_id, order_id, item, quantity, unit_price) VALUES
   (1, 1, 'ノートPC',       3,  150000),
@@ -32,4 +49,5 @@ INSERT INTO order_details (tenant_id, order_id, item, quantity, unit_price) VALU
   (1, 2, 'モニター',       5,   40000),
   (2, 3, '産業用ロボット', 1, 8000000),
   (2, 4, '制御盤',         2, 1200000),
-  (1, 5, 'オフィスチェア', 2,   60000);
+  (1, 5, 'オフィスチェア', 2,   60000),
+  (1, 6, '展示ブース',     1,  500000);

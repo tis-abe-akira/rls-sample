@@ -24,7 +24,8 @@ public class UserController {
     @GetMapping("/me")
     public Me me() {
         CurrentUser user = UserContext.require();
-        return new Me(TenantContext.require().value(), user.id(), user.subject(), user.role());
+        List<Long> visibleOrganizationIds = user.scope().organizationIds().stream().sorted().toList();
+        return new Me(TenantContext.require().value(), user.id(), user.subject(), user.role(), visibleOrganizationIds);
     }
 
     @GetMapping("/users")
@@ -32,6 +33,7 @@ public class UserController {
         return userService.listUsers();
     }
 
-    public record Me(long tenantId, long userId, String subject, Role role) {
+    /** visibleOrganizationIds: 自分のデータ以外に見てよい部署（AccessScopeResolver の算出結果） */
+    public record Me(long tenantId, long userId, String subject, Role role, List<Long> visibleOrganizationIds) {
     }
 }

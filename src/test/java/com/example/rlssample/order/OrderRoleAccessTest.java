@@ -96,24 +96,24 @@ class OrderRoleAccessTest {
     }
 
     @Test
-    @DisplayName("一般ユーザーが他人名義で受注を作ろうとすると、アプリが 403 で止める")
+    @DisplayName("一般ユーザーが他人名義で受注を作ろうとすると、アプリケーションが 403 で止める")
     void general_cannotCreateOrderForOthers_app() {
         assertThatThrownBy(() -> BOB.run(() -> orderService.createOrder(CAROL.userId(), "なりすまし", List.of())))
                 .isInstanceOf(ForbiddenException.class);
     }
 
     @Test
-    @DisplayName("アプリのチェックをすり抜けても、他人名義の受注は DB（WITH CHECK）が拒否する")
+    @DisplayName("アプリケーションのチェックをすり抜けても、他人名義の受注は DB（WITH CHECK）が拒否する")
     void general_cannotCreateOrderForOthers_db() {
         assertThatThrownBy(() -> BOB.run(() ->
-                tx.execute(status -> orderMapper.insert(A_SHOJI.value(), CAROL.userId(), "なりすまし"))))
+                tx.execute(status -> orderMapper.insert(A_SHOJI.value(), CAROL.userId(), 3L, "なりすまし"))))
                 .isInstanceOf(DataAccessException.class)
                 .rootCause()
                 .hasMessageContaining("row-level security policy");
     }
 
     @Test
-    @DisplayName("アプリのチェックをすり抜けても、他人の受注への明細追加は DB（WITH CHECK）が拒否する")
+    @DisplayName("アプリケーションのチェックをすり抜けても、他人の受注への明細追加は DB（WITH CHECK）が拒否する")
     void general_cannotAddDetailToOthersOrder_db() {
         long carolsOrderId = CAROL.run(orderService::listOrders).getFirst().id();
 
@@ -145,14 +145,14 @@ class OrderRoleAccessTest {
     }
 
     @Test
-    @DisplayName("一般ユーザーにはユーザー一覧を見せない（アプリが 403）")
+    @DisplayName("一般ユーザーにはユーザー一覧を見せない（アプリケーションが 403）")
     void general_cannotListUsers() {
         assertThatThrownBy(() -> BOB.run(userService::listUsers))
                 .isInstanceOf(ForbiddenException.class);
     }
 
     @Test
-    @DisplayName("アプリのチェックをすり抜けて全員分の SQL を流しても、一般ユーザーに見えるのは自分の行だけ（DB が絞る）")
+    @DisplayName("アプリケーションのチェックをすり抜けて全員分の SQL を流しても、一般ユーザーに見えるのは自分の行だけ（DB が絞る）")
     void general_seesOnlySelfInUsersTable() {
         List<User> visible = BOB.run(() -> tx.execute(status -> userMapper.findAllByTenant(A_SHOJI.value())));
 
@@ -195,11 +195,11 @@ class OrderRoleAccessTest {
     }
 
     @Test
-    @DisplayName("管理者のユーザー一覧は、自社の全員（他社のユーザーは出ない）")
+    @DisplayName("管理者のユーザー一覧は、自社の全員6人（他社のユーザーは出ない）")
     void admin_listsAllUsersInTenant() {
         List<User> users = ALICE.run(userService::listUsers);
 
-        assertThat(users).hasSize(4)
+        assertThat(users).hasSize(6)
                 .allSatisfy(u -> assertThat(u.tenantId()).isEqualTo(A_SHOJI.value()));
     }
 }

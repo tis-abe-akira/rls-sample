@@ -65,7 +65,7 @@ public class OrderController {
 
     /**
      * リクエストに tenantId は含めない。テナントは必ずサーバー側（TenantContext）で決める。
-     * userId は省略すると自分。他人を指定できるのは管理者だけ。
+     * userId は省略すると自分。他人を指定できるのは管理者と、管理職（見てよい部署のメンバーだけ）。
      */
     public record CreateOrderRequest(Long userId, String title, List<NewDetail> details) {
     }

@@ -111,7 +111,7 @@ class OrderRlsIntegrationTest {
     @DisplayName("WITH CHECK: 他社の tenant_id で INSERT しようとするとDBが拒否する")
     void insertWithOtherTenantId_isRejectedByDatabase() {
         assertThatThrownBy(() -> ALICE.run(() ->
-                tx.execute(status -> orderMapper.insert(B_KOGYO.value(), DAVE.userId(), "なりすまし注文"))))
+                tx.execute(status -> orderMapper.insert(B_KOGYO.value(), DAVE.userId(), 5L, "なりすまし注文"))))
                 .isInstanceOf(DataAccessException.class)
                 .rootCause()
                 .hasMessageContaining("row-level security policy");
@@ -121,7 +121,7 @@ class OrderRlsIntegrationTest {
     @DisplayName("複合外部キー: 管理者が自社の tenant_id で、他社のユーザー名義の受注を作ろうとするとDBが拒否する")
     void insertForOtherTenantsUser_isRejectedByForeignKey() {
         assertThatThrownBy(() -> ALICE.run(() ->
-                tx.execute(status -> orderMapper.insert(A_SHOJI.value(), DAVE.userId(), "他社ユーザー名義"))))
+                tx.execute(status -> orderMapper.insert(A_SHOJI.value(), DAVE.userId(), 4L, "他社ユーザー名義"))))
                 .isInstanceOf(DataIntegrityViolationException.class)
                 .rootCause()
                 .hasMessageContaining("foreign key");
