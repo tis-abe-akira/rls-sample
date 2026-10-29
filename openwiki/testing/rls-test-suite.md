@@ -5,7 +5,7 @@ description: 実際の PostgreSQL に接続する5つのテストクラスが、
 tags: [testing, integration-test, rls, spring-boot-test, junit]
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-29T20:28:49.941Z
+    at: 2026-10-29T22:35:43.342Z
 sources:
   - id: openwiki-source-b4fc34e2ebcad5a585a7a9f4
     resource: repo://src/test/java/com/example/rlssample/order/OrderRlsIntegrationTest.java
@@ -19,12 +19,12 @@ sources:
     resource: repo://src/test/java/com/example/rlssample/support/Actor.java
   - id: openwiki-source-40348177f850b343b14dbfb5
     resource: repo://src/test/java/com/example/rlssample/tenant/TenantFilterWebTest.java
-generated: { by: "claude-code", at: "2026-10-29T20:28:49.941Z" }
+generated: { by: "claude-code", at: "2026-10-29T22:35:43.342Z" }
 ---
 
 # テスト：越境できないことの確認
 
-テストの目的は「越境できないこと」を確かめることです。正しい SQL で正しい結果が返ることに加えて、**WHERE を書き忘れた SQL、id だけの SQL、アプリのチェックをすり抜けて直接流した SQL でも、見えてはいけない行が見えない・作れない** ことを確認します。
+テストの目的は「越境できないこと」を確かめることです。正しい SQL で正しい結果が返ることに加えて、**WHERE を書き忘れた SQL、id だけの SQL、アプリケーションのチェックをすり抜けて直接流した SQL でも、見えてはいけない行が見えない・作れない** ことを確認します。
 
 ## 前提
 
@@ -55,8 +55,8 @@ generated: { by: "claude-code", at: "2026-10-29T20:28:49.941Z" }
 ### OrderRoleAccessTest（一般と管理者）
 
 - 一般ユーザー（bob）の一覧・WHERE なしの一覧・明細は自分の分だけ。他人（carol）の受注の取得・更新・削除・明細追加は 404
-- 他人名義の作成はアプリが 403（`ForbiddenException`）、Mapper を直接呼んでも DB の `WITH CHECK` が拒否する
-- 一般ユーザーのユーザー一覧はアプリが 403、`findAllByTenant` を直接流しても自分の行だけ
+- 他人名義の作成はアプリケーションが 403（`ForbiddenException`）、Mapper を直接呼んでも DB の `WITH CHECK` が拒否する
+- 一般ユーザーのユーザー一覧はアプリケーションが 403、`findAllByTenant` を直接流しても自分の行だけ
 - 管理者は他人の受注を取得・更新・削除・明細追加でき、他人名義でも作成できる。ユーザー一覧は自社の6人
 
 ### OrgScopeAccessTest（部長・事業部長）
@@ -92,7 +92,7 @@ List<Order> orders = KEN.run(orderService::listOrders);
 
 そのため、テストは必ず `Actor#run` の **内側** でトランザクションを始めます。サービスのメソッドはそれ自体が `@Transactional` なので、そのまま呼べます。
 
-## 「アプリのチェックをすり抜けた」を再現する
+## 「アプリケーションのチェックをすり抜けた」を再現する
 
 DB の守りだけを確かめたいときは、サービスを通さずに Mapper を直接呼びます。Mapper にはトランザクションがないので、`TransactionTemplate` で包みます。
 

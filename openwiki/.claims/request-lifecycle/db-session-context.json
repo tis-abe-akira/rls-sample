@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:934479057ccc8185b7dd37ad1195b8493218c8a4ce07252f680f0c46d0d133b8",
+  "pageVersion": "sha256:14595f14f64b60cdb32ead760bc17bb131190948c8505c5d34929344b8ccb1a9",
   "claims": [
     {
-      "id": "claim_297f6c8b259644f6bfc955d2289d4da2",
+      "id": "claim_74641584adb44fc89f82d35abb59f096",
       "statement": "TenantContext.runAs and UserContext.runAs set the ThreadLocal value, run the action, and always restore the previous value (or remove it) in finally, so values do not leak to the next request on a pooled thread.",
       "evidence": [
         {
@@ -17,7 +17,7 @@
       ]
     },
     {
-      "id": "claim_bbf98525835f4ab5b8e86a49ae3c353d",
+      "id": "claim_6d32bd19968547ccb85c68d38927d993",
       "statement": "runAs throws IllegalStateException when an actual transaction is active and a different tenant or user is requested, because database settings are applied only once at BEGIN; re-entering with the same tenant and user is allowed.",
       "evidence": [
         {
@@ -35,7 +35,7 @@
       ]
     },
     {
-      "id": "claim_cad113ae2a3643b18cbd638a2f209b28",
+      "id": "claim_bfd422879626469aafe80347a112acb4",
       "statement": "UserContext.require fails unless the current user is resolved, whereas TenantContext.require fails only when no tenant is set.",
       "evidence": [
         {
@@ -49,7 +49,7 @@
       ]
     },
     {
-      "id": "claim_721af4f4f22b4aa6b1eb288e18bb7897",
+      "id": "claim_007a8de6266548eb933c95069082ab89",
       "statement": "TenantAwareTransactionManager overrides prepareTransactionalConnection to run one parameterized SELECT of five set_config(..., true) calls on the transaction's connection, filling missing user fields with empty strings.",
       "evidence": [
         {
@@ -59,7 +59,7 @@
       ]
     },
     {
-      "id": "claim_2e0a731abf99447f994733da5b945c12",
+      "id": "claim_48ae9406cd93469f8bea9cbd0f49b2f0",
       "statement": "TenantConfig defines the PlatformTransactionManager bean as TenantAwareTransactionManager, replacing Spring Boot's auto-configured one; MyBatis joins this transaction and connection.",
       "evidence": [
         {
@@ -69,7 +69,7 @@
       ]
     },
     {
-      "id": "claim_7bffc235300944fc9209ed43cb522aa5",
+      "id": "claim_b70397b057dc43ce9399e9179c51799d",
       "statement": "Without a tenant, or with a tenant but no user, or when a mapper is called outside a transaction, queries return no rows.",
       "evidence": [
         {
@@ -81,6 +81,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-29T20:28:49.941Z"
+    "at": "2026-10-29T22:35:43.342Z"
   }
 }

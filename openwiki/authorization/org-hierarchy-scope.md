@@ -1,11 +1,11 @@
 ---
 type: concept
 title: 組織階層による見える範囲（AccessScope と AccessScopeResolver）
-description: 部長・事業部長が配下の部署のデータを扱える仕組み。アプリが組織階層から「見てよい部署の一覧」を算出して app.visible_org_ids として DB に渡し、RLS が org_id = ANY(...) で強制する。
+description: 部長・事業部長が配下の部署のデータを扱える仕組み。アプリケーションが組織階層から「見てよい部署の一覧」を算出して app.visible_org_ids として DB に渡し、RLS が org_id = ANY(...) で強制する。
 tags: [authorization, org-hierarchy, access-scope, rls, adr]
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-29T20:28:49.941Z
+    at: 2026-10-29T22:35:43.342Z
 sources:
   - id: openwiki-source-ae9507c4a442eab54c70e7da
     resource: repo://db/init/02_schema.sql
@@ -29,14 +29,14 @@ sources:
     resource: repo://src/test/java/com/example/rlssample/order/OrgScopeAccessTest.java
   - id: openwiki-source-0fcc579c8ca35b4522510079
     resource: repo://src/test/java/com/example/rlssample/org/OrganizationHierarchyScopeResolverTest.java
-generated: { by: "claude-code", at: "2026-10-29T20:28:49.941Z" }
+generated: { by: "claude-code", at: "2026-10-29T22:35:43.342Z" }
 ---
 
 # 組織階層による見える範囲（AccessScope と AccessScopeResolver）
 
-テナントの中で、部長は自分の部、事業部長は事業部と配下の部のデータを扱えます。この「見える範囲」は **判断はアプリ、強制は DB** で実現しています。
+テナントの中で、部長は自分の部、事業部長は事業部と配下の部のデータを扱えます。この「見える範囲」は **判断はアプリケーション、強制は DB** で実現しています。
 
-- **判断**: アプリの `AccessScopeResolver` が、ユーザーの所属部署と組織階層から「見てよい部署の一覧」（`AccessScope`）を算出する
+- **判断**: アプリケーションの `AccessScopeResolver` が、ユーザーの所属部署と組織階層から「見てよい部署の一覧」（`AccessScope`）を算出する
 - **受け渡し**: `TenantAwareTransactionManager` がその一覧を `app.visible_org_ids` として `SET LOCAL` で DB に渡す
 - **強制**: RLS は `org_id = ANY(current_app_visible_org_ids())` で「渡された一覧に入っているか」だけを見る
 
@@ -45,8 +45,8 @@ generated: { by: "claude-code", at: "2026-10-29T20:28:49.941Z" }
 `docs/ADR.md` の決定の要点です。
 
 - 今の4パターン（一般・部長・事業部長・管理者）だけなら RLS のポリシーで階層をたどることもできるが、兼務・代理・期間限定・例外共有といった要件が今後増えると、ポリシーが複雑になり、変更のたびに DDL とデプロイが必要になる
-- 認可をすべてアプリに移すと、テナントの中で WHERE の書き忘れがそのまま事故になり、RLS を入れた理由の半分を失う
-- そこで、判断をアプリに置きつつ、強制は DB に残した。ポリシーは「渡された一覧に入っているか」から変わらないので、要件が増えても変わるのはアプリの算出ロジックだけになる
+- 認可をすべてアプリケーションに移すと、テナントの中で WHERE の書き忘れがそのまま事故になり、RLS を入れた理由の半分を失う
+- そこで、判断をアプリケーションに置きつつ、強制は DB に残した。ポリシーは「渡された一覧に入っているか」から変わらないので、要件が増えても変わるのはアプリケーションの算出ロジックだけになる
 
 ポイントは、認可を **受注1件ずつではなく部署の単位** で行うことです。部署の数は受注の数よりはるかに少ないので、一覧の絞り込みは `org_id = ANY(...)` という単純でインデックスの効く条件になります。
 
@@ -116,10 +116,10 @@ sequenceDiagram
 
 ## 範囲が効く場所
 
-算出した範囲は、DB とアプリの両方で使われます。
+算出した範囲は、DB とアプリケーションの両方で使われます。
 
 - **RLS**: `orders` の `owner_or_scope_or_admin` と `users` の `users_select` が `org_id = ANY(current_app_visible_org_ids())` を含む。明細は親の受注が見えるかで決まるので、範囲は明細にも及ぶ
-- **アプリ**: `OrderService#listOrders` は範囲を `findAllByTenantAndScope` に渡し、`createOrder` は他人名義の代理作成で名義人の部署が範囲に入っているかを確かめる。`UserService#listUsers` は管理職に範囲の部署のメンバーだけを返す
+- **アプリケーション**: `OrderService#listOrders` は範囲を `findAllByTenantAndScope` に渡し、`createOrder` は他人名義の代理作成で名義人の部署が範囲に入っているかを確かめる。`UserService#listUsers` は管理職に範囲の部署のメンバーだけを返す
 
 管理職は範囲の中で参照も更新もできます（代理作成を含む）。ポリシーを SELECT と書き込みで分けていないので、`WITH CHECK` によって範囲の外の部署の受注は作れず、範囲の外へ付け替えることもできません。API 側の挙動は [受注・ユーザー API と Mapper](../domain/orders-and-users-api.md)、ポリシーの全体は [スキーマと RLS ポリシー](../database/schema-and-rls-policies.md) を参照してください。
 
@@ -131,7 +131,7 @@ sequenceDiagram
 
 兼務・代理・期間限定の権限が必要になったときに変えるのは、`AccessScopeResolver` の実装だけです。RLS のポリシーと Mapper は変わりません。ADR では、要件が具体化した時点で OpenFGA（`ListObjects` で「見てよい部署の一覧」を取る）への置き換えを PoC で評価するとしています。
 
-注意点として、判断が DB の外にあるため、psql やバッチなどアプリを通らない経路では、その経路で渡す範囲を別に決める必要があります。また `app.visible_org_ids` を SQL インジェクションで書き換えられると、テナント内の任意の部署のデータが見えます（RESTRICTIVE があるので他テナントには届きません）。
+注意点として、判断が DB の外にあるため、psql やバッチなどアプリケーションを通らない経路では、その経路で渡す範囲を別に決める必要があります。また `app.visible_org_ids` を SQL インジェクションで書き換えられると、テナント内の任意の部署のデータが見えます（RESTRICTIVE があるので他テナントには届きません）。
 
 ## 確認しているテスト
 

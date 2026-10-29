@@ -3,22 +3,22 @@ type: guide
 title: クイックスタート
 description: PostgreSQL の RLS と MyBatis で作ったマルチテナントの最小サンプルの入口。何を示すリポジトリか、技術スタック、ディレクトリ構成と、やりたいことごとにどのページ・ソースを見ればよいかをまとめる。
 tags: [quickstart, overview, multi-tenancy, rls, navigation]
+verified:
+  - by: openwiki/0.7.2
+    at: 2026-10-29T22:35:43.342Z
 sources:
   - id: openwiki-source-2355f81d7cf522f8dbdaabd4
     resource: repo://pom.xml
   - id: openwiki-source-23775c3de52f3ab95a13cb8b
     resource: repo://README.md
-generated: { by: "claude-code", at: "2026-10-29T20:48:55.949Z" }
-verified:
-  - by: openwiki/0.7.2
-    at: 2026-10-29T20:48:55.949Z
+generated: { by: "claude-code", at: "2026-10-29T22:35:43.342Z" }
 ---
 
 # クイックスタート
 
 **rls-sample** は、PostgreSQL の Row Level Security（RLS）でマルチテナントのデータを守る Spring Boot のサンプルです。「WHERE 句を書き忘れても、id だけで取りに来られても、他社のデータは返らない」を、コードとテストで体験できるように作られています。
 
-テナント（企業）の中にも権限があり、一般ユーザーは自分のデータだけ、部長・事業部長は組織階層で配下の部署のデータ、管理者はテナント内の全員のデータを扱えます。組織階層の見える範囲は「判断はアプリ、強制は DB」で実現しています。
+テナント（企業）の中にも権限があり、一般ユーザーは自分のデータだけ、部長・事業部長は組織階層で配下の部署のデータ、管理者はテナント内の全員のデータを扱えます。組織階層の見える範囲は「判断はアプリケーション、強制は DB」で実現しています。
 
 ## 技術スタック
 
@@ -62,9 +62,9 @@ src/test/java/...      実 DB に繋ぐ統合テストと、テスト用の Acto
 
 ## まず読むもの
 
-1. [アーキテクチャ概要：多層防御とリクエストの流れ](architecture/overview.md) — 2段のポリシー、アプリと DB の二重チェック、1リクエストの流れ
+1. [アーキテクチャ概要：多層防御とリクエストの流れ](architecture/overview.md) — 2段のポリシー、アプリケーションと DB の二重チェック、1リクエストの流れ
 2. [スキーマと RLS ポリシー](database/schema-and-rls-policies.md) — 守りの本体
-3. [DB へのコンテキスト受け渡し](request-lifecycle/db-session-context.md) — アプリ側の本体
+3. [DB へのコンテキスト受け渡し](request-lifecycle/db-session-context.md) — アプリケーション側の本体
 
 手を動かして仕組みを確かめたいなら、[チュートリアル：テナント所有のテーブルを1つ追加する](tutorials/add-tenant-owned-table.md) から始めるのがおすすめです。PostgreSQL 以外の DB で同じ守りを作りたいなら、[RLS を持たない DB（MySQL など）での代替手段](guides/databases-without-rls.md) を読んでください。
 
@@ -87,15 +87,15 @@ src/test/java/...      実 DB に繋ぐ統合テストと、テスト用の Acto
 
 ## 押さえておきたい決まりごと
 
-- アプリは必ず `app_user`（RLS が効くロール）で接続する。スーパーユーザーや `BYPASSRLS` のロールでは RLS が素通りする
+- アプリケーションは必ず `app_user`（RLS が効くロール）で接続する。スーパーユーザーや `BYPASSRLS` のロールでは RLS が素通りする
 - テナントの根拠は署名済み JWT のクレーム `tenant_ids` だけ。`X-Tenant-Id` ヘッダはその中から選ぶだけ
 - ユーザー ID とロールは JWT ではなく、そのテナントの `users` テーブルから決める
 - SQL は `@Transactional` の中で実行する。テナントとユーザーはトランザクション開始時に `SET LOCAL` で DB に入る
 - トランザクションの途中で `runAs` によって別テナント・別ユーザーに切り替えない
 - テナントの壁は必ず `AS RESTRICTIVE` で書く
-- アプリ側の WHERE 句は消さない（多層防御）
+- アプリケーション側の WHERE 句は消さない（多層防御）
 - 他人の既存の行は 403 ではなく 404 にする
 
 ## 未実装のもの
 
-README の「本番に向けて足すもの」と ADR の未決事項に、IdP の公開鍵での JWT 検証への切り替え、非同期処理・バッチへのコンテキストの伝播、兼務・代理・期間限定の権限、見てよい部署のキャッシュ、psql やバッチなどアプリを通らない経路で渡す範囲の決め方、テナントを横断する権限が挙がっています。
+README の「本番に向けて足すもの」と ADR の未決事項に、IdP の公開鍵での JWT 検証への切り替え、非同期処理・バッチへのコンテキストの伝播、兼務・代理・期間限定の権限、見てよい部署のキャッシュ、psql やバッチなどアプリケーションを通らない経路で渡す範囲の決め方、テナントを横断する権限が挙がっています。

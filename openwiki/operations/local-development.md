@@ -1,11 +1,11 @@
 ---
 type: runbook
 title: ローカルでの動かし方とデモ
-description: Docker Compose で PostgreSQL を起動し、psql のデモ・テスト・アプリ起動・JWT を使った API 呼び出しを試す手順。bypass プロファイルで「RLS がない状態」を再現する方法と、デモデータの ID もまとめる。
+description: Docker Compose で PostgreSQL を起動し、psql のデモ・テスト・アプリケーション起動・JWT を使った API 呼び出しを試す手順。bypass プロファイルで「RLS がない状態」を再現する方法と、デモデータの ID もまとめる。
 tags: [operations, local-development, docker-compose, demo, jwt]
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-29T20:28:49.941Z
+    at: 2026-10-29T22:35:43.342Z
 sources:
   - id: openwiki-source-e201e686a785f09b6d899f0b
     resource: repo://compose.yaml
@@ -21,7 +21,7 @@ sources:
     resource: repo://src/main/resources/application-bypass.yml
   - id: openwiki-source-08039bc60652747dc83eb8ca
     resource: repo://src/main/resources/application.yml
-generated: { by: "claude-code", at: "2026-10-29T20:28:49.941Z" }
+generated: { by: "claude-code", at: "2026-10-29T22:35:43.342Z" }
 ---
 
 # ローカルでの動かし方とデモ
@@ -54,7 +54,7 @@ docker compose down -v && docker compose up -d
 docker exec -i rls-sample-db psql -U app_user -d rls_sample < db/demo.sql
 ```
 
-`db/demo.sql` は、アプリがトランザクション開始時に行う `set_config('app.*', ..., true)` を手で打ち、次の15ステップを順に見せます。
+`db/demo.sql` は、アプリケーションがトランザクション開始時に行う `set_config('app.*', ..., true)` を手で打ち、次の15ステップを順に見せます。
 
 - 何も設定しないと WHERE なしでも 0 件、テナントだけ設定してもユーザー未解決なら 0 件（fail-closed）
 - 管理者 alice でも B工業の行は id 指定（IDOR）でも UPDATE / DELETE でも 0 件
@@ -62,7 +62,7 @@ docker exec -i rls-sample-db psql -U app_user -d rls_sample < db/demo.sql
 - 部長 ken（`{2}`）・事業部長 mika（`{1,2,3}`）は `app.visible_org_ids` の範囲だけ。範囲の外の部署の受注は作れない
 - トランザクションが終わると設定が消えて再び 0 件
 
-## テストとアプリの起動
+## テストとアプリケーションの起動
 
 ```bash
 mvn test              # DB が起動している前提
@@ -76,7 +76,7 @@ mvn spring-boot:run   # localhost:8080
 | 設定 | 値 | 意味 |
 |---|---|---|
 | `spring.datasource.url` | `jdbc:postgresql://localhost:15432/rls_sample` | Compose の DB |
-| `spring.datasource.username` | `app_user` | RLS が効くアプリ用ロール。`owner` で繋ぐと RLS は素通りする |
+| `spring.datasource.username` | `app_user` | RLS が効くアプリケーション用ロール。`owner` で繋ぐと RLS は素通りする |
 | `app.jwt.secret` | デモ用の HS256 共有鍵（32 バイト以上） | `SecurityConfig` の `JwtDecoder` と `scripts/token.sh` が同じ値を使う |
 | `mybatis.mapper-locations` | `classpath:mapper/*.xml` | SQL 本体の場所 |
 | `logging.level` | `OrderMapper` と `TenantAwareTransactionManager` を DEBUG | 発行 SQL と、トランザクション開始時の `set_config` をログで確認できる |
@@ -90,7 +90,7 @@ curl -s localhost:8080/api/me -H "Authorization: Bearer $BOB"
 curl -s localhost:8080/api/orders/leaky -H "Authorization: Bearer $TARO" -H 'X-Tenant-Id: 2'
 ```
 
-`scripts/token.sh SUBJECT TENANT_ID [TENANT_ID...]` は、`sub`・`tenant_ids`・`iat`・`exp`（1時間後）を持つ HS256 の JWT を出力します。鍵は環境変数 `JWT_SECRET`、なければ `application.yml` と同じ既定値です。ユーザー ID とロールはトークンに入れず、アプリが `users` テーブルで決めます。subject とテナント ID の形式はスクリプトが検証します。
+`scripts/token.sh SUBJECT TENANT_ID [TENANT_ID...]` は、`sub`・`tenant_ids`・`iat`・`exp`（1時間後）を持つ HS256 の JWT を出力します。鍵は環境変数 `JWT_SECRET`、なければ `application.yml` と同じ既定値です。ユーザー ID とロールはトークンに入れず、アプリケーションが `users` テーブルで決めます。subject とテナント ID の形式はスクリプトが検証します。
 
 本番ではトークンは IdP が発行し、`SecurityConfig` の `JwtDecoder` Bean を消して `spring.security.oauth2.resourceserver.jwt.issuer-uri` を設定します（[テナントとユーザーの確定](../request-lifecycle/tenant-and-user-resolution.md)）。
 

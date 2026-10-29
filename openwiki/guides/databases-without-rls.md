@@ -1,11 +1,11 @@
 ---
 type: guide
 title: RLS を持たない DB（MySQL など）での代替手段
-description: このサンプルが頼っている PostgreSQL 固有の機能を整理し、MySQL・MariaDB のように RLS を持たない DB でテナントを守る方法（アプリで条件を自動で足す、ビューで絞る、物理的に分ける）を比べる。そのまま使える部品と作り直しが要る部品、セッション変数がプールに残る危険と対策もまとめる。
+description: このサンプルが頼っている PostgreSQL 固有の機能を整理し、MySQL・MariaDB のように RLS を持たない DB でテナントを守る方法（アプリケーションで条件を自動で足す、ビューで絞る、物理的に分ける）を比べる。そのまま使える部品と作り直しが要る部品、セッション変数がプールに残る危険と対策もまとめる。
 tags: [guide, mysql, mariadb, multi-tenancy, alternatives, rls]
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-29T20:48:55.949Z
+    at: 2026-10-29T22:35:43.342Z
 sources:
   - id: openwiki-source-aa9087ccfc3521e4e266024e
     resource: repo://db/init/01_roles.sql
@@ -21,12 +21,12 @@ sources:
     resource: repo://src/main/java/com/example/rlssample/user/AccessScopeResolver.java
   - id: openwiki-source-2bd85f9faf1fb7e8210d7fd0
     resource: repo://src/main/resources/mapper/OrderMapper.xml
-generated: { by: "claude-code", at: "2026-10-29T20:48:55.949Z" }
+generated: { by: "claude-code", at: "2026-10-29T22:35:43.342Z" }
 ---
 
 # RLS を持たない DB（MySQL など）での代替手段
 
-このサンプルの「DB 側の関所」は、PostgreSQL の Row Level Security（RLS）でできています。MySQL などの RLS を持たない DB に移すと、その関所を別の方法で作り直す必要があります。このページは、何が PostgreSQL に依存していて、代わりに何を選べるかを整理したものです。
+このサンプルの DB 側のアクセス制御は、PostgreSQL の Row Level Security（RLS）でできています。MySQL などの RLS を持たない DB に移すと、その仕組みを別の方法で作り直す必要があります。このページは、何が PostgreSQL に依存していて、代わりに何を選べるかを整理したものです。
 
 > このページの MySQL・MariaDB・各ライブラリの話は、**このリポジトリには含まれていない** 一般的な情報で、執筆時点のものです。採用する前に、各製品の公式ドキュメントで確かめてください。
 
@@ -42,30 +42,30 @@ generated: { by: "claude-code", at: "2026-10-29T20:48:55.949Z" }
 
 このうち、とくに代わりを見つけにくいのは次の2つです。
 
-- **DB が SQL に条件を足すこと**（`CREATE POLICY`）。アプリのコードを経由しない SQL にも効く
+- **DB が SQL に条件を足すこと**（`CREATE POLICY`）。アプリケーションのコードを経由しない SQL にも効く
 - **トランザクションの終わりで設定が消えること**（`set_config` の第3引数 `true` = `SET LOCAL`）。コネクションプールに値が残らない
 
 ## MySQL・MariaDB には RLS がない
 
 執筆時点で、MySQL と MariaDB には PostgreSQL の `CREATE POLICY` に当たる、テーブルの行レベルのセキュリティ機能はありません。AWS のブログも「MySQL（Aurora MySQL を含む）は、テーブルの行レベルのセキュリティをネイティブではサポートしていない」としたうえで、ビューとトリガーで代わりにする方法を紹介しています。
 
-参考までに、RLS に当たる機能を持つ DB もあります。SQL Server と Azure SQL の Row-Level Security（セキュリティポリシー）、Oracle の Virtual Private Database（VPD）などです。これらに移すなら、このサンプルと同じ「DB 側の関所」の考え方をそのまま使えます。
+参考までに、RLS に当たる機能を持つ DB もあります。SQL Server と Azure SQL の Row-Level Security（セキュリティポリシー）、Oracle の Virtual Private Database（VPD）などです。これらに移すなら、このサンプルと同じ「DB 側でアクセス制御を強制する」考え方をそのまま使えます。
 
 ## 代替手段
 
-### A. アプリで条件を自動で足す
+### A. アプリケーションで条件を自動で足す
 
-SQL を DB に送る前に、アプリが `tenant_id = ?` の条件を自動で足します。
+SQL を DB に送る前に、アプリケーションが `tenant_id = ?` の条件を自動で足します。
 
 - **MyBatis-Plus の `TenantLineInnerInterceptor`**: 実行前の SQL を JSqlParser で解析し、`tenant_id` の条件（INSERT なら列と値）を足す
-- **自作の MyBatis `Interceptor`**: 素の MyBatis には SQL を書き換える割り込み口しかないので、SQL の解析まで自分で作ることになる。現実的ではない
+- **自作の MyBatis `Interceptor`**: 素の MyBatis には SQL を書き換える割り込み口しかないので、SQL の解析まで自分で作ることになり、大きな労力がかかる
 - **Hibernate の `@TenantId`**: エンティティの列にテナントを持たせ、Hibernate が条件を足す
 
-`docs/STORY.md` のコラム「MyBatis にも同じような機能はないのか」に、MyBatis-Plus と RLS の詳しい比較があります。要点は、**条件を足すのがアプリか DB か** の違いです。アプリが足す方式では、MyBatis を通らない SQL（`JdbcTemplate`、手作業の SQL、別のアプリ）には効きません。また、アノテーションや設定1つで対象から外せてしまうので、レビューで必ず確認する必要があります。
+`docs/STORY.md` のコラム「MyBatis にも同じような機能はないのか」に、MyBatis-Plus と RLS の詳しい比較があります。要点は、**条件を足すのがアプリケーションか DB か** の違いです。アプリケーションが足す方式では、MyBatis を通らない SQL（`JdbcTemplate`、手作業の SQL、別のアプリケーション）には効きません。また、アノテーションや設定1つで対象から外せてしまうので、レビューで必ず確認する必要があります。
 
 ### B. ビューで絞る
 
-アプリ用の DB ユーザーには元のテーブルへの権限を与えず、テナントで絞ったビューだけを GRANT します。
+アプリケーション用の DB ユーザーには元のテーブルへの権限を与えず、テナントで絞ったビューだけを GRANT します。
 
 ```sql
 -- 例（このリポジトリには含まれていない）
@@ -78,7 +78,7 @@ CREATE SQL SECURITY DEFINER VIEW v_orders AS
 
 MySQL のビューの定義では、ユーザー変数（`@app_tenant_id`）を直接参照できません。そのため、変数を返すストアド関数をはさむのが定番の書き方です。
 
-- 良いところ: アプリ用のユーザーがビューしか触れなければ、MyBatis を通らない SQL にも効く
+- 良いところ: アプリケーション用のユーザーがビューしか触れなければ、MyBatis を通らない SQL にも効く
 - 難しいところ: 書き込みの扱いです。単純なビューなら更新可能ビューと `WITH CHECK OPTION` で絞れる場合もありますが、制約が多く、AWS のブログではトリガーと組み合わせています。テーブルを増やすたびにビュー・関数・権限をそろえる手間もかかります
 - 「テナントの中の権限」（自分の行だけ、見てよい部署だけ）まで条件に入れると、ビューが複雑になります
 
@@ -92,7 +92,7 @@ MySQL のビューの定義では、ユーザー変数（`@app_tenant_id`）を�
 
 ### 比べると
 
-| 観点 | A. アプリで自動で足す | B. ビューで絞る | C. 物理的に分ける |
+| 観点 | A. アプリケーションで自動で足す | B. ビューで絞る | C. 物理的に分ける |
 |---|---|---|---|
 | WHERE の書き忘れ・IDOR（テナントの壁） | ✅ 防げる | ✅ 防げる | ✅ 防げる |
 | テナントの中の権限 | ⚠️ 自分で条件を足す | ⚠️ ビューが複雑になる | ❌ 別の方法が要る |
@@ -109,7 +109,7 @@ MySQL のビューの定義では、ユーザー変数（`@app_tenant_id`）を�
 | `TenantFilter` | テナントを JWT のクレームで決め、ユーザーを `users` テーブルで決める処理は DB に依存しない |
 | `TenantContext` / `UserContext` | ThreadLocal と `runAs` だけでできている。トランザクション途中の切り替えを禁止する考え方も同じように必要 |
 | `AccessScopeResolver` | 「見てよい部署」を Java で算出する部分。再帰 CTE は MySQL 8.0 以降でも書ける |
-| アプリ側の WHERE（`findAllByTenantAndScope` など） | RLS がない DB では、これが唯一の関所になる。RLS があるとき以上に大事 |
+| アプリケーション側の WHERE（`findAllByTenantAndScope` など） | RLS がない DB では、これが唯一の制御点になる。RLS があるとき以上に大事 |
 | テストの考え方 | 2テナント以上のデータで「見えない・作れない・消せない」を確かめる。`Actor` で動く人を切り替える |
 
 ### 作り直しが要るもの
@@ -138,8 +138,8 @@ MySQL のユーザー変数（`SET @app_tenant_id = 1`）は **接続（セッ�
 ## おすすめの組み合わせ
 
 1. **テナントの決定は、このサンプルと同じにする。** `TenantFilter` のように、署名済み JWT のクレームでテナントを決め、ヘッダは選ぶだけにする（[テナントとユーザーの確定](../request-lifecycle/tenant-and-user-resolution.md)）
-2. **1枚目（アプリ）:** 手書きの `WHERE tenant_id = ...` を残し、できれば MyBatis-Plus のような自動の条件追加も入れる。対象から外す設定はレビューで必ず確認する
+2. **1枚目（アプリケーション）:** 手書きの `WHERE tenant_id = ...` を残し、できれば MyBatis-Plus のような自動の条件追加も入れる。対象から外す設定はレビューで必ず確認する
 3. **2枚目（DB）:** テナントの壁は、規模が許せば C（物理的に分ける）、そうでなければ B（ビュー）で作る。B を選ぶなら、セッション変数の後始末をテストで守る
 4. **MyBatis を通らない経路**（バッチ、手作業の SQL）には、その経路でテナントをどう決めるかを別に決める
 
-どの方式でも、**テナント ID そのものが偽物なら、偽物のテナントとして正しく動いてしまいます**。DB 側の関所が RLS でもビューでも物理的な分離でも、「テナントが正しく決まること」は `TenantFilter` のような入口の守りでしか保証できません。これは `docs/STORY.md` の第6章（信頼の鎖）と同じ話です。
+どの方式でも、**テナント ID そのものが偽物なら、偽物のテナントとして正しく動いてしまいます**。DB 側の制御点が RLS でもビューでも物理的な分離でも、「テナントが正しく決まること」は `TenantFilter` のような入口の守りでしか保証できません。これは `docs/STORY.md` の第6章（信頼の鎖）と同じ話です。

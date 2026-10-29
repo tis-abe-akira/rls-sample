@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:3b505d95217b6a3fe121ac13ecbb5f7ac2c89df90a9412032900cf86d1d50bb5",
+  "pageVersion": "sha256:c726f6e0cc4711d0e391db39786cd9e1af67891b9cb2e8fab63d9d4d7a8359d2",
   "claims": [
     {
-      "id": "claim_9324051ece8c466cae4b427a8dc5bbc9",
+      "id": "claim_4a34d5ee81bb4465a5d6b8e685932e07",
       "statement": "Order creation requests carry no tenantId; the tenant is always taken from TenantContext on the server, and detail tenant_id/order_id are set by the server.",
       "evidence": [
         {
@@ -17,12 +17,12 @@
       ]
     },
     {
-      "id": "claim_39e16475141143048b2eb5c5da57b435",
+      "id": "claim_28202a4c060f44c693cd53caaf7ca936",
       "statement": "OrderService is annotated @Transactional at class level (UserService with readOnly = true) so that all SQL runs inside a transaction where the tenant and user settings have been applied.",
       "evidence": [
         {
           "resource": "repo://src/main/java/com/example/rlssample/order/OrderService.java#L16-L26",
-          "version": "repo-lines-v1:sha256:43d5b21e77d315cdaaf6a41bfc037c94f8d9d9ad3ee042940b2bec8f111261c1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmMWQwNTc2MmFmMTM2ZTc2YmI5NzlmNjlkNWMzYmQzOWJiZmY5YjdmMjMxYTgyNmU0Yjg5YWI3YWFmNWU5MzIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQxNDE5ZWI2Nzg5ZGFkMjAwMTBlYWE5YTQwMzBlY2JiYTRhYjA1NDk3OTY5ZTBmMTIxMTVmN2JiZWRjYzRjOGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMzOWE5Nzk1YTFiMTRmZTBlMTE2MWUwZjc4NzdkZjVjMjM5YzYxNzFjY2NjZTQ1ZTkxNjY5YTc1ZWEwMjQ2MzIifQ"
+          "version": "repo-lines-v1:sha256:ea303fc79b3a660ea99ebb2091976f8db07195316ea586f9ae8364ab5d4876d5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmMWQwNTc2MmFmMTM2ZTc2YmI5NzlmNjlkNWMzYmQzOWJiZmY5YjdmMjMxYTgyNmU0Yjg5YWI3YWFmNWU5MzIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQxNDE5ZWI2Nzg5ZGFkMjAwMTBlYWE5YTQwMzBlY2JiYTRhYjA1NDk3OTY5ZTBmMTIxMTVmN2JiZWRjYzRjOGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMzOWE5Nzk1YTFiMTRmZTBlMTE2MWUwZjc4NzdkZjVjMjM5YzYxNzFjY2NjZTQ1ZTkxNjY5YTc1ZWEwMjQ2MzIifQ"
         },
         {
           "resource": "repo://src/main/java/com/example/rlssample/user/UserService.java#L15-L17",
@@ -31,7 +31,7 @@
       ]
     },
     {
-      "id": "claim_e8a3883cf30d4d15beb3290515287727",
+      "id": "claim_5b3239b6ad3e4798a19bb1599ffae60b",
       "statement": "findAllByTenantAndScope filters by tenant_id and (own user_id OR org_id IN visible organizations), omitting the org_id clause when the scope is empty.",
       "evidence": [
         {
@@ -41,7 +41,7 @@
       ]
     },
     {
-      "id": "claim_242de67a12e84a5b9ad3a2ba92dac107",
+      "id": "claim_ca33a4114f5c4e8ba050a392771c1383",
       "statement": "The mappers intentionally include a WHERE-less listing and id-only get/update/delete (IDOR patterns); with RLS these return or affect only rows the caller may see, so missing rows surface as 404.",
       "evidence": [
         {
@@ -59,7 +59,7 @@
       ]
     },
     {
-      "id": "claim_38fe13ddadd24c5ba60fc5c98e0355a8",
+      "id": "claim_5666740c5b9f4362b18c2fd8e8c847bc",
       "statement": "createOrder rejects a general user naming another owner, looks up the owner through RLS (out-of-scope users are not found), requires non-admin managers to have the owner's organization in scope, and stores the owner's current org_id on the order.",
       "evidence": [
         {
@@ -68,12 +68,12 @@
         },
         {
           "resource": "repo://src/test/java/com/example/rlssample/order/OrgScopeAccessTest.java#L114-L133",
-          "version": "repo-lines-v1:sha256:16ae94af5009febff5506f44a85812ca6634482191181106bc1262ff9a755a2e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjZjA5ZWIwYzU3NDRmYjk3MzMxYjk4ZmYzZmJmMDVhNjAyYmEzZjdmNjdlNWRhNWJlOTA5NTAzM2Y2MjU4MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0Njc1N2FmZTJhZGQ2M2Y0MzFmZTQyNWI2M2MxMTA3MDE0ZWM4N2IyMGJlYTkzMzc3Yjc2MjFhNjZiOGZkNzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBiMDA4Nzg0YTFkNDI5NGZiN2ZiMTU2ODE1YzIxNjYyZGQzYWU1ZmUzNDZhZTAzZDA5ZGU4MzBiOTAyZmNlOWMifQ"
+          "version": "repo-lines-v1:sha256:16ae94af5009febff5506f44a85812ca6634482191181106bc1262ff9a755a2e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjZjA5ZWIwYzU3NDRmYjk3MzMxYjk4ZmYzZmJmMDVhNjAyYmEzZjdmNjdlNWRhNWJlOTA5NTAzM2Y2MjU4MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0Njc1N2FmZTJhZGQ2M2Y0MzFmZTQyNWI2M2MxMTA3MDE0ZWM4N2IyMGJlYTkzMzc3Yjc2MjFhNjZiOGZkNzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcwMGFmYzllZjEzMzA1OWQ3NDE5NDc0YjgwMDYzNDZkYWNiMjA2ZjdjZjJkOWVlMTc2YzE1NTZmNjQ3MjZhYWYifQ"
         }
       ]
     },
     {
-      "id": "claim_f5a3b185a9c3496ea34d6df145eb2e0f",
+      "id": "claim_eba42837793741e4a4241a36e8eb7bae",
       "statement": "listUsers returns all tenant users for administrators, members of the visible organizations for managers with a non-empty scope, and throws ForbiddenException otherwise.",
       "evidence": [
         {
@@ -83,7 +83,7 @@
       ]
     },
     {
-      "id": "claim_96534e18c626419c86672f6d0b31cf6e",
+      "id": "claim_1032d8185ce74421916d33cb874ce5e7",
       "statement": "ApiExceptionHandler maps OrderNotFoundException to 404 and ForbiddenException to 403 ProblemDetail responses; 403 is reserved for the caller's own permission problems so that other users' existing rows are never revealed.",
       "evidence": [
         {
@@ -101,7 +101,7 @@
       ]
     },
     {
-      "id": "claim_a653dbcd79b94f0eac78d5291e8898fb",
+      "id": "claim_05a12084700a439c919c14e222112a44",
       "statement": "GET /api/me returns tenantId, userId, subject, role and the sorted visibleOrganizationIds computed by AccessScopeResolver.",
       "evidence": [
         {
@@ -113,6 +113,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-29T20:28:49.941Z"
+    "at": "2026-10-29T22:35:43.342Z"
   }
 }

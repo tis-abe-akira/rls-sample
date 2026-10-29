@@ -5,7 +5,7 @@ description: /api/orders・/api/me・/api/users のエンドポイント、ロ�
 tags: [api, orders, users, mybatis, idor, error-handling]
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-29T20:28:49.941Z
+    at: 2026-10-29T22:35:43.342Z
 sources:
   - id: openwiki-source-b9e9b19f2fe6a305c2bc92f3
     resource: repo://src/main/java/com/example/rlssample/common/ApiExceptionHandler.java
@@ -27,7 +27,7 @@ sources:
     resource: repo://src/main/resources/mapper/OrderMapper.xml
   - id: openwiki-source-f7a6629511ed92b57f2a95dd
     resource: repo://src/test/java/com/example/rlssample/order/OrgScopeAccessTest.java
-generated: { by: "claude-code", at: "2026-10-29T20:28:49.941Z" }
+generated: { by: "claude-code", at: "2026-10-29T22:35:43.342Z" }
 ---
 
 # 受注・ユーザー API と Mapper
@@ -60,7 +60,7 @@ generated: { by: "claude-code", at: "2026-10-29T20:28:49.941Z" }
 
 `listOrders` は、管理者なら `findAllByTenant(tenantId)`、それ以外なら `findAllByTenantAndScope(tenantId, userId, scope)` を呼びます。`findAllByTenantAndScope` は `tenant_id` と `(user_id = 自分 OR org_id IN (見てよい部署))` で絞り、一般ユーザーのように範囲が空なら `OR org_id IN ...` を付けません。
 
-RLS も同じ条件を DB で足すので、アプリの WHERE が正しければ RLS は何も削らず、書き忘れても結果は同じになります。
+RLS も同じ条件を DB で足すので、アプリケーションの WHERE が正しければ RLS は何も削らず、書き忘れても結果は同じになります。
 
 ## わざと残した危ない SQL
 
@@ -78,7 +78,7 @@ RLS も同じ条件を DB で足すので、アプリの WHERE が正しけれ�
 
 `UserMapper` も同じで、`findBySubject` と `findById` には `tenant_id` 条件がなく、テナントと範囲は RLS が絞ります。
 
-## 作成：代理作成のチェック（アプリ）と WITH CHECK（DB）
+## 作成：代理作成のチェック（アプリケーション）と WITH CHECK（DB）
 
 `createOrder(userId, title, details)` の流れです。
 
@@ -90,7 +90,7 @@ RLS も同じ条件を DB で足すので、アプリの WHERE が正しけれ�
 
 受注の `org_id` には名義人の **その時点の** 所属部署を記録します。名義人が後で異動しても、受注は元の部署のデータのままです（[組織階層による見える範囲](../authorization/org-hierarchy-scope.md)）。
 
-アプリのチェックをすり抜けて Mapper を直接呼んでも、`orders` と `order_details` の `WITH CHECK` が最後の砦になり、他人名義・範囲の外の部署・見えない受注への明細は `row-level security policy` 違反で拒否されます。他テナントのユーザー名義は、複合外部キーの違反になります。
+アプリケーションのチェックをすり抜けて Mapper を直接呼んでも、`orders` と `order_details` の `WITH CHECK` が最後の防御層になり、他人名義・範囲の外の部署・見えない受注への明細は `row-level security policy` 違反で拒否されます。他テナントのユーザー名義は、複合外部キーの違反になります。
 
 ## 更新・削除・明細の追加
 
@@ -100,7 +100,7 @@ RLS も同じ条件を DB で足すので、アプリの WHERE が正しけれ�
 
 ## ユーザー一覧
 
-`UserService#listUsers` は、管理者なら `findAllByTenant`、範囲が空でない管理職なら `findAllByOrganizations`（範囲の部署のメンバー）を返し、それ以外は 403 です。アプリのチェックをすり抜けて `findAllByTenant` を流しても、RLS の `users_select` により一般ユーザーには自分の行、部長には部員だけが見えます。
+`UserService#listUsers` は、管理者なら `findAllByTenant`、範囲が空でない管理職なら `findAllByOrganizations`（範囲の部署のメンバー）を返し、それ以外は 403 です。アプリケーションのチェックをすり抜けて `findAllByTenant` を流しても、RLS の `users_select` により一般ユーザーには自分の行、部長には部員だけが見えます。
 
 ## 404 と 403 の使い分け
 
@@ -112,7 +112,7 @@ RLS も同じ条件を DB で足すので、アプリの WHERE が正しけれ�
 | 400 | 所属が複数なのに `X-Tenant-Id` がない、ヘッダが数値でない | `TenantFilter` |
 | 403 | 所属していないテナントを指定、そのテナントの users に登録がない | `TenantFilter` |
 | 403 | 一般ユーザーが他人名義で作成、範囲の外のメンバー名義で作成、一般ユーザーがユーザー一覧を取得 | `OrderService`、`UserService` |
-| 404 | 他社・他人・範囲の外の **既存の行** を id で指定 | RLS で行が見えず、アプリが「存在しない」として返す |
+| 404 | 他社・他人・範囲の外の **既存の行** を id で指定 | RLS で行が見えず、アプリケーションが「存在しない」として返す |
 
 403 を返すのは **自分の権限についての情報** だけです。他人の既存の行に 403 を返すと「その id の行は存在する」と相手に教えてしまうので、すべて 404 にしています。
 

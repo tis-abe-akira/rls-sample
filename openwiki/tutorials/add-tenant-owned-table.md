@@ -5,7 +5,7 @@ description: 受注に付けるコメント（order_comments）を題材に、�
 tags: [tutorial, rls, schema, mybatis, testing, step-by-step]
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-29T20:48:55.949Z
+    at: 2026-10-29T22:35:43.342Z
 sources:
   - id: openwiki-source-e201e686a785f09b6d899f0b
     resource: repo://compose.yaml
@@ -19,7 +19,7 @@ sources:
     resource: repo://src/test/java/com/example/rlssample/order/OrderRoleAccessTest.java
   - id: openwiki-source-e7dba39fd3249c85dfcc11d5
     resource: repo://src/test/java/com/example/rlssample/support/Actor.java
-generated: { by: "claude-code", at: "2026-10-29T20:48:55.949Z" }
+generated: { by: "claude-code", at: "2026-10-29T22:35:43.342Z" }
 ---
 
 # チュートリアル：テナント所有のテーブルを1つ追加する
@@ -97,7 +97,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON order_comments TO app_user, app_bypass;
 `02_schema.sql` の最後の `GRANT` の並びに足します。シーケンスへの `USAGE` は、すでに `ALL SEQUENCES IN SCHEMA public` で付与しているので、`GRANT` より前に `CREATE TABLE` が流れていれば追加は要りません。
 
 - **なぜ**: RLS は GRANT の **上に** かかる絞り込みで、権限そのものは与えない
-- **忘れると**: アプリから `permission denied for table order_comments` になる
+- **忘れると**: アプリケーションから `permission denied for table order_comments` になる
 
 ## Step 5. デモデータを足して、DB を作り直す
 
@@ -172,7 +172,7 @@ public class OrderCommentService {
 ```
 
 - **`@Transactional` をクラスに付ける**: テナントとユーザーはトランザクション開始時に DB に入る。付け忘れると 0 件になる（漏れはしないが、気付きにくい）
-- **アプリ側の WHERE も書く**: RLS があっても `tenant_id` で絞る（多層防御）。`BYPASSRLS` のロールで動く経路では、これが唯一の守りになる
+- **アプリケーション側の WHERE も書く**: RLS があっても `tenant_id` で絞る（多層防御）。`BYPASSRLS` のロールで動く経路では、これが唯一の守りになる
 - **リクエストに `tenant_id` を含めない**: Controller のリクエストは `body` だけにし、`tenant_id` は親の受注（＝ RLS で見えた行）から取る
 - **見えない受注は 404**: 403 にすると「その id の受注は存在する」と教えてしまう
 
@@ -202,7 +202,7 @@ class OrderCommentAccessTest {
     }
 
     @Test
-    @DisplayName("アプリをすり抜けても、他社の受注へのコメントは DB（WITH CHECK）が拒否する")
+    @DisplayName("アプリケーションをすり抜けても、他社の受注へのコメントは DB（WITH CHECK）が拒否する")
     void otherTenantInsert_isRejectedByDatabase() {
         assertThatThrownBy(() -> ALICE.run(() ->
                 tx.execute(status -> commentMapper.insert(B_KOGYO.value(), 3L, "なりすまし"))))

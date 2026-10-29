@@ -5,7 +5,7 @@ description: JWT の検証のあと、TenantFilter がクレーム tenant_ids �
 tags: [authentication, jwt, tenant-resolution, spring-security, filter]
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-29T20:28:49.941Z
+    at: 2026-10-29T22:35:43.342Z
 sources:
   - id: openwiki-source-650c1395c4723ee71f00da2a
     resource: repo://src/main/java/com/example/rlssample/tenant/CurrentUser.java
@@ -17,7 +17,7 @@ sources:
     resource: repo://src/main/java/com/example/rlssample/user/UserService.java
   - id: openwiki-source-40348177f850b343b14dbfb5
     resource: repo://src/test/java/com/example/rlssample/tenant/TenantFilterWebTest.java
-generated: { by: "claude-code", at: "2026-10-29T20:28:49.941Z" }
+generated: { by: "claude-code", at: "2026-10-29T22:35:43.342Z" }
 ---
 
 # テナントとユーザーの確定（JWT・TenantFilter・UserService）

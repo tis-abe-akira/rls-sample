@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:58594defcf3f5fb7fb789a25845fb4c496f77085f458170c2237de3995d874bb",
+  "pageVersion": "sha256:8ff218747674d1bc325080cb633747f2f736a179b4382718cfe56c7c7f4daa6c",
   "claims": [
     {
-      "id": "claim_8e5f1fc08ead427994feedc81adc7484",
+      "id": "claim_838387c636c94aab99b7eb57a908454d",
       "statement": "order_details is the template for a child table: it carries tenant_id and uses a composite (tenant_id, order_id) foreign key to orders with ON DELETE CASCADE, relying on UNIQUE (tenant_id, id) on orders.",
       "evidence": [
         {
@@ -13,7 +13,7 @@
       ]
     },
     {
-      "id": "claim_4f5ed7e8c47f4c6dbdca34393e2653c9",
+      "id": "claim_74da5ab85bf94da08783bbdc74e72305",
       "statement": "The order_details visible_parent_order policy uses an EXISTS subquery on orders for both USING and WITH CHECK, so role-based visibility is inherited from the orders policy rather than duplicated.",
       "evidence": [
         {
@@ -23,7 +23,7 @@
       ]
     },
     {
-      "id": "claim_90b1825f7905474a987af0ad9b2546c8",
+      "id": "claim_2b855711b92d40b18cd68e3b5312fef9",
       "statement": "Table privileges are granted to app_user and app_bypass explicitly, and sequence USAGE is granted for all sequences in the public schema.",
       "evidence": [
         {
@@ -33,7 +33,7 @@
       ]
     },
     {
-      "id": "claim_04e65568fcf44eaab83e894757689884",
+      "id": "claim_4a3853be9bc2499190aae83652f8fd46",
       "statement": "OrderService.addDetail first loads the parent order through RLS and throws OrderNotFoundException when it is not visible, then inserts the child row with the parent's tenant_id.",
       "evidence": [
         {
@@ -43,21 +43,21 @@
       ]
     },
     {
-      "id": "claim_7304c1c3a1f546958dff5744de689a4a",
+      "id": "claim_6e336d6933174fb5b19d4df5e58104b3",
       "statement": "The README provides a pg_class query that lists tables having a tenant_id column but lacking ENABLE or FORCE ROW LEVEL SECURITY.",
       "evidence": [
         {
-          "resource": "repo://README.md#L256-L262",
+          "resource": "repo://README.md#L276-L282",
           "version": "repo-lines-v1:sha256:a1fed2dba7b3c2efd86dc5ea164c36aea1c063018b58fa5829cefc61feb36aff:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTZmNDAzZTYwZjE2MWM4MzVhYmFlZjg3NDZkZDA2Yjc4ZmE5YjBkY2JkZjEzMjAxOTVmN2U1ZmExM2QwMTQ2MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTYxYTRmOWZhNDlmNjg4MGIxZDIxNTQ5NWU1ODU3MTU4NGU2MWQ2N2YxNzEyOTJkMzZjZDUzNjYyOWZkMzAxYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDYwNGJjMTBjN2VjNzE4MjI0ZDhlZWY4YTg0NTQ0NDA2OWM5YjZhY2EzOTgyODI2ZTdiNjg5NWZmYTBkYjlkMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODEzYTBiNTM3MTA3NzE0NGJmNjQ0ZTdmZWFiNTlhMjE1ZDY3MDczNjBmOThhMDc3N2FjNDZiYmY3ZjVmMGUwNiJ9"
         }
       ]
     },
     {
-      "id": "claim_1d4b28088c434bb894a9be01cdfe2b8c",
+      "id": "claim_1d2a23e92eb8435386f1ed64ec7f2c46",
       "statement": "Init scripts only run on an empty database, so schema or seed changes require recreating the volume with docker compose down -v.",
       "evidence": [
         {
-          "resource": "repo://README.md#L93-L97",
+          "resource": "repo://README.md#L113-L117",
           "version": "repo-lines-v1:sha256:1fd337e671fded29fb1f98fb64f4193de6e54ae8bbbd7e452929942215897156:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDM0Y2E2NjFkMWE2MTZkMzZjZTk0ODEwNjdjMDQ1ZDY4ZjQ0MjE0NjUwMDllNDAyMmZjMDI1N2IzM2VkN2UwYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDdjMDZjNTYxZDVjMzI3MzQzNjg1MjY4YTQ2YjMzOTFmMzk5OGVlZTg5MGQyYmU1MWYwZDIxY2M0YTUzYWU2ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGQ2ZDk1NTlhMDRkZmRmZDk0NDdlYWE4ODk1Yjg3YTg3Njc5NTViNmRiMDU0YmMyYWE3ODllYWEwZjQyMTBhMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTc1NjJhZmRlOWU4NWQ5NmEzMDhkYWU0ZGIxYzgxZmE5YzZkYjY4MDIyOTRhNTllMTQ2YzY3ZDRkMWRiMDkxZiJ9"
         },
         {
@@ -67,12 +67,12 @@
       ]
     },
     {
-      "id": "claim_df1db52fb92e43118cfe8b1b66e4bf47",
+      "id": "claim_5b36617c8fdd4987afcbf58bfad086db",
       "statement": "Existing tests use Actor personas and TransactionTemplate to call mappers directly, asserting that DB-level WITH CHECK rejects writes with a row-level security policy error.",
       "evidence": [
         {
           "resource": "repo://src/test/java/com/example/rlssample/order/OrderRoleAccessTest.java#L105-L125",
-          "version": "repo-lines-v1:sha256:2f29a8446d52cd63e012cbdc5a7b55254cabf7e5c10e67b3fd531f2384f23865:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjZjA5ZWIwYzU3NDRmYjk3MzMxYjk4ZmYzZmJmMDVhNjAyYmEzZjdmNjdlNWRhNWJlOTA5NTAzM2Y2MjU4MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEwYTBhNWJmMWM4NGYxOGQ3NWIxZTgwZDA4NGRjMmQyNWE2ODJhYzJjMzBlYTJjMTM4YzU2MzI3MWU5Yjk2OTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY0Yjg5ZmM5ZTY2MDU5NDEzNGZhNTMwZGIwNDllMWNkOGZhZjkwNWRjOTNhNzY3YzA4YzE5YmEwMWE2ZGEyMTUifQ"
+          "version": "repo-lines-v1:sha256:b0aab09d81166b4d375f3088d1e05da32df9aceab03338fae64c6e8440ef8101:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjZjA5ZWIwYzU3NDRmYjk3MzMxYjk4ZmYzZmJmMDVhNjAyYmEzZjdmNjdlNWRhNWJlOTA5NTAzM2Y2MjU4MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEwYTBhNWJmMWM4NGYxOGQ3NWIxZTgwZDA4NGRjMmQyNWE2ODJhYzJjMzBlYTJjMTM4YzU2MzI3MWU5Yjk2OTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY0Yjg5ZmM5ZTY2MDU5NDEzNGZhNTMwZGIwNDllMWNkOGZhZjkwNWRjOTNhNzY3YzA4YzE5YmEwMWE2ZGEyMTUifQ"
         },
         {
           "resource": "repo://src/test/java/com/example/rlssample/support/Actor.java#L47-L50",
@@ -83,6 +83,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-29T20:48:55.949Z"
+    "at": "2026-10-29T22:35:43.342Z"
   }
 }

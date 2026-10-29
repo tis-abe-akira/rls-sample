@@ -1,11 +1,11 @@
 ---
 type: architecture
 title: アーキテクチャ概要：多層防御とリクエストの流れ
-description: PostgreSQL の RLS とアプリ側の WHERE 句で、テナントの壁とテナント内の権限を二重に守る仕組みの全体像。1リクエストが JWT 検証から RLS まで通る経路と、パッケージの責務分担をまとめる。
+description: PostgreSQL の RLS とアプリケーション側の WHERE 句で、テナントの壁とテナント内の権限を二重に守る仕組みの全体像。1リクエストが JWT 検証から RLS まで通る経路と、パッケージの責務分担をまとめる。
 tags: [architecture, multi-tenancy, rls, defense-in-depth, request-flow]
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-29T20:28:49.941Z
+    at: 2026-10-29T22:35:43.342Z
 sources:
   - id: openwiki-source-ae9507c4a442eab54c70e7da
     resource: repo://db/init/02_schema.sql
@@ -19,12 +19,12 @@ sources:
     resource: repo://src/main/java/com/example/rlssample/tenant/TenantConfig.java
   - id: openwiki-source-2bd85f9faf1fb7e8210d7fd0
     resource: repo://src/main/resources/mapper/OrderMapper.xml
-generated: { by: "claude-code", at: "2026-10-29T20:28:49.941Z" }
+generated: { by: "claude-code", at: "2026-10-29T22:35:43.342Z" }
 ---
 
 # アーキテクチャ概要：多層防御とリクエストの流れ
 
-このリポジトリは「WHERE 句を書き忘れても、id だけで取りに来られても、他社のデータは返らない」を体験するための Spring Boot 4.1 / MyBatis / PostgreSQL 17 のサンプルです。守りの中心はアプリのコードではなく **PostgreSQL の Row Level Security（RLS）** で、アプリの役割は「今のリクエストが、どのテナントの誰か」を正しく決めて DB に届けることです。
+このリポジトリは「WHERE 句を書き忘れても、id だけで取りに来られても、他社のデータは返らない」を体験するための Spring Boot 4.1 / MyBatis / PostgreSQL 17 のサンプルです。守りの中心はアプリケーションのコードではなく **PostgreSQL の Row Level Security（RLS）** で、アプリケーションの役割は「今のリクエストが、どのテナントの誰か」を正しく決めて DB に届けることです。
 
 ## 守りの2段構え
 
@@ -43,19 +43,19 @@ PostgreSQL では RESTRICTIVE 同士が AND、PERMISSIVE 同士が OR で結合�
 - `MANAGER`（部長・事業部長）: 自分のデータに加えて、組織階層で算出した「見てよい部署」のデータ
 - `ADMIN`（管理者）: テナント内の全員のデータ
 
-## 「判断はアプリ、強制は DB」
+## 「判断はアプリケーション、強制は DB」
 
-組織階層による見える範囲は、RLS のポリシーで階層をたどるのではなく、アプリが「見てよい部署の一覧」を算出して DB に渡し、RLS はその一覧と `org_id` を比べるだけにしています。兼務・代理・期間限定の権限が増えても、変わるのはアプリ側の算出（`AccessScopeResolver` の実装）だけで、ポリシーは変わりません。設計判断の経緯は `docs/ADR.md`、仕組みは [組織階層による見える範囲](../authorization/org-hierarchy-scope.md) を参照してください。
+組織階層による見える範囲は、RLS のポリシーで階層をたどるのではなく、アプリケーションが「見てよい部署の一覧」を算出して DB に渡し、RLS はその一覧と `org_id` を比べるだけにしています。兼務・代理・期間限定の権限が増えても、変わるのはアプリケーション側の算出（`AccessScopeResolver` の実装）だけで、ポリシーは変わりません。設計判断の経緯は `docs/ADR.md`、仕組みは [組織階層による見える範囲](../authorization/org-hierarchy-scope.md) を参照してください。
 
-## 多層防御：アプリの WHERE と RLS の二重チェック
+## 多層防御：アプリケーションの WHERE と RLS の二重チェック
 
-RLS があってもアプリ側の WHERE 句は消していません。`OrderService` はロールに応じて Mapper を選び、一般・管理職なら `tenant_id` と「自分または見てよい部署」、管理者なら `tenant_id` で絞ります。そのうえで RLS が同じ条件を DB で足します。
+RLS があってもアプリケーション側の WHERE 句は消していません。`OrderService` はロールに応じて Mapper を選び、一般・管理職なら `tenant_id` と「自分または見てよい部署」、管理者なら `tenant_id` で絞ります。そのうえで RLS が同じ条件を DB で足します。
 
-- アプリの WHERE が正しければ、RLS は何も削らない（結果は同じ）
-- アプリが WHERE を書き忘れても（`/api/orders/leaky`）、RLS が同じ条件を足すので結果は同じ
-- `id` だけで他人・他社の行を指定されても（IDOR）、RLS で行が見えず 0 件になり、アプリは 404 を返す
+- アプリケーションの WHERE が正しければ、RLS は何も削らない（結果は同じ）
+- アプリケーションが WHERE を書き忘れても（`/api/orders/leaky`）、RLS が同じ条件を足すので結果は同じ
+- `id` だけで他人・他社の行を指定されても（IDOR）、RLS で行が見えず 0 件になり、アプリケーションは 404 を返す
 
-一方、`BYPASSRLS` ロールで動くバッチや管理機能には RLS が効かないため、アプリ側の条件が唯一の守りになります。これがアプリの WHERE を残す理由の1つです。
+一方、`BYPASSRLS` ロールで動くバッチや管理機能には RLS が効かないため、アプリケーション側の条件が唯一の守りになります。これがアプリケーションの WHERE を残す理由の1つです。
 
 ## 1リクエストの流れ
 

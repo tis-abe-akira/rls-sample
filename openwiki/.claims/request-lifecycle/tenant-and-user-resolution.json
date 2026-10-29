@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:5c47122cf1c3bc835a7324dac20126f3cce798ca1d50462e444a67f2cee9b1e0",
+  "pageVersion": "sha256:97fd8da37c46e8125d08f223026900d8dd890ab20255347a36f34e74dcbbc00b",
   "claims": [
     {
-      "id": "claim_d59a053dc2e04cd08e1061581919719c",
+      "id": "claim_8837c37aef444ffa8f18eb65496ed112",
       "statement": "SecurityConfig requires authentication for all non-error requests, uses stateless JWT resource-server authentication with CSRF disabled, and validates HS256 tokens with the shared secret app.jwt.secret; production is meant to replace the JwtDecoder bean with issuer-uri configuration.",
       "evidence": [
         {
@@ -13,7 +13,7 @@
       ]
     },
     {
-      "id": "claim_a9754ee4e5c0494592d5fc18bd41fe08",
+      "id": "claim_8f6c1877a4f9440a9661fa8f7d6acf19",
       "statement": "TenantFilter only filters /api/ requests and derives the tenant solely from the signed tenant_ids claim; X-Tenant-Id only selects among those tenants.",
       "evidence": [
         {
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "id": "claim_eae8287ce3da4b82968a8a691a930558",
+      "id": "claim_06fd093f06d1448396ebf1f6c79d204c",
       "statement": "Tenant resolution returns 403 for a missing or unparseable tenant_ids claim, 400 when a multi-tenant user omits the header or the header is not a positive number, and 403 with a WARN log when the header names a tenant not in the claim.",
       "evidence": [
         {
@@ -41,7 +41,7 @@
       ]
     },
     {
-      "id": "claim_7d862ab0f2d84cf1b2efe77870e05bf9",
+      "id": "claim_313bdc27154c4867926d7a80c94ea240",
       "statement": "The user is resolved by looking up users by JWT sub inside runAs(tenant, unresolved user); roles come from the database rather than the token, and a subject not registered in the tenant yields 403.",
       "evidence": [
         {
@@ -59,7 +59,7 @@
       ]
     },
     {
-      "id": "claim_df0b37c1a5fc4aa4921004c80586468a",
+      "id": "claim_1f94dd1f66ab46609deb1018662793a9",
       "statement": "CurrentUser requires a subject and enforces that id, role and scope are either all set (resolved) or all null (unresolved).",
       "evidence": [
         {
@@ -69,7 +69,7 @@
       ]
     },
     {
-      "id": "claim_6ac7862857024879a30fd310eae6031a",
+      "id": "claim_b5d09a724f684661bbef523496d5bb28",
       "statement": "After resolution, TenantFilter runs the rest of the filter chain inside TenantContext.runAs and UserContext.runAs, and rejected requests receive an application/problem+json body.",
       "evidence": [
         {
@@ -85,6 +85,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-29T20:28:49.941Z"
+    "at": "2026-10-29T22:35:43.342Z"
   }
 }

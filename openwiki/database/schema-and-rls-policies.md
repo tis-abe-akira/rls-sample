@@ -5,7 +5,7 @@ description: 接続ロールの分離、テナント所有テーブルと複合�
 tags: [database, postgresql, rls, schema, policies, security]
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-29T20:28:49.941Z
+    at: 2026-10-29T22:35:43.342Z
 sources:
   - id: openwiki-source-e201e686a785f09b6d899f0b
     resource: repo://compose.yaml
@@ -27,22 +27,22 @@ sources:
     resource: repo://src/test/java/com/example/rlssample/order/OrgScopeAccessTest.java
   - id: openwiki-source-e7dba39fd3249c85dfcc11d5
     resource: repo://src/test/java/com/example/rlssample/support/Actor.java
-generated: { by: "claude-code", at: "2026-10-29T20:28:49.941Z" }
+generated: { by: "claude-code", at: "2026-10-29T22:35:43.342Z" }
 ---
 
 # スキーマと RLS ポリシー
 
-守りの本体は `db/init/02_schema.sql` です。アプリはここで定義した関数が読む `app.*` 設定を届けるだけで、「どの行が見えるか」は DB が決めます。初期化スクリプトは `compose.yaml` で `/docker-entrypoint-initdb.d` にマウントされ、DB が空のときだけアルファベット順に実行されます（`01_roles.sql` → `02_schema.sql` → `03_data.sql`）。
+守りの本体は `db/init/02_schema.sql` です。アプリケーションはここで定義した関数が読む `app.*` 設定を届けるだけで、「どの行が見えるか」は DB が決めます。初期化スクリプトは `compose.yaml` で `/docker-entrypoint-initdb.d` にマウントされ、DB が空のときだけアルファベット順に実行されます（`01_roles.sql` → `02_schema.sql` → `03_data.sql`）。
 
 ## 接続ロール
 
 | ロール | 作られる場所 | 用途 | RLS |
 |---|---|---|---|
-| `owner` | `compose.yaml` の `POSTGRES_USER` | テーブル所有者・スーパーユーザー。DDL とデータ投入専用で、アプリからは使わない | 素通り（スーパーユーザー） |
-| `app_user` | `01_roles.sql` | アプリが普段使うロール（`application.yml`） | **効く** |
+| `owner` | `compose.yaml` の `POSTGRES_USER` | テーブル所有者・スーパーユーザー。DDL とデータ投入専用で、アプリケーションからは使わない | 素通り（スーパーユーザー） |
+| `app_user` | `01_roles.sql` | アプリケーションが普段使うロール（`application.yml`） | **効く** |
 | `app_bypass` | `01_roles.sql`（`BYPASSRLS`） | バッチ・運用管理用。`bypass` プロファイルで「RLS がない状態」を再現するデモにも使う | 素通り |
 
-スーパーユーザーと `BYPASSRLS` を持つロールは、`FORCE ROW LEVEL SECURITY` を付けても RLS を素通りします。そのためアプリは必ず `app_user` で接続します。Spring Boot の Docker Compose 連携は `POSTGRES_USER`（スーパーユーザー）で接続してしまうので、このサンプルでは使っていません。
+スーパーユーザーと `BYPASSRLS` を持つロールは、`FORCE ROW LEVEL SECURITY` を付けても RLS を素通りします。そのためアプリケーションは必ず `app_user` で接続します。Spring Boot の Docker Compose 連携は `POSTGRES_USER`（スーパーユーザー）で接続してしまうので、このサンプルでは使っていません。
 
 ## テーブルとデータモデル
 
@@ -72,7 +72,7 @@ erDiagram
 
 子テーブル `order_details` に `tenant_id` を持たせているのは、親を経由せずに子テーブルを直接 SELECT されたときにも RLS を効かせるためです。
 
-インデックスは `(tenant_id, ...)` を先頭にしています（`orders_tenant_user_idx`、`orders_tenant_org_idx`、`order_details_tenant_order_idx`、`organizations_tenant_parent_idx`）。アプリ側の WHERE に `tenant_id` を残しておくと、これらを使った実行計画になりやすくなります。
+インデックスは `(tenant_id, ...)` を先頭にしています（`orders_tenant_user_idx`、`orders_tenant_org_idx`、`order_details_tenant_order_idx`、`organizations_tenant_parent_idx`）。アプリケーション側の WHERE に `tenant_id` を残しておくと、これらを使った実行計画になりやすくなります。
 
 ## 「今の接続は誰か」を返す関数
 
@@ -117,7 +117,7 @@ README には、RLS が有効になっていないテナント所有テーブル
 
 ### orders は参照と書き込みを同じ条件で守る
 
-`owner_or_scope_or_admin` は `FOR` を指定していないので、SELECT・INSERT・UPDATE・DELETE のすべてに効きます。`USING` と `WITH CHECK` が同じ条件なので、範囲の外の部署や他人名義の受注は作れず、UPDATE で範囲の外へ付け替えることもできません。組織階層をたどる処理はポリシーにはなく、アプリが渡した `app.visible_org_ids` と比べるだけです（[組織階層による見える範囲](../authorization/org-hierarchy-scope.md)）。
+`owner_or_scope_or_admin` は `FOR` を指定していないので、SELECT・INSERT・UPDATE・DELETE のすべてに効きます。`USING` と `WITH CHECK` が同じ条件なので、範囲の外の部署や他人名義の受注は作れず、UPDATE で範囲の外へ付け替えることもできません。組織階層をたどる処理はポリシーにはなく、アプリケーションが渡した `app.visible_org_ids` と比べるだけです（[組織階層による見える範囲](../authorization/org-hierarchy-scope.md)）。
 
 ### 明細は「親の受注が見えるか」で決める
 
@@ -131,4 +131,4 @@ RLS は GRANT の「上に」かかる追加の絞り込みです。`app_user` �
 
 `03_data.sql` は `owner`（スーパーユーザー）で実行されるので RLS は効かず、2社分の行をまとめて投入できます。テストは投入順で採番される ID（organizations 1〜6、users 1〜9、orders 1〜6）を前提にしているので、順番を変えるとテストが壊れます。データの一覧は [ローカルでの動かし方とデモ](../operations/local-development.md) にあります。
 
-`db/demo.sql` を `app_user` で流すと、アプリを起動せずに psql だけでポリシーの挙動（未設定なら 0 件、IDOR が 0 件、`WITH CHECK` 違反、部長・事業部長の範囲、トランザクション終了後に設定が消えること）を確認できます。
+`db/demo.sql` を `app_user` で流すと、アプリケーションを起動せずに psql だけでポリシーの挙動（未設定なら 0 件、IDOR が 0 件、`WITH CHECK` 違反、部長・事業部長の範囲、トランザクション終了後に設定が消えること）を確認できます。

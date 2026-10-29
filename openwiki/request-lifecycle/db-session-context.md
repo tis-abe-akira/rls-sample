@@ -5,7 +5,7 @@ description: TenantContext / UserContext の ThreadLocal に入れたテナン�
 tags: [transaction, threadlocal, set-local, spring, mybatis, fail-closed]
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-29T20:28:49.941Z
+    at: 2026-10-29T22:35:43.342Z
 sources:
   - id: openwiki-source-30c0f5ae480b178275a17c19
     resource: repo://src/main/java/com/example/rlssample/tenant/TenantAwareTransactionManager.java
@@ -17,12 +17,12 @@ sources:
     resource: repo://src/main/java/com/example/rlssample/tenant/UserContext.java
   - id: openwiki-source-b4fc34e2ebcad5a585a7a9f4
     resource: repo://src/test/java/com/example/rlssample/order/OrderRlsIntegrationTest.java
-generated: { by: "claude-code", at: "2026-10-29T20:28:49.941Z" }
+generated: { by: "claude-code", at: "2026-10-29T22:35:43.342Z" }
 ---
 
 # DB へのコンテキスト受け渡し（ThreadLocal と SET LOCAL）
 
-RLS のポリシーは `app.tenant_id` などのセッション設定を読みます。アプリ側でこの値を運ぶのが `TenantContext` / `UserContext`（ThreadLocal）で、DB の接続に届けるのが `TenantAwareTransactionManager` です。DB に値を渡す場所はこの1か所だけで、サービスや Mapper はテナントを意識しません。
+RLS のポリシーは `app.tenant_id` などのセッション設定を読みます。アプリケーション側でこの値を運ぶのが `TenantContext` / `UserContext`（ThreadLocal）で、DB の接続に届けるのが `TenantAwareTransactionManager` です。DB に値を渡す場所はこの1か所だけで、サービスや Mapper はテナントを意識しません。
 
 ## ThreadLocal：TenantContext と UserContext
 

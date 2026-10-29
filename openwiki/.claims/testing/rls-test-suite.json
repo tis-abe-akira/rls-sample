@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:1dc8f293e088c8985f776cf3ca0e4d34a1ceb847b0ddbb7242ef7e78a80ded05",
+  "pageVersion": "sha256:b33a7a0674d75722da3d316088c7fb73a0345aa1e5f0098b75ebca4c2ef309be",
   "claims": [
     {
-      "id": "claim_22fe6b63def44b25ae6a70c42126f556",
+      "id": "claim_47ad85f16d494406969a68e9471be715",
       "statement": "The test suite is @SpringBootTest integration tests against a real PostgreSQL started with docker compose, and relies on the seed data's insertion-order IDs.",
       "evidence": [
         {
@@ -17,7 +17,7 @@
       ]
     },
     {
-      "id": "claim_837b324ce6ba4ea7a48153f6c8152427",
+      "id": "claim_e3d09ede0de44d67be9c9c244cb76883",
       "statement": "Actor fixes the tenant and resolved CurrentUser for each test persona and run() wraps the action in TenantContext.runAs and UserContext.runAs.",
       "evidence": [
         {
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "id": "claim_a40dccedeff5465e98e59668c016c1f8",
+      "id": "claim_cd568188f96b496b8e5800d0d16a3e01",
       "statement": "OrganizationHierarchyScopeResolverTest verifies that resolving each persona through UserService.resolve yields exactly the CurrentUser hard-coded in Actor, keeping test fixtures aligned with production scope calculation.",
       "evidence": [
         {
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "id": "claim_e66c768972524d948646cda07775cfc9",
+      "id": "claim_7ba596eb91e4470ea15ce9ae305862a3",
       "statement": "Tests must not be annotated @Transactional because the transaction would begin before runAs sets the tenant, leaving every query with no visible rows.",
       "evidence": [
         {
@@ -47,31 +47,31 @@
       ]
     },
     {
-      "id": "claim_8a620a717998446582093dccd0337917",
+      "id": "claim_523041edf25e4da4b43ad2e9e29b7a31",
       "statement": "Database-only defenses are tested by calling mappers directly inside TransactionTemplate.execute, expecting DataAccessException whose root cause mentions row-level security policy.",
       "evidence": [
         {
           "resource": "repo://src/test/java/com/example/rlssample/order/OrderRoleAccessTest.java#L105-L125",
-          "version": "repo-lines-v1:sha256:2f29a8446d52cd63e012cbdc5a7b55254cabf7e5c10e67b3fd531f2384f23865:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjZjA5ZWIwYzU3NDRmYjk3MzMxYjk4ZmYzZmJmMDVhNjAyYmEzZjdmNjdlNWRhNWJlOTA5NTAzM2Y2MjU4MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEwYTBhNWJmMWM4NGYxOGQ3NWIxZTgwZDA4NGRjMmQyNWE2ODJhYzJjMzBlYTJjMTM4YzU2MzI3MWU5Yjk2OTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY0Yjg5ZmM5ZTY2MDU5NDEzNGZhNTMwZGIwNDllMWNkOGZhZjkwNWRjOTNhNzY3YzA4YzE5YmEwMWE2ZGEyMTUifQ"
+          "version": "repo-lines-v1:sha256:b0aab09d81166b4d375f3088d1e05da32df9aceab03338fae64c6e8440ef8101:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjZjA5ZWIwYzU3NDRmYjk3MzMxYjk4ZmYzZmJmMDVhNjAyYmEzZjdmNjdlNWRhNWJlOTA5NTAzM2Y2MjU4MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEwYTBhNWJmMWM4NGYxOGQ3NWIxZTgwZDA4NGRjMmQyNWE2ODJhYzJjMzBlYTJjMTM4YzU2MzI3MWU5Yjk2OTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY0Yjg5ZmM5ZTY2MDU5NDEzNGZhNTMwZGIwNDllMWNkOGZhZjkwNWRjOTNhNzY3YzA4YzE5YmEwMWE2ZGEyMTUifQ"
         },
         {
           "resource": "repo://src/test/java/com/example/rlssample/order/OrgScopeAccessTest.java#L135-L143",
-          "version": "repo-lines-v1:sha256:cdc124a9071641dd7027f50c57a6fab7d127d592aeb31ca7297571fbcd82fd73:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGNmMDllYjBjNTc0NGZiOTczMzFiOThmZjNmYmYwNWE2MDJiYTNmN2Y2N2U1ZGE1YmU5MDk1MDMzZjYyNTgyNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2MxNWFiOWVkMTNjN2UxNDJkMmQ5ODJjNDRlMjFkMTk0NjY0ZDVhOTYyODE2ZDFjZTEwZjIyZjA4ZWYzNDIzMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzRhNTUwZWMwNGNmZGQ1NmQyYmQxYzdiYThhZWMwNDJmN2ZkZTMzOTk0MjRhZGU4MmUwZTk1NzNjYmQwMTczZSJ9"
+          "version": "repo-lines-v1:sha256:eaecec7228162d44e94e28f78bb87e127f0c523202078c446fda3699dc1ce84b:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGNmMDllYjBjNTc0NGZiOTczMzFiOThmZjNmYmYwNWE2MDJiYTNmN2Y2N2U1ZGE1YmU5MDk1MDMzZjYyNTgyNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2MxNWFiOWVkMTNjN2UxNDJkMmQ5ODJjNDRlMjFkMTk0NjY0ZDVhOTYyODE2ZDFjZTEwZjIyZjA4ZWYzNDIzMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzRhNTUwZWMwNGNmZGQ1NmQyYmQxYzdiYThhZWMwNDJmN2ZkZTMzOTk0MjRhZGU4MmUwZTk1NzNjYmQwMTczZSJ9"
         }
       ]
     },
     {
-      "id": "claim_b6666bb12d6247c89da5a91d1ea4383c",
+      "id": "claim_c64a629d295a4cb79666662d0a0e94cf",
       "statement": "OrgScopeAccessTest asserts the visible order IDs per persona: bob sees 1, ken sees 1 and 6, mika sees 1, 2 and 6, and alice sees 1, 2, 5 and 6.",
       "evidence": [
         {
           "resource": "repo://src/test/java/com/example/rlssample/order/OrgScopeAccessTest.java#L28-L68",
-          "version": "repo-lines-v1:sha256:dd711b573027db8dfb37d201c4e9ca4a14e6fe2ffb04390284965455f91ecb44:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg2OGY4ZTJkYmNmZjk3MjJkYTNiMDc3YTNjMjMzNTI0OTZlZDMyMDM1NzAzODY0MzEyZDdlMTNhMzhhNDYwNWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk2ZGYyOWM1MGQzYTUyYmRlMTA1ZDFhZWI5Mjg4MzY4OGE4ZGE0NmFlMmI1MDVhNDBjZDQyNDgwN2RjYTVlMGMifQ"
+          "version": "repo-lines-v1:sha256:7b97d6b820245404304d84bfa21bac2369c02328de934c93ceb803696c33333d:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg2OGY4ZTJkYmNmZjk3MjJkYTNiMDc3YTNjMjMzNTI0OTZlZDMyMDM1NzAzODY0MzEyZDdlMTNhMzhhNDYwNWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk2ZGYyOWM1MGQzYTUyYmRlMTA1ZDFhZWI5Mjg4MzY4OGE4ZGE0NmFlMmI1MDVhNDBjZDQyNDgwN2RjYTVlMGMifQ"
         }
       ]
     },
     {
-      "id": "claim_427696a486ab45e9a270c1efb0616875",
+      "id": "claim_fb37270744584eb691fb454db06be39b",
       "statement": "TenantFilterWebTest issues tokens with NimbusJwtEncoder using app.jwt.secret (or a different key for forged tokens) and asserts HTTP statuses through MockMvc.",
       "evidence": [
         {
@@ -87,6 +87,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-29T20:28:49.941Z"
+    "at": "2026-10-29T22:35:43.342Z"
   }
 }
