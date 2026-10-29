@@ -42,6 +42,26 @@ src/test/.../TenantFilterWebTest       JWT・ヘッダ・users テーブルに�
 | [docs/STORY.md](docs/STORY.md) | 背景、RLS の利点と限界、設計のベストプラクティス |
 | [docs/AUTHORIZATION.md](docs/AUTHORIZATION.md) | 認可の処理の流れ（主要なクラスの連携をシーケンス図で説明） |
 | [docs/ADR.md](docs/ADR.md) | 組織階層の見える範囲を「判断はアプリ、強制は DB」にした設計判断 |
+| [openwiki/quickstart.md](openwiki/quickstart.md) | [OpenWiki](https://github.com/langchain-ai/openwiki) で生成した Wiki の入口（チュートリアル、RLS を持たない DB での代替手段を含む） |
+
+### Wiki を見る
+
+Wiki は `openwiki/` の Markdown なので、そのまま読めます。ページのつながりをグラフで見るには、OpenWiki の CLI（`npm install -g openwiki`、Node.js 22 以上）を使います。
+
+```bash
+# LIVE: ローカルサーバーで表示する。Wiki のファイルを変えると自動で反映される
+openwiki visualize                      # http://127.0.0.1:4321 がブラウザで開く
+
+# STATIC: 静的なファイルに書き出す（出力先は例。リポジトリの外に置くとコミットに混ざらない）
+openwiki visualize openwiki --export ~/openwiki-sites/rls-sample
+cd ~/openwiki-sites/rls-sample && python3 -m http.server 8000   # http://localhost:8000
+```
+
+- STATIC は `graph.json` を `fetch` で読むので、`index.html` をダブルクリック（`file://`）しても開けません。HTTP で配信してください
+- STATIC は描画ライブラリとフォントを CDN から読むので、オフラインでは表示できません
+- STATIC は自動では更新されません。Wiki を更新したら書き出し直します
+
+Wiki の方針は [openwiki/INSTRUCTIONS.md](openwiki/INSTRUCTIONS.md) に書いてあります。生成されたページは手で直さず、Claude Code（`openwiki integrations install claude` で連携）に「このリポジトリの OpenWiki を前回からの変更分だけ更新して」と頼んで更新します。
 
 ## データモデル
 
