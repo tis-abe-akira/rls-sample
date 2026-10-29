@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: rls-sample
+  datasource:
+    url: jdbc:postgresql://localhost:15432/rls_sample
+    # RLS が効くアプリ用ロール。owner(スーパーユーザー)で繋ぐと RLS は素通りするので注意。
+    username: app_user
+    password: app_user
+
+app:
+  jwt:
+    # サンプル用の HS256 共有鍵（32バイト以上必要）。scripts/token.sh も同じ値で署名する。
+    # 本番では共有鍵を持たず、IdP の公開鍵で検証する（spring.security.oauth2.resourceserver.jwt.issuer-uri）。
+    secret: rls-sample-demo-secret-change-me-0123456789
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    # Mapper の発行SQLを出す（WHERE句が無いのに絞られていることを確認できる）
+    com.example.rlssample.order.OrderMapper: DEBUG
+    # set_config がトランザクション開始時に発行されていることを確認できる
+    com.example.rlssample.tenant.TenantAwareTransactionManager: DEBUG

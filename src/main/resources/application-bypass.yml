@@ -1,0 +1,7 @@
+# 「RLS が無かったら何が起きるか」を再現するためのプロファイル。
+#   mvn spring-boot:run -Dspring-boot.run.profiles=bypass
+# BYPASSRLS ロールで接続するので、WHERE句の漏れがそのまま他社データ露出になる。
+spring:
+  datasource:
+    username: app_bypass
+    password: app_bypass

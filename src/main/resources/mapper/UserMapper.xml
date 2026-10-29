@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.rlssample.user.UserMapper">
+
+    <resultMap id="userMap" type="com.example.rlssample.user.User">
+        <constructor>
+            <idArg column="id"        javaType="java.lang.Long"/>
+            <arg   column="tenant_id" javaType="java.lang.Long"/>
+            <arg   column="subject"   javaType="java.lang.String"/>
+            <arg   column="name"      javaType="java.lang.String"/>
+            <arg   column="role"      javaType="com.example.rlssample.tenant.Role"/>
+        </constructor>
+    </resultMap>
+
+    <!-- テナントは RLS が絞る（同じ subject でもテナントごとに別の行がある） -->
+    <select id="findBySubject" resultMap="userMap">
+        SELECT id, tenant_id, subject, name, role
+          FROM users
+         WHERE subject = #{subject}
+    </select>
+
+    <select id="findAllByTenant" resultMap="userMap">
+        SELECT id, tenant_id, subject, name, role
+          FROM users
+         WHERE tenant_id = #{tenantId}
+         ORDER BY id
+    </select>
+
+</mapper>

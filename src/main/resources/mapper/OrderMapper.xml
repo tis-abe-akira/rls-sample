@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.rlssample.order.OrderMapper">
+
+    <resultMap id="orderMap" type="com.example.rlssample.order.Order">
+        <constructor>
+            <idArg column="id"        javaType="java.lang.Long"/>
+            <arg   column="tenant_id" javaType="java.lang.Long"/>
+            <arg   column="user_id"   javaType="java.lang.Long"/>
+            <arg   column="title"     javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+
+    <!-- ✅ 正しい実装（管理者）: アプリ側でも tenant_id で絞る（RLS と二重の防御） -->
+    <select id="findAllByTenant" resultMap="orderMap">
+        SELECT id, tenant_id, user_id, title
+          FROM orders
+         WHERE tenant_id = #{tenantId}
+         ORDER BY id
+    </select>
+
+    <!-- ✅ 正しい実装（一般ユーザー）: tenant_id と user_id で絞る -->
+    <select id="findAllByTenantAndUser" resultMap="orderMap">
+        SELECT id, tenant_id, user_id, title
+          FROM orders
+         WHERE tenant_id = #{tenantId}
+           AND user_id   = #{userId}
+         ORDER BY id
+    </select>
+
+    <!-- ❌ WHERE句の書き忘れ。RLS が無ければ全社・全員のデータが返る -->
+    <select id="findAllWithoutTenantFilter" resultMap="orderMap">
+        SELECT id, tenant_id, user_id, title
+          FROM orders
+         ORDER BY id
+    </select>
+
+    <!-- ❌ id だけで取得する IDOR パターン。他社・他人の id を指定されると読めてしまう -->
+    <select id="findById" resultMap="orderMap">
+        SELECT id, tenant_id, user_id, title
+          FROM orders
+         WHERE id = #{id}
+    </select>
+
+    <!-- PostgreSQL の RETURNING で採番された id を受け取る -->
+    <select id="insert" resultType="long" flushCache="true">
+        INSERT INTO orders (tenant_id, user_id, title)
+        VALUES (#{tenantId}, #{userId}, #{title})
+        RETURNING id
+    </select>
+
+    <!-- ❌ id だけで更新する IDOR パターン -->
+    <update id="updateTitle">
+        UPDATE orders SET title = #{title} WHERE id = #{id}
+    </update>
+
+    <!-- ❌ id だけで削除する IDOR パターン（明細は外部キーの ON DELETE CASCADE で消える） -->
+    <delete id="deleteById">
+        DELETE FROM orders WHERE id = #{id}
+    </delete>
+
+</mapper>

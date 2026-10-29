@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: rls-sample-db
+    environment:
+      # ここで作られるのは「スーパーユーザー兼テーブル所有者」。DDL専用で、アプリからは絶対に使わない。
+      POSTGRES_DB: rls_sample
+      POSTGRES_USER: owner
+      POSTGRES_PASSWORD: owner
+    ports:
+      - "15432:5432"
+    volumes:
+      # 初回起動時にアルファベット順で実行される
+      - ./db/init:/docker-entrypoint-initdb.d:ro
