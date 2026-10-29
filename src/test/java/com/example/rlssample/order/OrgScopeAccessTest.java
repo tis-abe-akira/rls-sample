@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
- * 組織階層による見える範囲を確認する。判断はアプリ（AccessScopeResolver）、強制は DB（RLS）。
+ * 組織階層による見える範囲を確認する。判断はアプリケーション（AccessScopeResolver）、強制は DB（RLS）。
  * <pre>
  *   bob   一般（第一営業部）            → 自分の受注だけ           = 受注 1
  *   ken   部長（第一営業部）            → 第一営業部の受注         = 受注 1, 6
@@ -133,7 +133,7 @@ class OrgScopeAccessTest {
     }
 
     @Test
-    @DisplayName("アプリのチェックをすり抜けても、範囲の外の部署の受注は DB（WITH CHECK）が拒否する")
+    @DisplayName("アプリケーションのチェックをすり抜けても、範囲の外の部署の受注は DB（WITH CHECK）が拒否する")
     void outsideScopeInsertIsRejectedByDatabase() {
         assertThatThrownBy(() -> KEN.run(() ->
                 tx.execute(status -> orderMapper.insert(A_SHOJI.value(), CAROL.userId(), SALES_DEPT_2, "範囲外"))))
@@ -152,7 +152,7 @@ class OrgScopeAccessTest {
     }
 
     @Test
-    @DisplayName("アプリのチェックをすり抜けて全員分の SQL を流しても、部長に見えるのは部員だけ（DB が絞る）")
+    @DisplayName("アプリケーションのチェックをすり抜けて全員分の SQL を流しても、部長に見えるのは部員だけ（DB が絞る）")
     void leakyUserQueryIsLimitedToScope() {
         List<User> visible = KEN.run(() -> tx.execute(status -> userMapper.findAllByTenant(A_SHOJI.value())));
 

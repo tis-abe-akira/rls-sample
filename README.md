@@ -4,7 +4,7 @@ Spring Boot 4.1.1 / MyBatis (mybatis-spring-boot-starter 4.0.0) / PostgreSQL 17 
 
 「WHERE句を書き忘れても、id だけで取りに来られても、他社のデータは返らない」を体験するためのサンプルです。
 テナントの中でも、**一般ユーザーは自分のデータだけ、部長・事業部長は組織階層で配下の部署のデータ、管理者はテナント内の全員のデータ**を扱えるようにしています。
-組織階層の見える範囲は「判断はアプリ、強制は DB」で実現しています（[ADR.md](docs/ADR.md)）。
+組織階層の見える範囲は「判断はアプリケーション、強制は DB」で実現しています（[ADR.md](docs/ADR.md)）。
 
 ## 構成
 
@@ -22,7 +22,7 @@ src/main/java/.../tenant/
   AccessScope                    見てよい部署の一覧（app.visible_org_ids として DB に渡す）
   SecurityConfig                 JWT（Bearer トークン）の検証と TenantFilter の配置
   TenantFilter                   JWT とヘッダでテナントを、users テーブルでユーザーを確定
-  TenantAwareTransactionManager  BEGIN直後に set_config を発行 ← ★アプリ側の本体
+  TenantAwareTransactionManager  BEGIN直後に set_config を発行 ← ★アプリケーション側の本体
   TenantConfig                   上記を TransactionManager として登録
 src/main/java/.../user/          ユーザー（/api/me, /api/users）と AccessScopeResolver（インターフェース）
 src/main/java/.../org/           組織。OrganizationHierarchyScopeResolver（自前の AccessScopeResolver）
@@ -41,7 +41,7 @@ src/test/.../TenantFilterWebTest       JWT・ヘッダ・users テーブルに�
 |---|---|
 | [docs/STORY.md](docs/STORY.md) | 背景、RLS の利点と限界、設計のベストプラクティス |
 | [docs/AUTHORIZATION.md](docs/AUTHORIZATION.md) | 認可の処理の流れ（主要なクラスの連携をシーケンス図で説明） |
-| [docs/ADR.md](docs/ADR.md) | 組織階層の見える範囲を「判断はアプリ、強制は DB」にした設計判断 |
+| [docs/ADR.md](docs/ADR.md) | 組織階層の見える範囲を「判断はアプリケーション、強制は DB」にした設計判断 |
 | [openwiki/quickstart.md](openwiki/quickstart.md) | [OpenWiki](https://github.com/langchain-ai/openwiki) で生成した Wiki の入口（チュートリアル、RLS を持たない DB での代替手段を含む） |
 
 ### Wiki を見る
@@ -106,7 +106,7 @@ docker exec -i rls-sample-db psql -U app_user -d rls_sample < db/demo.sql
 # 2) テスト（DBが起動している前提）
 mvn test
 
-# 3) アプリ起動
+# 3) アプリケーション起動
 mvn spring-boot:run
 ```
 
@@ -174,7 +174,7 @@ curl -s localhost:8080/api/orders/leaky -H "Authorization: Bearer $TARO" -H 'X-T
 KEN=$(scripts/token.sh ken 1)      # 第一営業部の部長
 MIKA=$(scripts/token.sh mika 1)    # 営業事業部の事業部長
 
-# /me に、アプリが算出した「見てよい部署」が出る → ken は [2]、mika は [1,2,3]
+# /me に、アプリケーションが算出した「見てよい部署」が出る → ken は [2]、mika は [1,2,3]
 curl -s localhost:8080/api/me -H "Authorization: Bearer $MIKA"
 
 # WHERE句を書き忘れた実装でも、範囲の中だけ（ken: 第一営業部 / mika: 事業部と配下の部）
@@ -220,7 +220,7 @@ curl -s -X POST localhost:8080/api/orders/1/details -H "Authorization: Bearer $B
 ```
 
 `scripts/token.sh` は `application.yml` の `app.jwt.secret`（HS256 の共有鍵）で署名するデモ用のスクリプトです。
-本番ではトークンは IdP が発行し、アプリは IdP の公開鍵で検証します（`SecurityConfig` の `JwtDecoder` を消して
+本番ではトークンは IdP が発行し、アプリケーションは IdP の公開鍵で検証します（`SecurityConfig` の `JwtDecoder` を消して
 `spring.security.oauth2.resourceserver.jwt.issuer-uri` を設定するだけです）。
 
 ### 「RLS が無かったら」を再現する
@@ -251,7 +251,7 @@ curl -s localhost:8080/api/orders/3     -H "Authorization: Bearer $BOB"   # ← 
 
 | 落とし穴 | 何が起きるか | 対処 |
 |---|---|---|
-| アプリがスーパーユーザーで接続 | RLS が一切効かない | `app_user` を分ける。Spring Boot の Docker Compose 連携は `POSTGRES_USER`（スーパーユーザー）で繋ぐので使っていない |
+| アプリケーションがスーパーユーザーで接続 | RLS が一切効かない | `app_user` を分ける。Spring Boot の Docker Compose 連携は `POSTGRES_USER`（スーパーユーザー）で繋ぐので使っていない |
 | テーブル所有者で接続 | `FORCE` なしだと素通り | `ALTER TABLE ... FORCE ROW LEVEL SECURITY` |
 | `SET`（セッション単位）で設定 | プールで次のリクエストに値が残り、**別テナント・別ユーザーとして動く** | `set_config(..., true)` = `SET LOCAL` |
 | 一度 SET LOCAL した接続 | 以後 `current_setting` が NULL ではなく `''` を返し `''::bigint` でエラー | `NULLIF(..., '')` を関数に閉じ込める |
@@ -261,12 +261,12 @@ curl -s localhost:8080/api/orders/3     -H "Authorization: Bearer $BOB"   # ← 
 | トランザクションの途中で `runAs` で別テナント・別ユーザーに切り替える | Java 側だけ切り替わり、DB 側は前の値のまま動く | `runAs` が例外を投げる。`runAs` → その内側でトランザクション |
 | テストに `@Transactional` を付ける | テナント設定前にトランザクションが始まる | テストでは付けない（`runAs` を使う） |
 
-## アプリ側の WHERE 句は消してよい？
+## アプリケーション側の WHERE 句は消してよい？
 
 消さないことを推奨します（多層防御）。このサンプルも、一般ユーザーなら `tenant_id` と `user_id`、管理職なら `tenant_id` と「自分または見てよい部署」、管理者なら `tenant_id` で絞っています。
 
 - `bypass` ロールで動くバッチ・管理機能では RLS が効かない
-- RLS 設定ミス（ポリシー付け忘れのテーブル）があってもアプリ側で止まる
+- RLS 設定ミス（ポリシー付け忘れのテーブル）があってもアプリケーション側で止まる
 - `tenant_id` 条件があるほうがインデックスを使った実行計画になりやすい
 
 ## 本番に向けて足すもの

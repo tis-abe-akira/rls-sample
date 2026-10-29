@@ -3,7 +3,7 @@ spring:
     name: rls-sample
   datasource:
     url: jdbc:postgresql://localhost:15432/rls_sample
-    # RLS が効くアプリ用ロール。owner(スーパーユーザー)で繋ぐと RLS は素通りするので注意。
+    # RLS が効くアプリケーション用ロール。owner(スーパーユーザー)で繋ぐと RLS は素通りするので注意。
     username: app_user
     password: app_user
 

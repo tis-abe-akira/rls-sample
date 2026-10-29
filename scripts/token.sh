@@ -3,7 +3,7 @@
 # token.sh : デモ用の JWT（HS256）を発行する
 #   scripts/token.sh bob 1       → A商事だけに所属する bob        sub=bob  tenant_ids=[1]
 #   scripts/token.sh taro 1 2    → 2社に所属する taro             sub=taro tenant_ids=[1,2]
-# ユーザーIDとロールはトークンに入れない（アプリが users テーブルで決める）。
+# ユーザーIDとロールはトークンに入れない（アプリケーションが users テーブルで決める）。
 # 本番ではトークンは IdP が発行する。これはローカルで試すためだけのもの。
 # =============================================================
 set -euo pipefail

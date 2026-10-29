@@ -13,7 +13,7 @@
         </constructor>
     </resultMap>
 
-    <!-- ✅ 正しい実装（管理者）: アプリ側でも tenant_id で絞る（RLS と二重の防御） -->
+    <!-- ✅ 正しい実装（管理者）: アプリケーション側でも tenant_id で絞る（RLS と二重の防御） -->
     <select id="findAllByTenant" resultMap="orderMap">
         SELECT id, tenant_id, user_id, org_id, title
           FROM orders
